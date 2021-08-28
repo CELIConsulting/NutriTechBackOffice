@@ -6,5 +6,6 @@ namespace Domain.Entities
 {
     class User
     {
+
     }
 }
