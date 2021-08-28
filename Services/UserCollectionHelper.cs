@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Google.Cloud.Firestore;
 
-namespace Services.User
+namespace Services.Users
 {
-    class UserCollectionHelper
+    public class UserCollectionHelper
     {
     }
 }

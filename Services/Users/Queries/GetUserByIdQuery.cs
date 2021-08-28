@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.User.Querys
+namespace Services.Users.Querys
 {
-    class GetUserByIdQuery
+    public class GetUserByIdQuery
     {
     }
 }

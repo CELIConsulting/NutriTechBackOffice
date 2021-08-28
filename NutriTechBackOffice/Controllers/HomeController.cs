@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Services.Users.Commands;
+using Services.Users.Forms;
+using Services.Users.Queries;
 
 namespace NutriTechBackOffice.Controllers
 {
@@ -11,20 +15,14 @@ namespace NutriTechBackOffice.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        [HttpGet]
-        public async Task<HelloMessage> Get()
+        public readonly IMediator _mediator;
+        public HomeController(IMediator mediator)
         {
-            HelloMessage message = new HelloMessage
-            {
-                MessageText = "Hello my Dear!",
-                UserName = "pepito"
-            };
-            return message;
+            _mediator = mediator;
         }
-    }
-    public class HelloMessage
-    {
-        public string MessageText { get; set; }
-        public string UserName { get; set; }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers() =>
+            Ok(await _mediator.Send(new GetUsersQuery()));
     }
 }

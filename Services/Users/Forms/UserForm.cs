@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.User.Commands
+namespace Services.Users.Forms
 {
-    class InsertUserForm
+    class UserForm
     {
     }
 }
