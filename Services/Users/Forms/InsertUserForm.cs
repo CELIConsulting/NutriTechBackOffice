@@ -1,14 +1,13 @@
-﻿using Google.Cloud.Firestore;
+﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Entities
+namespace Services.Users.Forms
 {
-    [FirestoreData]
-    public class User
+    public class InsertUserForm
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Email { get; set; }

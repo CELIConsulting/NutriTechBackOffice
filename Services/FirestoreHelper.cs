@@ -10,7 +10,7 @@ namespace Services
         public FirestoreDb FirestoreDb { get; set; }
         public FirestoreHelper()
         {
-            this.FirestoreDb = FirestoreDb.Create("nutritech-9fc4b");
+            this.FirestoreDb = FirestoreDb.Create("nutritechistea-d3f24");
         }
     }
 }
