@@ -13,7 +13,7 @@ namespace Services.Users.Commands
     public class InserUserCommandHandler : FirestoreHelper,IRequestHandler<InsertUserCommand, User>
     {
         private CollectionReference usersRef;
-        private DocumentReference result;
+        private WriteResult result;
 
 
         public InserUserCommandHandler()
@@ -37,12 +37,11 @@ namespace Services.Users.Commands
                     }
                 };
 
-                result = await this.usersRef.AddAsync(user);
+                result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
                 if (result == null)
                 {
                     return null;
                 }
-                user.Id = result.Id;
 
                 return user;
             }

@@ -21,8 +21,8 @@ namespace NutriTechBackOffice.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUsers() =>
-            Ok(await _mediator.Send(new GetUsersQuery()));
+        //[HttpGet]
+        //public async Task<IActionResult> GetUsers() =>
+        //    Ok(await _mediator.Send(new GetUsersQuery()));
     }
 }

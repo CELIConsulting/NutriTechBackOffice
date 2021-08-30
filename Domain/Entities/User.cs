@@ -20,5 +20,7 @@ namespace Domain.Entities
         public string Password { get; set; }
         [FirestoreProperty]
         public Role Rol { get; set; }
+        [FirestoreProperty, ServerTimestamp]
+        public Timestamp LastUpdated { get; set; }
     }
 }
