@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.User
+namespace Services.Users.Forms
 {
-    class UserCollectionHelper
+    public class UpdateUserForm
     {
     }
 }
