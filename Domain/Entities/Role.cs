@@ -8,8 +8,11 @@ namespace Domain.Entities
     [FirestoreData]
     public class Role
     {
-        //public int Id { get; set; }
+        [FirestoreProperty]
+        public string Id { get; set; }
+        [FirestoreProperty]
         public string Nombre { get; set; }
+        [FirestoreProperty]
         public string Descripcion { get; set; }
 
     }

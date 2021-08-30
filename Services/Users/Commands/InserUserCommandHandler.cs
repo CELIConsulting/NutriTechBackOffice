@@ -36,11 +36,13 @@ namespace Services.Users.Commands
                         Descripcion = request.Usuario.Rol.Descripcion
                     }
                 };
+
                 result = await this.usersRef.AddAsync(user);
                 if (result == null)
                 {
                     return null;
                 }
+                user.Id = result.Id;
 
                 return user;
             }

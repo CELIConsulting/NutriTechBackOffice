@@ -24,14 +24,14 @@ namespace Services.Users.Queries
         public async Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             existingUser = await usersRef.Document(request.Id.ToString()).GetSnapshotAsync();
-            //if (!existingUser.Exists)
-            //{
-            //    return null;
-            //}
+            if (!existingUser.Exists)
+            {
+                return null;
+            }
             Dictionary<string, object> user = existingUser.ToDictionary();
             string json = JsonConvert.SerializeObject(user);
             User newUser = JsonConvert.DeserializeObject<User>(json);
-            newUser.Id = existingUser.Exists ? existingUser.Id : null;
+            newUser.Id = existingUser.Exists != false ? existingUser.Id : null;
             return newUser;
         }
     }
