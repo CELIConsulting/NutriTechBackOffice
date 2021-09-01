@@ -6,7 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Services.Users.Queries;
+using Services;
+using Domain.Entities;
+using MediatR;
 using System;
+using System.Reflection;
 
 namespace NutriTechBackOffice
 {
@@ -28,6 +33,7 @@ namespace NutriTechBackOffice
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddMediatR(typeof(GetUsersQuery).GetTypeInfo().Assembly);
             AddSwagger(services);
         }
 
@@ -63,7 +69,7 @@ namespace NutriTechBackOffice
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "api/v1/{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
