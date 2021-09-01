@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Services.Users.Queries;
 using Services.Users.Forms;
+using Services.Users.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Services.Users.Commands;
 using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
