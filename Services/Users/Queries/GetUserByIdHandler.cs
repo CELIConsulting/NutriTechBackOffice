@@ -15,7 +15,6 @@ namespace Services.Users.Queries
     {
         private CollectionReference usersRef;
         private DocumentSnapshot existingUser;
-        private User _user = new User();
 
         public GetUserByIdHandler()
         {
