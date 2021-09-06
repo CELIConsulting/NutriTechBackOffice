@@ -11,9 +11,8 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      //"launchUrl": "swagger",
       "environmentVariables": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "C:\\Users\\ivan_\\.ssh\\service-account-file.json",
+        "GOOGLE_APPLICATION_CREDENTIALS": "C:\\Users\\lucia\\Documents\\facu\\service-account-file.json",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
