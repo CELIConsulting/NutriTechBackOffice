@@ -1,23 +1,23 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
   <mat-card class="user-card">
     <mat-card-header>
-      <mat-card-title>User Information</mat-card-title>
+      <mat-card-title>Información del usuario</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="First name" formControlName="firstName" required>
+            <input matInput placeholder="Nombre" formControlName="firstName" required>
             <mat-error *ngIf="userForm.controls['firstName'].hasError('required')">
-              First name is <strong>required</strong>
+              El nombre es <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Last name" formControlName="lastName" required>
+            <input matInput placeholder="Apellido" formControlName="lastName" required>
             <mat-error *ngIf="userForm.controls['lastName'].hasError('required')">
-              Last name is <strong>required</strong>
+              El apellido es  <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>
         </div>
@@ -27,7 +27,10 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="email" formControlName="email" [errorStateMatcher]="matcher" required>
             <mat-error *ngIf="userForm.controls['email'].hasError('required')">
-              email is <strong>required</strong>
+              El email es <strong>obligatorio</strong>
+            </mat-error>
+            <mat-error *ngIf="userForm.controls['email'].hasError('email')">
+              El email es <strong>invalido</strong>
             </mat-error>
           </mat-form-field>
         </div>
@@ -40,23 +43,23 @@
                 {{rol.nombre}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="userForm.controls['rol'].hasError('required')">Please choose an rol</mat-error>
+            <mat-error *ngIf="userForm.controls['rol'].hasError('required')">Por favor elija un rol</mat-error>
           </mat-form-field>
         </div>
       </div>
       <div class="row">
         <div class="col-4">
           <mat-form-field class="full-width">
-            <input matInput placeholder="password" formControlName="password" required>
+            <input matInput placeholder="Contraseña" formControlName="password" type="password">
             <mat-error *ngIf="userForm.controls['password'].hasError('required')">
-              password is <strong>required</strong>
+              La contraseña es <strong>obligatoria</strong>
             </mat-error>
           </mat-form-field>
         </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit">Guardar</button>
     </mat-card-actions>
   </mat-card>
 </form>
