@@ -20,6 +20,7 @@ export class LoginFormComponent {
 
   constructor(private fb: FormBuilder, private userService: UsersService, public dialog: MatDialog, private router: Router) { }
 
+
   onSubmit() {
     this.userService.getUserById(this.loginForm.get('email').value).subscribe(
       data => {
@@ -29,13 +30,12 @@ export class LoginFormComponent {
         }
         else {
          
-            this.dialog.open(PopUpComponent);
+          this.dialog.open(PopUpComponent, { data: { title:"Ups hubo un error!",message: "Las credenciales son invalidas."}});
          
         }
       },
       err => {
-        this.dialog.open(PopUpComponent);
-      }
+        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "El usuario no esta registrado, hable con su nutricionista " } });      }
     )
   }
 }
