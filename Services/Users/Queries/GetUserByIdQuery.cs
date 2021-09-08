@@ -1,10 +1,10 @@
-﻿using Domain.Entities;
+﻿using NutriTechBackOffice.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.Users.Queries
+namespace NutriTechBackOffice.Services.Users.Queries
 {
     public class GetUserByIdQuery : IRequest<User>
     {

@@ -1,11 +1,11 @@
-﻿using Domain.Entities;
+﻿using NutriTechBackOffice.Domain.Entities;
 using MediatR;
-using Services.Users.Forms;
+using NutriTechBackOffice.Services.Users.Forms;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.Users.Commands
+namespace NutriTechBackOffice.Services.Users.Commands
 {
     public class UpdateUserCommand : IRequest<User>
     {

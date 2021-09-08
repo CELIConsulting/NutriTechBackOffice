@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Users.Queries;
-using Services.Users.Forms;
-using Services.Users.Commands;
+using NutriTechBackOffice.Services.Users.Queries;
+using NutriTechBackOffice.Services.Users.Forms;
+using NutriTechBackOffice.Services.Users.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,9 +1,9 @@
-﻿using Domain.Entities;
+﻿using NutriTechBackOffice.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.Roles.Forms
+namespace NutriTechBackOffice.Services.Roles.Forms
 {
     public class InsertRoleForm
     {

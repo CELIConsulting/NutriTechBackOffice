@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using NutriTechBackOffice.Domain.Entities;
 using Google.Cloud.Firestore;
 using MediatR;
 using System;
@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Services.Roles.Queries;
+using NutriTechBackOffice.Services.Roles.Queries;
 
-namespace Services.Roles.Commands
+namespace NutriTechBackOffice.Services.Roles.Commands
 {
     public class InserRoleCommandHandler : FirestoreHelper, IRequestHandler<InsertRoleCommand, Role>
     {

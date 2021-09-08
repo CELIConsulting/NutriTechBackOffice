@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using NutriTechBackOffice.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
-using Services;
+using NutriTechBackOffice.Services;
 using Newtonsoft.Json;
 
 
-namespace Services.Roles.Queries
+namespace NutriTechBackOffice.Services.Roles.Queries
 {
     public class GetRolesHandler : FirestoreHelper, IRequestHandler<GetRolesQuery, List<Role>>
     {

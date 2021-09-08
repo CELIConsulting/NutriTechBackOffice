@@ -1,10 +1,10 @@
-﻿using Domain.Entities;
+﻿using NutriTechBackOffice.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.Roles.Queries
+namespace NutriTechBackOffice.Services.Roles.Queries
 {
     public class GetRoleByIdQuery : IRequest<Role>
     {

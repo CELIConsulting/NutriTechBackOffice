@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Entities
+namespace NutriTechBackOffice.Domain.Entities
 {
     [FirestoreData]
     public class User
@@ -19,7 +19,7 @@ namespace Domain.Entities
         [FirestoreProperty]
         public string Password { get; set; }
         [FirestoreProperty]
-        public Role ?Rol { get; set; }
+        public Role? Rol { get; set; }
         [FirestoreProperty, ServerTimestamp]
         public Timestamp LastUpdated { get; set; }
     }

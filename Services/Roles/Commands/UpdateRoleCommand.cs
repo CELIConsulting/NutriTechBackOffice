@@ -1,11 +1,11 @@
-﻿using Domain.Entities;
+﻿using NutriTechBackOffice.Domain.Entities;
 using MediatR;
-using Services.Roles.Forms;
+using NutriTechBackOffice.Services.Roles.Forms;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.Roles.Commands
+namespace NutriTechBackOffice.Services.Roles.Commands
 {
     public class UpdateRoleCommand : IRequest<Role>
     {

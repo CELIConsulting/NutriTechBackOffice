@@ -1,15 +1,15 @@
-﻿using Domain.Entities;
+﻿using NutriTechBackOffice.Domain.Entities;
 using Google.Cloud.Firestore;
 using MediatR;
 using Newtonsoft.Json;
-using Services.Users.Queries;
+using NutriTechBackOffice.Services.Users.Queries;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Services.Users.Queries
+namespace NutriTechBackOffice.Services.Users.Queries
 {
     class GetUserByIdHandler : FirestoreHelper, IRequestHandler<GetUserByIdQuery, User>
     {

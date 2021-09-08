@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Entities
+namespace NutriTechBackOffice.Domain.Entities
 {
     [FirestoreData]
     public class Role
@@ -14,6 +14,5 @@ namespace Domain.Entities
         public string Nombre { get; set; }
         [FirestoreProperty]
         public string Descripcion { get; set; }
-
     }
 }

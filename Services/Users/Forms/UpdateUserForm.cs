@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.Users.Forms
+namespace NutriTechBackOffice.Services.Users.Forms
 {
     public class UpdateUserForm
     {
