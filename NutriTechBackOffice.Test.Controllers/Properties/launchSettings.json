@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NutriTechBackOffice.Test.Controllers": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "C:\\Users\\ivan_\\.ssh\\service-account-file.json"
+      }
+    }
+  }
+}
