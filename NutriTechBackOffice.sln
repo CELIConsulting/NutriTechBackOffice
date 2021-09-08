@@ -4,15 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NutriTechBackOffice", "NutriTechBackOffice\NutriTechBackOffice.csproj", "{D02640CC-05BA-47DE-AA12-D2A7D61AB0E3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{65509E57-8C06-4A93-9CA3-76CF43D0CC8F} = {65509E57-8C06-4A93-9CA3-76CF43D0CC8F}
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NutriTechBackOffice.Services", "Services\NutriTechBackOffice.Services.csproj", "{65509E57-8C06-4A93-9CA3-76CF43D0CC8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NutriTechBackOffice.Services", "NutriTechBackOffice.Services\NutriTechBackOffice.Services.csproj", "{65509E57-8C06-4A93-9CA3-76CF43D0CC8F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0FD201DA-07B6-454C-A968-FC3D6EC4B192} = {0FD201DA-07B6-454C-A968-FC3D6EC4B192}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NutriTechBackOffice.Domain", "Domain\NutriTechBackOffice.Domain.csproj", "{0FD201DA-07B6-454C-A968-FC3D6EC4B192}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NutriTechBackOffice.Domain", "NutriTechBackOffice.Domain\NutriTechBackOffice.Domain.csproj", "{0FD201DA-07B6-454C-A968-FC3D6EC4B192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutriTechBackOffice.Test.Controllers", "NutriTechBackOffice.Test.Controllers\NutriTechBackOffice.Test.Controllers.csproj", "{95154235-9CA8-48FC-A599-D63608B42EF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NutriTechBackOffice.Test.Controllers", "NutriTechBackOffice.Test.Controllers\NutriTechBackOffice.Test.Controllers.csproj", "{95154235-9CA8-48FC-A599-D63608B42EF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
