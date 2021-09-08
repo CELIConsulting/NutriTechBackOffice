@@ -27,7 +27,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
-
+import { LoginFormComponent } from './pages/login-form/login-form.component';
+import { PopUpComponent } from './components/pop-up/pop-up.component';
+import { MatDialogModule } from "@angular/material/dialog"
+import { from } from 'rxjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +39,8 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     TableComponent,
     DashboardComponent,
     FormUserComponent,
+    LoginFormComponent,
+    PopUpComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -61,9 +66,12 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
+    MatDialogModule
   ],
   providers: [
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[PopUpComponent],
+
 })
 export class AppModule { }
