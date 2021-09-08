@@ -5,6 +5,8 @@ import { User } from '../../interfaces/user';
 import { UserForm } from '../../interfaces/user-form';
 import { RolesService } from '../../services/roles.service';
 import { UsersService } from '../../services/users.service';
+import { PopUpComponent } from '../../components/pop-up/pop-up.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-form-user',
@@ -20,8 +22,9 @@ export class FormUserComponent {
     rol: [null, Validators.required],
   });
   roles: any[] = [];
+  
 
-  constructor(private fb: FormBuilder, private roleService: RolesService, private usersService: UsersService) {
+  constructor(private fb: FormBuilder, private roleService: RolesService, private usersService: UsersService, public dialog: MatDialog) {
     this.fillRoles();
   }
 
@@ -50,15 +53,17 @@ export class FormUserComponent {
           user.Rol = data
           this.usersService.addUser(user).subscribe(
             data => {
-              console.log(data)
+              this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente registrado." } });
+
             },
             err => {
-              console.log(err)
+              this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo agregar el usuario." } });
+
             }
           )
         },
         err => {
-          console.log(err)
+          this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo agregar el usuario." } });
         }
       )
 
