@@ -12,7 +12,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "C:\\Users\\lucia\\Documents\\facu\\service-account-file.json",
+        "GOOGLE_APPLICATION_CREDENTIALS": "%USERPROFILE%\\.ssh\\service-account-file.json",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
@@ -20,7 +20,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "C:\\Users\\ivan_\\.ssh\\service-account-file.json",
+        "GOOGLE_APPLICATION_CREDENTIALS": "%USERPROFILE%\\.ssh\\service-account-file.json",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"

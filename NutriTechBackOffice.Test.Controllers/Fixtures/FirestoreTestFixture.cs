@@ -12,23 +12,13 @@ namespace NutriTechBackOffice.Test.Controllers.Fixtures
     {
         public FirestoreTestFixture()
         {
-            // si si lo se esto esta horrible pero bueno no se me ocurrio de otra manera
-            string filepath = @"C:\Users\ivan_\.ssh\service-account-file.json";
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
-            Environment.SetEnvironmentVariable("FIRESTORE_EMULATOR_HOST", "localhost:8080");
+            Configuration = CreateConfiguration();
             DB = CreateDbInstance();
             Clean(DB.Collection("Users"));
             Clean(DB.Collection("Roles"));
-
         }
         public FirestoreDb DB { get; }
-        public IConfiguration Configuration { get; } = new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", true)
-        .AddJsonFile(@"C:\Users\ivan_\.ssh\service-account-file.json", true)
-        .AddEnvironmentVariables()
-        .AddUserSecrets<FirestoreTestFixture>()
-        .Build();
+        public IConfiguration Configuration { get; }
 
         private FirestoreDb CreateDbInstance()
         {
@@ -37,6 +27,17 @@ namespace NutriTechBackOffice.Test.Controllers.Fixtures
                 ProjectId = Configuration["project_id"],
                 EmulatorDetection = EmulatorDetection.EmulatorOnly
             }.Build();
+        }
+
+        private IConfiguration CreateConfiguration()
+        {
+            return new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true)
+                .AddJsonFile(Environment.ExpandEnvironmentVariables(Environment.GetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS")), true)
+                .AddEnvironmentVariables()
+                .AddUserSecrets<FirestoreTestFixture>()
+                .Build();
         }
         private void Clean(CollectionReference collection)
         {
