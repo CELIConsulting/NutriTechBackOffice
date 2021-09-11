@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "NutriTechBackOffice.Test.Controllers": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "%USERPROFILE%\\.ssh\\service-account-file.json",
+        "FIRESTORE_EMULATOR_HOST": "localhost:8080"
+      }
+    }
+  }
+}
