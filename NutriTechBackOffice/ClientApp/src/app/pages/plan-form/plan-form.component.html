@@ -1,0 +1,78 @@
+<app-navigation>
+  <form [formGroup]="planForm" (ngSubmit)="onSubmit()">
+    <mat-card class="plan-card">
+      <mat-card-header>
+        <mat-card-title class="header-ml-0">Información del plan:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+
+          <!--Nombre-->
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nombre" formControlName="nombre" required>
+              <mat-error *ngIf="planForm.controls['nombre'].hasError('required')">
+                El nombre es <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!--Tipo-->
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Tipo" formControlName="tipo" required>
+              <mat-error *ngIf="planForm.controls['tipo'].hasError('required')">
+                El tipo es <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <!--Cantidad de agua diaria-->
+          <div class="col">
+            <mat-form-field>
+              <input matInput type="number" placeholder="Litros por dia" formControlName="litrosAgua" required>
+              <mat-error *ngIf="planForm.controls['litrosAgua'].hasError('required')">
+                La cantidad de litros de agua a tomar es un campo <strong>obligatorio</strong>
+              </mat-error>
+              <mat-error *ngIf="planForm.controls['cantColaciones'].hasError('min')">
+                La cantidad de litros de agua a tomar no puede ser menor que <strong>{{minLitrosAgua}} lts</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!--Colaciones-->
+          <div class="col">
+            <mat-form-field>
+              <input matInput type="number" placeholder="Colaciones por dia" formControlName="cantColaciones" required>
+              <mat-error *ngIf="planForm.controls['cantColaciones'].hasError('required')">
+                La cantidad de colaciones permitidas es un campo <strong>obligatorio</strong>
+              </mat-error>
+              <mat-error *ngIf="planForm.controls['cantColaciones'].hasError('min')">
+                La cantidad de colaciones permitidas no puede ser menor que <strong>{{minCantColaciones}}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Tablas -->
+
+          <div class="row">
+            <div class="col">
+              <!--HEAD-->
+              <!--CONTENT-->
+              <!--FOOTER-->
+            </div>
+          </div>
+
+
+        </div>
+      </mat-card-content>
+
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Guardar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</app-navigation>

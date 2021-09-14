@@ -30,7 +30,9 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
 import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
 import { MatDialogModule } from "@angular/material/dialog"
+import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { from } from 'rxjs';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,7 @@ import { from } from 'rxjs';
     FormUserComponent,
     LoginFormComponent,
     PopUpComponent,
+    PlanFormComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

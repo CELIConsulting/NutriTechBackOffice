@@ -16,4 +16,8 @@
     <ProjectReference Include="..\NutriTechBackOffice.Domain\NutriTechBackOffice.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Planes\Queries\" />
+  </ItemGroup>
+
 </Project>

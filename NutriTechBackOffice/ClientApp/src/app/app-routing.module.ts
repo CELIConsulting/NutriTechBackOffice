@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { FormUserComponent } from './pages/form-user/form-user.component';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
+import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { AppComponent } from './app.component';
 import { UserLoginGuard } from './user-login.guard';
 
@@ -21,6 +22,11 @@ const routes: Routes = [
   {
     path: 'user-form',
     component: FormUserComponent,
+    canActivate: [UserLoginGuard],
+  },
+  {
+    path: 'plan-form',
+    component: PlanFormComponent,
     canActivate: [UserLoginGuard],
   },
 ]
