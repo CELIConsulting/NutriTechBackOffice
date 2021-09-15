@@ -16,6 +16,7 @@ using System.Threading;
 using NutriTechBackOffice.Services.Users.Commands;
 using NutriTechBackOffice.Services.Users.Forms;
 
+
 namespace NutriTechBackOffice.Test.Controllers
 {
     public class UserControllerTest : IClassFixture<FirestoreTestFixture>
@@ -26,7 +27,9 @@ namespace NutriTechBackOffice.Test.Controllers
 
 
         UserController _userController;
-
+        GetUsersQuery _queryUser = new GetUsersQuery();
+        GetUsersHandler _getUsersHandler= new GetUsersHandler();
+      
         public UserControllerTest(FirestoreTestFixture fixture)
         {
             this._fixture = fixture;
@@ -36,9 +39,9 @@ namespace NutriTechBackOffice.Test.Controllers
         [Fact]
         public async Task GetAllUsers()
         {
-            mediatrMock.Setup(m => m.Send(It.IsAny<GetUsersQuery>(), It.IsAny<CancellationToken>()));
-            _userController = new UserController(mediatrMock.Object);
-            var result = _userController.GetUsers();
+            _getUsersHandler = new GetUsersHandler();
+            CancellationToken _cancellationToken = new CancellationToken();
+            var result =  _getUsersHandler.Handle(_queryUser, _cancellationToken);
             result.Should().NotBeNull();
         }
 
@@ -48,9 +51,9 @@ namespace NutriTechBackOffice.Test.Controllers
             mediatrMock.Setup(m => m.Send(It.IsAny<InsertUserCommand>(), It.IsAny<CancellationToken>()));
             _userController = new UserController(mediatrMock.Object);
             var insertForm = new InsertUserForm() { 
-                Nombre = "prueba ivan",
-                Apellido = "hribernik",
-                Email = "algo@gmail.com",
+                Nombre = "prueba lu",
+                Apellido = "oliva",
+                Email = "TestInsertLu@gmail.com",
                 Password ="hola1234",
                 Rol = new Role()
                 {
@@ -58,16 +61,20 @@ namespace NutriTechBackOffice.Test.Controllers
                     Descripcion = "admin que te borra la base en produccion porque estaba armando tests a la madrugada"
                 }
             };
-            var result = _userController.PostAsync(insertForm);
+            InsertUserCommand _insertComand = new InsertUserCommand(insertForm);
+            CancellationToken _cancellationToken = new CancellationToken();
+            InserUserCommandHandler _insertUser = new InserUserCommandHandler();
+            var result = await _insertUser.Handle(_insertComand, _cancellationToken);
             result.Should().NotBeNull();
         }
 
         [Fact]
         public async Task GetUserById_retunsNotNull()
         {
-            mediatrMock.Setup(m => m.Send(It.IsAny<GetUserByIdQuery>(), It.IsAny<CancellationToken>()));
-            _userController = new UserController(mediatrMock.Object);
-            var result = _userController.Get("pepe");
+            GetUserByIdHandler _userById = new GetUserByIdHandler();
+            CancellationToken _cancellationToken = new CancellationToken();
+            GetUserByIdQuery _queryUser = new GetUserByIdQuery("lu.com");
+            var result = await _userById.Handle(_queryUser,_cancellationToken);
             result.Should().NotBeNull();
         }
     }
