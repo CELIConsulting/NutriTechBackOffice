@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NutriTechBackOffice.Services.Users.Queries
 {
-    class GetUserByIdHandler : FirestoreHelper, IRequestHandler<GetUserByIdQuery, User>
+    public class GetUserByIdHandler : FirestoreHelper, IRequestHandler<GetUserByIdQuery, User>
     {
         private CollectionReference usersRef;
         private DocumentSnapshot existingUser;
