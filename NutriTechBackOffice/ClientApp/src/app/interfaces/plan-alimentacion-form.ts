@@ -10,4 +10,3 @@ export interface PlanAlimentacionForm {
   Colacion: Array<string>;
 }
 
-//LastUpdated: que se genere del lado del servidor

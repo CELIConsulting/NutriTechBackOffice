@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NutriTechBackOffice.Services.Planes.Commands;
 using NutriTechBackOffice.Services.Planes.Forms;
+using NutriTechBackOffice.Services.Planes.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,15 @@ namespace NutriTechBackOffice.Controllers
             return Ok(await _mediator.Send(new InsertPlanCommand(planForm)));
         }
 
-
+        // GET: api/<PlanController>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> GetAllPlansAsync() 
+        {
+            return Ok(await _mediator.Send(new GetAllPlansQuery()));
+        
+        }
     }
 }

@@ -18,5 +18,8 @@ export class PlanesService {
   }
 
   //GET: ALL PLANS
+  getAllPlans(): Observable<Array<PlanAlimentacion>> {
+    return this.http.get<Array<PlanAlimentacion>>(`${env.apiBaseUrl}/Plan/`);
+  }
 
 }
