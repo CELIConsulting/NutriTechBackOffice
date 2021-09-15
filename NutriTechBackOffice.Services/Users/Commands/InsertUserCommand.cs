@@ -11,7 +11,7 @@ namespace NutriTechBackOffice.Services.Users.Commands
     {
         public InsertUserForm Usuario { get; }
 
-        public InsertUserCommand(InsertUserForm user)
+        public InsertUserCommand(InsertUserForm user)   
         {
             Usuario = user;
         }

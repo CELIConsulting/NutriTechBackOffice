@@ -37,9 +37,9 @@ namespace NutriTechBackOffice.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+            [ProducesResponseType(StatusCodes.Status200OK)]
+            [ProducesResponseType(StatusCodes.Status400BadRequest)]
+            [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> PostAsync([FromBody] InsertUserForm userForm) =>
             Ok(await _mediator.Send(new InsertUserCommand(userForm)));
 

@@ -15,7 +15,7 @@ export class UsersService {
   addUser(user: UserForm) {
     return this.http.post(`${env.apiBaseUrl}/User/`,user);
   }
-
+      
   getUserById(email: String): Observable<User> {
     return this.http.get<User>(`${env.apiBaseUrl}/User/${email}`)
   }
