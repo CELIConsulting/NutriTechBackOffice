@@ -29,7 +29,7 @@ namespace NutriTechBackOffice.Test.Controllers
         UserController _userController;
         GetUsersQuery _queryUser = new GetUsersQuery();
         GetUsersHandler _getUsersHandler= new GetUsersHandler();
-      
+
         public UserControllerTest(FirestoreTestFixture fixture)
         {
             this._fixture = fixture;
@@ -41,7 +41,7 @@ namespace NutriTechBackOffice.Test.Controllers
         {
             _getUsersHandler = new GetUsersHandler();
             CancellationToken _cancellationToken = new CancellationToken();
-            var result =  _getUsersHandler.Handle(_queryUser, _cancellationToken);
+            var result = await _getUsersHandler.Handle(_queryUser, _cancellationToken);
             result.Should().NotBeNull();
         }
 
@@ -50,7 +50,7 @@ namespace NutriTechBackOffice.Test.Controllers
         {
             mediatrMock.Setup(m => m.Send(It.IsAny<InsertUserCommand>(), It.IsAny<CancellationToken>()));
             _userController = new UserController(mediatrMock.Object);
-            var insertForm = new InsertUserForm() { 
+            var insertForm = new InsertUserForm() {
                 Nombre = "prueba lu",
                 Apellido = "oliva",
                 Email = "TestInsertLu@gmail.com",

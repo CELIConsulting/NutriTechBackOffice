@@ -9,6 +9,7 @@ using NutriTechBackOffice.Services.Users.Queries;
 using MediatR;
 using System;
 using System.Reflection;
+using Google.Cloud.Firestore;
 
 namespace NutriTechBackOffice
 {
@@ -32,6 +33,8 @@ namespace NutriTechBackOffice
             });
             services.AddMediatR(typeof(GetUsersQuery).GetTypeInfo().Assembly);
             AddSwagger(services);
+            services.AddSingleton<FirestoreDb>(
+                provider => FirestoreDb.Create(GetFirestoreProjectId()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,5 +104,7 @@ namespace NutriTechBackOffice
                 });
             });
         }
+        public string GetFirestoreProjectId() =>
+            Configuration["project_id"];
     }
 }

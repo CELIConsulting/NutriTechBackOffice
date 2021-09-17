@@ -12,15 +12,15 @@ using Newtonsoft.Json;
 
 namespace NutriTechBackOffice.Services.Users.Queries
 {
-    public class GetUsersHandler : FirestoreHelper, IRequestHandler<GetUsersQuery, List<User>>
+    public class GetUsersHandler : IRequestHandler<GetUsersQuery, List<User>>
     {
         private CollectionReference usersRef;
         private QuerySnapshot existingUsers;
         private List<User> _users = new List<User>();
 
-        public GetUsersHandler()
+        public GetUsersHandler(FirestoreDb firestore)
         {
-            usersRef = this.FirestoreDb.Collection("Users");
+            usersRef = firestore.Collection("Users");
         }
 
         public async Task<List<User>> Handle(GetUsersQuery request, CancellationToken cancellationToken)

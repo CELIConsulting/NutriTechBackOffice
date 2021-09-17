@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace NutriTechBackOffice.Services.Roles.Queries
 {
-    class GetRoleByIdHandler : FirestoreHelper, IRequestHandler<GetRoleByIdQuery, Role>
+    class GetRoleByIdHandler : IRequestHandler<GetRoleByIdQuery, Role>
     {
         private CollectionReference rolesRef;
         private DocumentSnapshot existingRole;
 
-        public GetRoleByIdHandler()
+        public GetRoleByIdHandler(FirestoreDb firestore)
         {
-            rolesRef = this.FirestoreDb.Collection("Roles");
+            rolesRef = firestore.Collection("Roles");
         }
         public async Task<Role> Handle(GetRoleByIdQuery request, CancellationToken cancellationToken)
         {
