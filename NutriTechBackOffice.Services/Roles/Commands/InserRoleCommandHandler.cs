@@ -10,15 +10,15 @@ using NutriTechBackOffice.Services.Roles.Queries;
 
 namespace NutriTechBackOffice.Services.Roles.Commands
 {
-    public class InserRoleCommandHandler : FirestoreHelper, IRequestHandler<InsertRoleCommand, Role>
+    public class InserRoleCommandHandler : IRequestHandler<InsertRoleCommand, Role>
     {
         private CollectionReference rolesRef;
         private WriteResult result;
 
 
-        public InserRoleCommandHandler()
+        public InserRoleCommandHandler(FirestoreDb firestore)
         {
-            rolesRef = this.FirestoreDb.Collection("Roles");
+            rolesRef = firestore.Collection("Roles");
         }
         public async Task<Role> Handle(InsertRoleCommand request, CancellationToken cancellationToken)
         {

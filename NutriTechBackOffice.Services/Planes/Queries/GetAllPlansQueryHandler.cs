@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace NutriTechBackOffice.Services.Planes.Queries
 {
-    class GetAllPlansQueryHandler : FirestoreHelper, IRequestHandler<GetAllPlansQuery, List<PlanAlimentacion>>
+    class GetAllPlansQueryHandler : IRequestHandler<GetAllPlansQuery, List<PlanAlimentacion>>
     {
         private CollectionReference _planesRef;
         private QuerySnapshot _existentPlans;
         private List<PlanAlimentacion> _planesDeAlimentacion;
 
 
-        public GetAllPlansQueryHandler()
+        public GetAllPlansQueryHandler(FirestoreDb firestore)
         {
             _planesDeAlimentacion = new List<PlanAlimentacion>();
-            _planesRef = this.FirestoreDb.Collection("Planes");
+            _planesRef = firestore.Collection("Planes");
         }
 
         public async Task<List<PlanAlimentacion>> Handle(GetAllPlansQuery request, CancellationToken cancellationToken)

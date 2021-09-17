@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Google.Cloud.Firestore;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NutriTechBackOffice.Services.Planes.Commands;
@@ -16,10 +17,12 @@ namespace NutriTechBackOffice.Controllers
     public class PlanController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly FirestoreDb _firestore;
 
-        public PlanController(IMediator mediator)
+        public PlanController(IMediator mediator, FirestoreDb firestore)
         {
             _mediator = mediator;
+            _firestore = firestore;
         }
 
         // POST: api/<PlanController>
@@ -27,7 +30,7 @@ namespace NutriTechBackOffice.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> PostAsync([FromBody] InsertPlanForm planForm) 
+        public async Task<IActionResult> PostAsync([FromBody] InsertPlanForm planForm)
         {
             return Ok(await _mediator.Send(new InsertPlanCommand(planForm)));
         }
@@ -37,10 +40,10 @@ namespace NutriTechBackOffice.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> GetAllPlansAsync() 
+        public async Task<IActionResult> GetAllPlansAsync()
         {
             return Ok(await _mediator.Send(new GetAllPlansQuery()));
-        
+
         }
     }
 }

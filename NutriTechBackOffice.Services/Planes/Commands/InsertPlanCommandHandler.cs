@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace NutriTechBackOffice.Services.Planes.Commands
 {
-    public class InsertPlanCommandHandler : FirestoreHelper, IRequestHandler<InsertPlanCommand, PlanAlimentacion>
+    public class InsertPlanCommandHandler : IRequestHandler<InsertPlanCommand, PlanAlimentacion>
     {
         private CollectionReference _planesRef;
         private WriteResult _result;
 
-        public InsertPlanCommandHandler()
+        public InsertPlanCommandHandler(FirestoreDb firestore)
         {
             //Conectarme con la base de datos de firestore
-            _planesRef = this.FirestoreDb.Collection("Planes");
+            _planesRef = firestore.Collection("Planes");
         }
 
         public async Task<PlanAlimentacion> Handle(InsertPlanCommand request, CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ namespace NutriTechBackOffice.Services.Planes.Commands
 
                 _result = await _planesRef.Document(request.Plan.Nombre).SetAsync(plan);
 
-                if(_result == null) 
+                if(_result == null)
                 {
                     return null;
                 }

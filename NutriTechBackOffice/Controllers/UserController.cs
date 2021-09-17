@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Google.Cloud.Firestore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,9 +19,12 @@ namespace NutriTechBackOffice.Controllers
     public class UserController : ControllerBase
     {
         public readonly IMediator _mediator;
-        public UserController(IMediator mediator)
+        private readonly FirestoreDb _firestore;
+
+        public UserController(IMediator mediator, FirestoreDb firestore)
         {
             _mediator = mediator;
+            _firestore = firestore;
         }
         // GET: api/<UserController>
         [HttpGet]
@@ -37,9 +41,9 @@ namespace NutriTechBackOffice.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-            [ProducesResponseType(StatusCodes.Status200OK)]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> PostAsync([FromBody] InsertUserForm userForm) =>
             Ok(await _mediator.Send(new InsertUserCommand(userForm)));
 

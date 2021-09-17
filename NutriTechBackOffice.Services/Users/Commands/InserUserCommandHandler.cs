@@ -10,15 +10,13 @@ using NutriTechBackOffice.Services.Users.Queries;
 
 namespace NutriTechBackOffice.Services.Users.Commands
 {
-    public class InserUserCommandHandler : FirestoreHelper,IRequestHandler<InsertUserCommand, User>
+    public class InserUserCommandHandler : IRequestHandler<InsertUserCommand, User>
     {
         private CollectionReference usersRef;
         private WriteResult result;
-
-
-        public InserUserCommandHandler()
+        public InserUserCommandHandler(FirestoreDb firestore)
         {
-            usersRef = this.FirestoreDb.Collection("Users");
+            usersRef = firestore.Collection("Users");
         }
         public async Task<User> Handle(InsertUserCommand request, CancellationToken cancellationToken)
         {

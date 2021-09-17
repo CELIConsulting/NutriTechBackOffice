@@ -12,15 +12,15 @@ using Newtonsoft.Json;
 
 namespace NutriTechBackOffice.Services.Roles.Queries
 {
-    public class GetRolesHandler : FirestoreHelper, IRequestHandler<GetRolesQuery, List<Role>>
+    public class GetRolesHandler : IRequestHandler<GetRolesQuery, List<Role>>
     {
         private CollectionReference rolesRef;
         private QuerySnapshot existingRoles;
         private List<Role> _roles = new List<Role>();
 
-        public GetRolesHandler()
+        public GetRolesHandler(FirestoreDb firestore)
         {
-            rolesRef = this.FirestoreDb.Collection("Roles");
+            rolesRef = firestore.Collection("Roles");
         }
 
         public async Task<List<Role>> Handle(GetRolesQuery request, CancellationToken cancellationToken)

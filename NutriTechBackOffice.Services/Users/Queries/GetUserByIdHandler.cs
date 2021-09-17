@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace NutriTechBackOffice.Services.Users.Queries
 {
-    public class GetUserByIdHandler : FirestoreHelper, IRequestHandler<GetUserByIdQuery, User>
+    public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, User>
     {
         private CollectionReference usersRef;
         private DocumentSnapshot existingUser;
 
-        public GetUserByIdHandler()
+        public GetUserByIdHandler(FirestoreDb firestore)
         {
-            usersRef = this.FirestoreDb.Collection("Users");
+            usersRef = firestore.Collection("Users");
         }
         public async Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
