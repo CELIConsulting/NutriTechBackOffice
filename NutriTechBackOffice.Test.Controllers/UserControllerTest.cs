@@ -15,31 +15,31 @@ using NutriTechBackOffice.Domain.Entities;
 using System.Threading;
 using NutriTechBackOffice.Services.Users.Commands;
 using NutriTechBackOffice.Services.Users.Forms;
-
+using Google.Cloud.Firestore;
 
 namespace NutriTechBackOffice.Test.Controllers
 {
     public class UserControllerTest : IClassFixture<FirestoreTestFixture>
     {
         private readonly FirestoreTestFixture _fixture;
-        private readonly FirestoreHelper _context;
         private readonly Mock<IMediator> mediatrMock;
-
-
-        UserController _userController;
-        GetUsersQuery _queryUser = new GetUsersQuery();
-        GetUsersHandler _getUsersHandler= new GetUsersHandler();
+        private readonly Mock<FirestoreDb> firebaseMock;
+        private GetUsersQuery _queryUser;
+        private GetUsersHandler _getUsersHandler;
 
         public UserControllerTest(FirestoreTestFixture fixture)
         {
             this._fixture = fixture;
             this.mediatrMock = new Mock<IMediator>();
+            this.firebaseMock = new Mock<FirestoreDb>();
+            _queryUser = new GetUsersQuery();
+            _getUsersHandler = new GetUsersHandler(firebaseMock.Object);
         }
 
         [Fact]
         public async Task GetAllUsers()
         {
-            _getUsersHandler = new GetUsersHandler();
+            _getUsersHandler = new GetUsersHandler(this.firebaseMock.Object);
             CancellationToken _cancellationToken = new CancellationToken();
             var result = await _getUsersHandler.Handle(_queryUser, _cancellationToken);
             result.Should().NotBeNull();
@@ -49,12 +49,12 @@ namespace NutriTechBackOffice.Test.Controllers
         public async Task InsertUser()
         {
             mediatrMock.Setup(m => m.Send(It.IsAny<InsertUserCommand>(), It.IsAny<CancellationToken>()));
-            _userController = new UserController(mediatrMock.Object);
-            var insertForm = new InsertUserForm() {
+            var insertForm = new InsertUserForm()
+            {
                 Nombre = "prueba lu",
                 Apellido = "oliva",
                 Email = "TestInsertLu@gmail.com",
-                Password ="hola1234",
+                Password = "hola1234",
                 Rol = new Role()
                 {
                     Nombre = "admin",
@@ -63,7 +63,7 @@ namespace NutriTechBackOffice.Test.Controllers
             };
             InsertUserCommand _insertComand = new InsertUserCommand(insertForm);
             CancellationToken _cancellationToken = new CancellationToken();
-            InserUserCommandHandler _insertUser = new InserUserCommandHandler();
+            InserUserCommandHandler _insertUser = new InserUserCommandHandler(this.firebaseMock.Object);
             var result = await _insertUser.Handle(_insertComand, _cancellationToken);
             result.Should().NotBeNull();
         }
@@ -71,7 +71,7 @@ namespace NutriTechBackOffice.Test.Controllers
         [Fact]
         public async Task GetUserById_retunsNotNull()
         {
-            GetUserByIdHandler _userById = new GetUserByIdHandler();
+            GetUserByIdHandler _userById = new GetUserByIdHandler(this.firebaseMock.Object);
             CancellationToken _cancellationToken = new CancellationToken();
             GetUserByIdQuery _queryUser = new GetUserByIdQuery("lu.com");
             var result = await _userById.Handle(_queryUser,_cancellationToken);
