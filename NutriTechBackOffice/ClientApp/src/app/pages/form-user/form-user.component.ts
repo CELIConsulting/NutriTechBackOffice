@@ -31,7 +31,7 @@ export class FormUserComponent {
   fillRoles() {
     this.roleService.getRoles().subscribe(
       data => {
-        this.roles = data.map(item => { return { nombre: item.nombre, id: item.id } })
+        this.roles = data.map(item => { return { nombre: item.nombre} })
       },
       err => {
         console.log(err)
@@ -46,24 +46,17 @@ export class FormUserComponent {
         'Apellido': this.userForm.value['lastName'],
         'Email': this.userForm.value['email'],
         'Password': this.userForm.value['password'],
-        'Rol': null,
+        'Rol': this.userForm.value['rol'].nombre,
       };
-      this.roleService.getRole(this.userForm.value['rol'].id).subscribe(
+
+      this.usersService.addUser(user).subscribe(
         data => {
-          user.Rol = data
-          this.usersService.addUser(user).subscribe(
-            data => {
-              this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente registrado." } });
+          this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente registrado." } });
 
-            },
-            err => {
-              this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo agregar el usuario." } });
-
-            }
-          )
         },
         err => {
           this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo agregar el usuario." } });
+
         }
       )
 

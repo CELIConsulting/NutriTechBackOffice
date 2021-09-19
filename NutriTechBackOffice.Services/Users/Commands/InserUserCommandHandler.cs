@@ -22,26 +22,60 @@ namespace NutriTechBackOffice.Services.Users.Commands
         {
             try
             {
-                User user = new User()
+                if (request.Usuario.Rol == "Paciente")
                 {
-                    Nombre = request.Usuario.Nombre,
-                    Apellido = request.Usuario.Apellido,
-                    Email = request.Usuario.Email,
-                    Password = request.Usuario.Password,
-                    Rol = new Role()
+                    Paciente user = new Paciente()
                     {
-                        Nombre = request.Usuario.Rol.Nombre,
-                        Descripcion = request.Usuario.Rol.Descripcion
+                        Nombre = request.Usuario.Nombre,
+                        Apellido = request.Usuario.Apellido,
+                        Email = request.Usuario.Email,
+                        Password = request.Usuario.Password,
+                        Rol = request.Usuario.Rol,
+                    };
+                    result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
+                    if (result == null)
+                    {
+                        return null;
                     }
-                };
 
-                result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
-                if (result == null)
-                {
-                    return null;
+                    return user;
                 }
+                else if (request.Usuario.Rol == "Admin")
+                {
+                    Administrador user = new Administrador()
+                    {
+                        Nombre = request.Usuario.Nombre,
+                        Apellido = request.Usuario.Apellido,
+                        Email = request.Usuario.Email,
+                        Password = request.Usuario.Password,
+                        Rol = request.Usuario.Rol,
+                    };
+                    result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
+                    if (result == null)
+                    {
+                        return null;
+                    }
 
-                return user;
+                    return user;
+                }
+                else {
+                    Nutricionista user = new Nutricionista()
+                    {
+                        Nombre = request.Usuario.Nombre,
+                        Apellido = request.Usuario.Apellido,
+                        Email = request.Usuario.Email,
+                        Password = request.Usuario.Password,
+                        Rol = request.Usuario.Rol,
+                    };
+                    result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
+                    if (result == null)
+                    {
+                        return null;
+                    }
+
+                    return user;
+                }
+                   
             }
             catch
             {

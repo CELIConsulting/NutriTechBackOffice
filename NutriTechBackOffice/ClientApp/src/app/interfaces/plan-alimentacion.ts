@@ -1,7 +1,6 @@
 import { LastUpdated } from "./user";
 
 export interface PlanAlimentacion {
-  id: string;
   nombre: string;
   tipo: string;
   cantAguaDiaria: Number;

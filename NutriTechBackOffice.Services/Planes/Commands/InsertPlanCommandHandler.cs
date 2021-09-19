@@ -28,7 +28,6 @@ namespace NutriTechBackOffice.Services.Planes.Commands
             {
                 PlanAlimentacion plan = new PlanAlimentacion
                 {
-                    Id = null,
                     Nombre = request.Plan.Nombre,
                     Tipo = request.Plan.Tipo,
                     CantAguaDiaria = request.Plan.CantAguaDiaria,

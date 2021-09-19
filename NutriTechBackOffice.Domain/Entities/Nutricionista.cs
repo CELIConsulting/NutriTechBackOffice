@@ -6,12 +6,9 @@ using System.Text;
 namespace NutriTechBackOffice.Domain.Entities
 {
     [FirestoreData]
-    public class Role
+    public class Nutricionista:User
     {
         [FirestoreProperty]
-        public string Nombre { get; set; }
-
-        [FirestoreProperty]
-        public string Descripcion { get; set; }
+        int? Matricula { get; set; }
     }
 }
