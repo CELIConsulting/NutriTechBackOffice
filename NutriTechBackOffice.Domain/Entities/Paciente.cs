@@ -6,7 +6,7 @@ using Google.Cloud.Firestore;
 namespace NutriTechBackOffice.Domain.Entities
 {
     [FirestoreData]
-   public class Paciente:User
+    public class Paciente : User
     {
         [FirestoreProperty]
         float? Altura { get; set; }

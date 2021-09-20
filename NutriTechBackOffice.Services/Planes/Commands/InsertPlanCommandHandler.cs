@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace NutriTechBackOffice.Services.Planes.Commands
 {
@@ -14,11 +15,13 @@ namespace NutriTechBackOffice.Services.Planes.Commands
     {
         private CollectionReference _planesRef;
         private WriteResult _result;
+        private readonly IMapper _mapper;
 
-        public InsertPlanCommandHandler(FirestoreDb firestore)
+        public InsertPlanCommandHandler(FirestoreDb firestore, IMapper mapper)
         {
             //Conectarme con la base de datos de firestore
             _planesRef = firestore.Collection("Planes");
+            _mapper = mapper;
         }
 
         public async Task<PlanAlimentacion> Handle(InsertPlanCommand request, CancellationToken cancellationToken)
@@ -26,18 +29,7 @@ namespace NutriTechBackOffice.Services.Planes.Commands
             //Generar el objeto de Plan de Alimentacion en base al request y guardarlo
             try
             {
-                PlanAlimentacion plan = new PlanAlimentacion
-                {
-                    Nombre = request.Plan.Nombre,
-                    Tipo = request.Plan.Tipo,
-                    CantAguaDiaria = request.Plan.CantAguaDiaria,
-                    CantColacionesDiarias = request.Plan.CantColacionesDiarias,
-                    Desayuno = request.Plan.Desayuno,
-                    Almuerzo = request.Plan.Almuerzo,
-                    Merienda = request.Plan.Merienda,
-                    Cena = request.Plan.Cena,
-                    Colacion = request.Plan.Colacion
-                };
+                PlanAlimentacion plan = _mapper.Map<PlanAlimentacion>(request.Plan);
 
                 _result = await _planesRef.Document(request.Plan.Nombre).SetAsync(plan);
 

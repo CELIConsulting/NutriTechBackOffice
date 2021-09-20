@@ -10,6 +10,8 @@ using MediatR;
 using System;
 using System.Reflection;
 using Google.Cloud.Firestore;
+using AutoMapper;
+using NutriTechBackOffice.Services.Users.Automapper;
 
 namespace NutriTechBackOffice
 {
@@ -18,6 +20,7 @@ namespace NutriTechBackOffice
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -35,6 +38,10 @@ namespace NutriTechBackOffice
             AddSwagger(services);
             services.AddSingleton<FirestoreDb>(
                 provider => FirestoreDb.Create(GetFirestoreProjectId()));
+
+           services.AddAutoMapper(typeof(ConfigurationMapperProfile));
+            services.AddControllersWithViews();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
