@@ -20,6 +20,8 @@ namespace NutriTechBackOffice.Domain.Entities
         public string Password { get; set; }
         [FirestoreProperty]
         public Role? Rol { get; set; }
+        [FirestoreProperty]
+        public PlanAsignacion PlanAsignado { get; set; }
         [FirestoreProperty, ServerTimestamp]
         public Timestamp LastUpdated { get; set; }
     }

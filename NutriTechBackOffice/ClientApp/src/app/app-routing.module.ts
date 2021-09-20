@@ -7,6 +7,7 @@ import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { AppComponent } from './app.component';
 import { UserLoginGuard } from './user-login.guard';
+import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,11 @@ const routes: Routes = [
   {
     path: 'plan-form',
     component: PlanFormComponent,
+    canActivate: [UserLoginGuard],
+  },
+  {
+    path: 'asignacion-plan',
+    component: AsignacionPlanComponent,
     canActivate: [UserLoginGuard],
   },
 ]

@@ -31,6 +31,15 @@ namespace NutriTechBackOffice.Controllers
         public async Task<IActionResult> GetUsers() =>
             Ok(await _mediator.Send(new GetUsersQuery()));
 
+        
+        // GET api/<UserController>/Patients/
+        [HttpGet("Patients")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> GetPatients() =>
+            Ok(await _mediator.Send(new GetPatientsQuery()));
+
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

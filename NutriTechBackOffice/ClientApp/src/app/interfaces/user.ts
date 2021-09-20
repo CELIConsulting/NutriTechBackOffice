@@ -1,3 +1,4 @@
+import { PlanAsignado } from "./plan-asignado";
 import { Role } from "./role";
 
 export interface User {
@@ -7,7 +8,8 @@ export interface User {
   email: string;
   password: string;
   rol: Role;
+  planAsignado: PlanAsignado;
   lastUpdated: LastUpdated;
 }
-export interface LastUpdated {
+export interface LastUpdated {  
 }
