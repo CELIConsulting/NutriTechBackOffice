@@ -27,7 +27,6 @@ namespace NutriTechBackOffice.Services.Roles.Queries
                 Dictionary<string, object> Role = existingRole.ToDictionary();
                 string json = JsonConvert.SerializeObject(Role);
                 Role newRole = JsonConvert.DeserializeObject<Role>(json);
-                newRole.Id = existingRole.Exists != false ? existingRole.Id : null;
                 return newRole;
             }else
             {

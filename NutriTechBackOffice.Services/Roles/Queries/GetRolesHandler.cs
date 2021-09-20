@@ -33,7 +33,6 @@ namespace NutriTechBackOffice.Services.Roles.Queries
                     Dictionary<string, object> user = document.ToDictionary();
                     string json = JsonConvert.SerializeObject(user);
                     Role newUser = JsonConvert.DeserializeObject<Role>(json);
-                    newUser.Id = document.Id;
                     _roles.Add(newUser);
                 }
             }

@@ -37,7 +37,6 @@ namespace NutriTechBackOffice.Services.Planes.Queries
                         Dictionary<string, object> plan = document.ToDictionary();
                         string json = JsonConvert.SerializeObject(plan);
                         PlanAlimentacion newPlan = JsonConvert.DeserializeObject<PlanAlimentacion>(json);
-                        newPlan.Id = document.Id;
                         _planesDeAlimentacion.Add(newPlan);
                     }
                 }

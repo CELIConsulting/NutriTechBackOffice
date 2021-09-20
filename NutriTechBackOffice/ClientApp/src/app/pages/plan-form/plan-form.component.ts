@@ -42,7 +42,7 @@ export class PlanFormComponent implements OnInit {
           Validators.required,
           Validators.min(this.minLitrosAgua)
         ],
-        onUpdate: "change"
+        updateOn: "change"
       }],
       cantColaciones: new FormControl("",
         {

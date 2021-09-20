@@ -9,9 +9,6 @@ namespace NutriTechBackOffice.Domain.Entities
     public class PlanAlimentacion
     {
         [FirestoreProperty]
-        public string Id { get; set; }
-
-        [FirestoreProperty]
         public string Nombre { get; set; }
 
         [FirestoreProperty]

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NutriTechBackOffice.Services.Users.Queries
 {
-    public class GetPatientsQuery: IRequest<List<User>>
+    public class GetPatientsQuery: IRequest<List<Paciente>>
     {
         public GetPatientsQuery()
         {

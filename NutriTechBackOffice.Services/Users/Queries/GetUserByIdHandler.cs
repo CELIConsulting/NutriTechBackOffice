@@ -28,7 +28,6 @@ namespace NutriTechBackOffice.Services.Users.Queries
                 Dictionary<string, object> user = existingUser.ToDictionary();
                 string json = JsonConvert.SerializeObject(user);
                 User newUser = JsonConvert.DeserializeObject<User>(json);
-                newUser.Id = existingUser.Exists != false ? existingUser.Id : null;
                 return newUser;
             }else
             {

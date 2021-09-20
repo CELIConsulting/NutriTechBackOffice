@@ -1,15 +1,13 @@
-import { PlanAsignado } from "./plan-asignado";
-import { Role } from "./role";
-
 export interface User {
-  id: string;
   nombre: string;
   apellido: string;
   email: string;
   password: string;
-  rol: Role;
-  planAsignado: PlanAsignado;
+  rol: string;
   lastUpdated: LastUpdated;
+  fechaNacimiento: Date;
+  telefonoContacto: string;
 }
-export interface LastUpdated {  
+
+export interface LastUpdated {
 }

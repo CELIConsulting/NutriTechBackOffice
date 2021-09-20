@@ -10,23 +10,22 @@ using System.Threading.Tasks;
 
 namespace NutriTechBackOffice.Services.Users.Queries
 {
-    public class GetPatientsQueryHandler :  IRequestHandler<GetPatientsQuery, List<User>>
+    public class GetPatientsQueryHandler :  IRequestHandler<GetPatientsQuery, List<Paciente>>
     {
         private CollectionReference _usersRef;
         private QuerySnapshot _patientsFound;
-        private List<User> _patients;
+        private List<Paciente> _patients;
 
         public GetPatientsQueryHandler(FirestoreDb firestore)
         {
-            _patients = new List<User>();
+            _patients = new List<Paciente>();
             _usersRef = firestore.Collection("Users");
         }
 
-        public async Task<List<User>> Handle(GetPatientsQuery request, CancellationToken cancellationToken)
+        public async Task<List<Paciente>> Handle(GetPatientsQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                //Obtener dentro de la collecion de usuarios, aquellos que tengan en Rol.Nombre el paciente
                 _patientsFound = await _usersRef.WhereEqualTo("Rol.Nombre", "Paciente").GetSnapshotAsync();
 
                 foreach (var document in _patientsFound)
@@ -36,8 +35,7 @@ namespace NutriTechBackOffice.Services.Users.Queries
                         Dictionary<string, object> patient = document.ToDictionary();
 
                         string patientJSON = JsonConvert.SerializeObject(patient);
-                        User newPatient = JsonConvert.DeserializeObject<User>(patientJSON);
-                        newPatient.Id = document.Id;
+                        Paciente newPatient = JsonConvert.DeserializeObject<Paciente>(patientJSON);
                         _patients.Add(newPatient);
                     }
 

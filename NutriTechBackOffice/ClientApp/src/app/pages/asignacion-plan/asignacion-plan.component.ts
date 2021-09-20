@@ -66,9 +66,6 @@ export class AsignacionPlanComponent implements OnInit {
   }
 
 
-  //TODO: Crear form de paciente
-  //TODO: Crear un paciente con los datos del form
-
   asignarPlan() {
     //Crear planAsignado en base al form
     let planAsignadoForm: PlanAsignado = ({
