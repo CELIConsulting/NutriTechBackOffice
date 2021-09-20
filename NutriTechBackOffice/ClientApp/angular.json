@@ -25,11 +25,10 @@
             ],
             "styles": [
               {
-                "input":"src/StyleNutriTech.scss"
+                "input": "src/StyleNutriTech.scss"
               },
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
-
             ],
             "scripts": []
           },
@@ -124,6 +123,10 @@
               "vendorChunk": false
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     },

@@ -31,7 +31,12 @@ import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
 import { MatDialogModule } from "@angular/material/dialog"
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { from } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -69,9 +74,14 @@ import { from } from 'rxjs';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireAnalyticsModule
   ],
   providers: [
+    AngularFirestore
   ],
   bootstrap: [AppComponent],
   entryComponents:[PopUpComponent],
