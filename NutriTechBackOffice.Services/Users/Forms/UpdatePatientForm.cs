@@ -1,27 +1,16 @@
-﻿using System;
+﻿using NutriTechBackOffice.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Google.Cloud.Firestore;
 
-namespace NutriTechBackOffice.Domain.Entities
+namespace NutriTechBackOffice.Services.Users.Forms
 {
-    [FirestoreData]
-    public class Paciente : User
+    public class UpdatePatientForm: InsertUserForm
     {
-        [FirestoreProperty]
         public float? Altura { get; set; }
-
-        [FirestoreProperty]
         public float? Peso { get; set; }
-
-        [FirestoreProperty]
         public float? MedidaCintura { get; set; }
-
-        [FirestoreProperty]
         public string TipoAlimentacion { get; set; }
-
-        [FirestoreProperty]
         public PlanAsignacion PlanAsignado { get; set; }
-
     }
 }

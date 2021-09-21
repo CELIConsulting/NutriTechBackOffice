@@ -12,5 +12,8 @@ namespace NutriTechBackOffice.Services.Users.Forms
         public string Email { get; set; }
         public string Password { get; set; }
         public string Rol { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+        public string Telefono { get; set; }
+
     }
 }

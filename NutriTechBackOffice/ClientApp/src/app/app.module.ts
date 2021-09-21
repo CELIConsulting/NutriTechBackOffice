@@ -36,7 +36,7 @@ import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard'
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/';
 import { environment } from 'src/environments/environment';
-
+import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +49,7 @@ import { environment } from 'src/environments/environment';
     LoginFormComponent,
     PopUpComponent,
     PlanFormComponent,
+    AsignacionPlanComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
