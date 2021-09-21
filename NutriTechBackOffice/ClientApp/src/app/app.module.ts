@@ -32,6 +32,11 @@ import { PopUpComponent } from './components/pop-up/pop-up.component';
 import { MatDialogModule } from "@angular/material/dialog"
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { from } from 'rxjs';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard'
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire/';
+import { environment } from 'src/environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -69,7 +74,10 @@ import { from } from 'rxjs';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireAuthGuardModule,
   ],
   providers: [
   ],

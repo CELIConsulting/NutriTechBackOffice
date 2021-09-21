@@ -6,7 +6,7 @@ import { FormUserComponent } from './pages/form-user/form-user.component';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { AppComponent } from './app.component';
-import { UserLoginGuard } from './user-login.guard';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard'
 
 const routes: Routes = [
   {
@@ -15,19 +15,19 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate: [UserLoginGuard],
+    canActivate: [AngularFireAuthGuard],
     component: HomeComponent
   
   },
   {
     path: 'user-form',
     component: FormUserComponent,
-    canActivate: [UserLoginGuard],
+    canActivate: [AngularFireAuthGuard],
   },
   {
     path: 'plan-form',
     component: PlanFormComponent,
-    canActivate: [UserLoginGuard],
+    canActivate: [AngularFireAuthGuard],
   },
 ]
 
