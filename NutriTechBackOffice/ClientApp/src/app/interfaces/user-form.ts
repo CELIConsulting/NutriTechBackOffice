@@ -7,5 +7,5 @@ export interface UserForm {
   Password: string;
   Rol: string;
   FechaNacimiento?: Date;
-  Telefono?: string;
+  Telefono: string;
 }
