@@ -7,6 +7,8 @@ export interface User {
   fechaNacimiento?: Date;
   telefono: string;
   lastUpdated: LastUpdated;
+  fechaNacimiento: Date;
+  telefonoContacto: string;
 }
 
 export interface LastUpdated {
