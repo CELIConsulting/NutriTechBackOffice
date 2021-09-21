@@ -17,11 +17,9 @@ namespace NutriTechBackOffice.Controllers
     public class RoleController : ControllerBase
     {
         public readonly IMediator _mediator;
-        private readonly FirestoreDb _firestore;
-        public RoleController(IMediator mediator, FirestoreDb firestore)
+        public RoleController(IMediator mediator)
         {
             _mediator = mediator;
-            _firestore = firestore;
         }
         // GET: api/<RoleController>
         [HttpGet]

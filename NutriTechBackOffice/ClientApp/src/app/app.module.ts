@@ -74,7 +74,7 @@ import { from } from 'rxjs';
   providers: [
   ],
   bootstrap: [AppComponent],
-  entryComponents:[PopUpComponent],
+  entryComponents: [PopUpComponent],
 
 })
 export class AppModule { }

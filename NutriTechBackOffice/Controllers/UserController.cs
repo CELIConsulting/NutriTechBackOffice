@@ -21,12 +21,10 @@ namespace NutriTechBackOffice.Controllers
     public class UserController : ControllerBase
     {
         public readonly IMediator _mediator;
-        private readonly FirestoreDb _firestore;
 
-        public UserController(IMediator mediator, FirestoreDb firestore)
+        public UserController(IMediator mediator)
         {
             _mediator = mediator;
-            _firestore = firestore;
         }
         // GET: api/<UserController>
         [HttpGet]
@@ -54,7 +52,7 @@ namespace NutriTechBackOffice.Controllers
             else
                 return Ok(result);
         }
-          
+
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
