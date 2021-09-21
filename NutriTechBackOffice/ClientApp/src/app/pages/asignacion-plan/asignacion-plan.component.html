@@ -26,16 +26,25 @@
               </mat-form-field>
             </div>
 
+            
+            <!--Visualizar plan actual del paciente-->
             <div class="col">
               <div *ngIf="pacienteSeleccionado">
-                <p>Plan Asignado: {{ pacienteSeleccionado.planAsignado?.planAlimentacion.nombre || "No hay un plan asignado"}}</p>
+                <p>
+                  Plan Asignado: <span *ngIf="pacienteSeleccionado.planAsignado?.planAlimentacion?.length;else noHayPlanAlimentacion">{{ pacienteSeleccionado.planAsignado?.planAlimentacion}}</span>
+                  <ng-template #noHayPlanAlimentacion>
+                    <span>No hay un plan cargado</span>
+                  </ng-template>
+                </p>
 
                 <!-- Mostrar las notas solamente si tiene un plan asignado -->
                 <p *ngIf="pacienteSeleccionado.planAsignado">
                   Notas adicionales:
-                  <span>{{pacienteSeleccionado.planAsignado.notasAdicionales}}</span>
+                  <span *ngIf="pacienteSeleccionado.planAsignado?.notasAdicionales?.length;else noHayNotas">{{pacienteSeleccionado.planAsignado?.notasAdicionales}}</span>
+                  <ng-template #noHayNotas>
+                    <span>No hay notas cargadas</span>
+                  </ng-template>
                 </p>
-
               </div>
 
               <p *ngIf="!pacienteSeleccionado">No se selecciono paciente</p>
@@ -109,6 +118,7 @@
             </div>
           </div>
         </section>
+
 
       </mat-card-content>
     </mat-card>

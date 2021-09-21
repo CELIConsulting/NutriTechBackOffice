@@ -1,5 +1,5 @@
 import { PlanAsignado } from "./plan-asignado";
-import { User } from "./user";
+import { LastUpdated, User } from "./user";
 
 export interface Paciente extends User {
   altura: number;
@@ -7,4 +7,5 @@ export interface Paciente extends User {
   medidaCintura: number;
   tipoAlimentacion: string;
   planAsignado: PlanAsignado;
+  lastAssignment: LastUpdated;
 }

@@ -47,6 +47,9 @@ export class FormUserComponent {
         'Email': this.userForm.value['email'],
         'Password': this.userForm.value['password'],
         'Rol': this.userForm.value['rol'].nombre,
+        //TODO: Agregar inputs al form
+        'FechaNacimiento': null, 
+        'Telefono': null,
       };
 
       this.usersService.addUser(user).subscribe(

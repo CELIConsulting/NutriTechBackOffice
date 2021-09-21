@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NutriTechBackOffice.Services.Users.Queries;
+using AutoMapper;
 
 namespace NutriTechBackOffice.Services.Users.Commands
 {
@@ -14,73 +15,36 @@ namespace NutriTechBackOffice.Services.Users.Commands
     {
         private CollectionReference usersRef;
         private WriteResult result;
-        public InserUserCommandHandler(FirestoreDb firestore)
+        private readonly IMapper _mapper;
+        public InserUserCommandHandler(FirestoreDb firestore, IMapper mapper)
         {
             usersRef = firestore.Collection("Users");
+            _mapper = mapper;
         }
         public async Task<User> Handle(InsertUserCommand request, CancellationToken cancellationToken)
         {
-            try
+            var user = new User();
+            switch (request.Usuario.Rol)
             {
-                if (request.Usuario.Rol == "Paciente")
-                {
-                    Paciente user = new Paciente()
-                    {
-                        Nombre = request.Usuario.Nombre,
-                        Apellido = request.Usuario.Apellido,
-                        Email = request.Usuario.Email,
-                        Password = request.Usuario.Password,
-                        Rol = request.Usuario.Rol,
-                    };
-                    result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
-                    if (result == null)
-                    {
-                        return null;
-                    }
-
-                    return user;
-                }
-                else if (request.Usuario.Rol == "Admin")
-                {
-                    Administrador user = new Administrador()
-                    {
-                        Nombre = request.Usuario.Nombre,
-                        Apellido = request.Usuario.Apellido,
-                        Email = request.Usuario.Email,
-                        Password = request.Usuario.Password,
-                        Rol = request.Usuario.Rol,
-                    };
-                    result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
-                    if (result == null)
-                    {
-                        return null;
-                    }
-
-                    return user;
-                }
-                else {
-                    Nutricionista user = new Nutricionista()
-                    {
-                        Nombre = request.Usuario.Nombre,
-                        Apellido = request.Usuario.Apellido,
-                        Email = request.Usuario.Email,
-                        Password = request.Usuario.Password,
-                        Rol = request.Usuario.Rol,
-                    };
-                    result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
-                    if (result == null)
-                    {
-                        return null;
-                    }
-
-                    return user;
-                }
-                   
+                case "Paciente":
+                    user = _mapper.Map<Paciente>(request.Usuario);
+                    break;
+                case "Admin":
+                    user = _mapper.Map<Administrador>(request.Usuario);
+                    break;
+                case "Nutricionista":
+                    user = _mapper.Map<Nutricionista>(request.Usuario);
+                    break;
+                default:
+                    //user = _mapper.Map<User>(request.Usuario);
+                    break;
             }
-            catch
-            {
-                throw;
-            }
+            result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
+            if (result == null)
+                return null;
+            return user;
+
+
         }
     }
 }

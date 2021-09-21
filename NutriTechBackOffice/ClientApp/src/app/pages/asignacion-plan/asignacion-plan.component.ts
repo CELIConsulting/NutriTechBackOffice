@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { timeStamp } from 'console';
-import { Timestamp } from 'rxjs/internal/operators/timestamp';
+import { MatDialog } from '@angular/material';
+import { PopUpComponent } from '../../components/pop-up/pop-up.component';
+import { Paciente } from '../../interfaces/paciente';
+import { PacienteForm } from '../../interfaces/paciente-form';
 import { PlanAlimentacion } from '../../interfaces/plan-alimentacion';
 import { PlanAsignado } from '../../interfaces/plan-asignado';
-import { User } from '../../interfaces/user';
 import { PlanesService } from '../../services/planes.service';
 import { UsersService } from '../../services/users.service';
 
@@ -19,16 +20,18 @@ export class AsignacionPlanComponent implements OnInit {
   modoEdicion = false;
 
   asignacionPlanForm: FormGroup;
-  pacientesRegistrados: Array<User> = [];
+  pacientesRegistrados: Array<Paciente> = [];
   planesDisponibles: Array<PlanAlimentacion> = [];
-  pacienteSeleccionado: User;
+  pacienteSeleccionado: Paciente;
+  pacienteFormActualizado: PacienteForm;
   planSeleccionado: string;
   notasAdicionales: string;
 
   constructor(
     private fb: FormBuilder,
     private planesService: PlanesService,
-    private usersService: UsersService) {
+    private usersService: UsersService,
+    private dialog: MatDialog) {
 
     this.obtenerPacientes();
     this.obtenerPlanes();
@@ -49,7 +52,6 @@ export class AsignacionPlanComponent implements OnInit {
       .subscribe(
         (planes) => {
           this.planesDisponibles = planes;
-          console.log("Se pudo obtener los planes");
         },
         (error) => { console.error("No se pudo obtener los planes disponibles") })
   }
@@ -60,40 +62,52 @@ export class AsignacionPlanComponent implements OnInit {
       .subscribe(
         (pacientes) => {
           this.pacientesRegistrados = pacientes;
-          console.log("Se pudo obtener los pacientes");
         },
         (error) => { console.error("No se pudo obtener a los pacientes registrados") });
   }
 
-
   asignarPlan() {
-    //Crear planAsignado en base al form
-    let planAsignadoForm: PlanAsignado = ({
+    this.pacienteFormActualizado = this.buildUpdatedPaciente();
+    this.updatePacienteData(this.pacienteFormActualizado);
+  }
+
+  private buildUpdatedPaciente(): PacienteForm {
+    return {
+      Apellido: this.pacienteSeleccionado.apellido,
+      Nombre: this.pacienteSeleccionado.nombre,
+      Email: this.pacienteSeleccionado.email,
+      Password: this.pacienteSeleccionado.password,
+      Rol: this.pacienteSeleccionado.rol,
+      Telefono: this.pacienteSeleccionado.telefono,
+      FechaNacimiento: this.pacienteSeleccionado.fechaNacimiento,
+      Altura: this.pacienteSeleccionado.altura,
+      Peso: this.pacienteSeleccionado.peso,
+      MedidaCintura: this.pacienteSeleccionado.medidaCintura,
+      TipoAlimentacion: this.pacienteSeleccionado.tipoAlimentacion,
+      PlanAsignado: this.getNewPlanAsignado()
+    }
+  }
+
+
+  private getNewPlanAsignado(): PlanAsignado {
+    return {
       planAlimentacion: this.asignacionPlanForm.controls["planesAlimentacion"].value,
       notasAdicionales: this.asignacionPlanForm.controls["notasAdicionales"].value,
       lastAsignacion: []
-    });
-
-    this.pacienteSeleccionado.planAsignado = planAsignadoForm;
-
-    //Actualizar data del paciente
-    this.usersService.updatePaciente(this.pacienteSeleccionado.email, null);
+    };
   }
 
+
   toggleFormAsignacion() {
-    setTimeout((() => {
-      this.modoEdicion = !this.modoEdicion;
-      this.loadPlanActual();
-    }), 100);
+    this.modoEdicion = !this.modoEdicion;
+    this.loadPlanActual();
   }
 
   private loadPlanActual() {
     let planActual: PlanAsignado = this.pacienteSeleccionado.planAsignado;
 
-    //Contras - Un get por cada vez que se seleccione al paciente
-
     if (planActual) {
-      this.planSeleccionado = planActual.planAlimentacion.nombre;
+      this.planSeleccionado = planActual.planAlimentacion;
       this.notasAdicionales = planActual.notasAdicionales;
     }
     else {
@@ -102,8 +116,13 @@ export class AsignacionPlanComponent implements OnInit {
     }
   }
 
-  private updatePacienteData(paciente: User) {
-
+  updatePacienteData(pacienteForm: PacienteForm) {
+    this.usersService.updatePaciente(this.pacienteSeleccionado.email, pacienteForm).subscribe
+      (
+        (pacienteOK) => { this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue asignado al paciente correctamente." } }); }
+        ,
+        (error) => { this.dialog.open(PopUpComponent, { data: { title: "Oops!", message: "No se pudo asignar un plan al paciente." } }); }
+      );
   }
 }
 

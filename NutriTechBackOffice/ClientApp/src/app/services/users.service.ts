@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { UserForm } from '../interfaces/user-form';
 import { environment as env } from 'src/environments/environment';
 import { User } from '../interfaces/user';
+import { Paciente } from '../interfaces/paciente';
+import { PacienteForm } from '../interfaces/paciente-form';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +25,13 @@ export class UsersService {
   }
 
   //GET: Obtener los usuarios que tengan rol de paciente
-  getPatients(): Observable<Array<User>> {
-    return this.http.get<Array<User>>(`${env.apiBaseUrl}/User/Patients/`)
+  getPatients(): Observable<Array<Paciente>> {
+    return this.http.get<Array<Paciente>>(`${env.apiBaseUrl}/User/Patients/`)
   }
 
   //PUT: Actualizar la información del paciente
-  updatePaciente(email:string, paciente: UserForm) {
-    return this.http.put(`${env.apiBaseUrl}/User/${email}`, paciente);
+  updatePaciente(email:string, paciente: PacienteForm): Observable<Paciente> {
+    return this.http.put<Paciente>(`${env.apiBaseUrl}/User/Patients/${email}`, paciente);
   }
 
 }

@@ -26,7 +26,7 @@ namespace NutriTechBackOffice.Services.Users.Queries
         {
             try
             {
-                _patientsFound = await _usersRef.WhereEqualTo("Rol.Nombre", "Paciente").GetSnapshotAsync();
+                _patientsFound = await _usersRef.WhereEqualTo("Rol", "Paciente").GetSnapshotAsync();
 
                 foreach (var document in _patientsFound)
                 {

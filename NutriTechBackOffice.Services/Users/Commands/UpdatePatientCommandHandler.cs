@@ -1,4 +1,5 @@
-﻿using Google.Cloud.Firestore;
+﻿using AutoMapper;
+using Google.Cloud.Firestore;
 using MediatR;
 using Newtonsoft.Json;
 using NutriTechBackOffice.Domain.Entities;
@@ -13,55 +14,28 @@ namespace NutriTechBackOffice.Services.Users.Commands
 {
     public class UpdatePatientCommandHandler : IRequestHandler<UpdatePatientCommand, Paciente>
     {
-        private CollectionReference patientsRef;
+        private CollectionReference _patientsRef;
         private WriteResult result;
-        public UpdatePatientCommandHandler(FirestoreDb firestore)
+        private IMapper _mapper;
+
+        public UpdatePatientCommandHandler(FirestoreDb firestore, IMapper mapper)
         {
-            patientsRef = firestore.Collection("Users");
+            _patientsRef = firestore.Collection("Users");
+            _mapper = mapper;
         }
 
         public async Task<Paciente> Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
         {
-            var userWithMail = await patientsRef.Document(request.Email).GetSnapshotAsync();
+            var userWithMail = await _patientsRef.Document(request.Email).GetSnapshotAsync();
 
             if (userWithMail.Exists)
             {
-                #region Get existing user
-                Dictionary<string, object> user = userWithMail.ToDictionary();
-                string json = JsonConvert.SerializeObject(user);
-                Paciente existingUser = JsonConvert.DeserializeObject<Paciente>(json);
-                #endregion
-
-                if (existingUser.Email.Equals(request.Email))
+                if (GetExistingUser(userWithMail).Email.Equals(request.Email))
                 {
                     try
                     {
-
-                        //TODO: Cambiar por automapper
-                        #region Crear paciente en base al form
-
-                        Paciente pacienteActualizado = new Paciente()
-                        {
-                            Nombre = request.Paciente.Nombre,
-                            Apellido = request.Paciente.Apellido,
-                            Email = request.Paciente.Email,
-                            Password = request.Paciente.Password,
-                            Rol = request.Paciente.Rol,
-                            Telefono = request.Paciente.Telefono,
-                            FechaNacimiento = request.Paciente.FechaNacimiento,
-                            Altura = request.Paciente.Altura,
-                            Peso = request.Paciente.Peso,
-                            MedidaCintura = request.Paciente.MedidaCintura,
-                            TipoAlimentacion = request.Paciente.TipoAlimentacion,
-                            PlanAsignado = request.Paciente.PlanAsignado
-                        };
-                        #endregion
-
-                        #region Actualizar usuario en firestore
-                        string jsonPaciente = JsonConvert.SerializeObject(pacienteActualizado);
-                        var firestorePaciente = JsonConvert.DeserializeObject<ExpandoObject>(jsonPaciente);
-                        result = await this.patientsRef.Document(request.Paciente.Email).UpdateAsync(firestorePaciente);
-                        #endregion
+                        Paciente pacienteActualizado = _mapper.Map<Paciente>(request.Paciente);
+                        result = await UpdateUserInFirestoreDB(pacienteActualizado);
 
                         if (result != null)
                         {
@@ -78,6 +52,19 @@ namespace NutriTechBackOffice.Services.Users.Commands
             }
 
             return null;
+        }
+
+        private Paciente GetExistingUser(DocumentSnapshot userWithMail) {
+            Dictionary<string, object> user = userWithMail.ToDictionary();
+            string json = JsonConvert.SerializeObject(user);
+            return JsonConvert.DeserializeObject<Paciente>(json);
+        }
+
+        private async Task<WriteResult> UpdateUserInFirestoreDB(Paciente paciente) 
+        {
+            string jsonPaciente = JsonConvert.SerializeObject(paciente);
+            var firestorePaciente = JsonConvert.DeserializeObject<ExpandoObject>(jsonPaciente);
+            return await this._patientsRef.Document(paciente.Email).UpdateAsync(firestorePaciente);
         }
     }
 }
