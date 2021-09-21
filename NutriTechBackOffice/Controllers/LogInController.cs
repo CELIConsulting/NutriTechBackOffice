@@ -19,6 +19,7 @@ namespace NutriTechBackOffice.Controllers
     {
         public readonly IMediator _mediator;
         public readonly FirebaseAuth _firebaseAuth;
+
         public LogInController(IMediator mediator, FirebaseAuth firebaseAuth)
         {
             _mediator = mediator;
