@@ -31,7 +31,7 @@ import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
 import { MatDialogModule } from "@angular/material/dialog"
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
-import { from } from 'rxjs';
+import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +44,7 @@ import { from } from 'rxjs';
     LoginFormComponent,
     PopUpComponent,
     PlanFormComponent,
+    AsignacionPlanComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -9,6 +9,6 @@ namespace NutriTechBackOffice.Domain.Entities
     public class Nutricionista:User
     {
         [FirestoreProperty]
-        int? Matricula { get; set; }
+        public int? Matricula { get; set; }
     }
 }

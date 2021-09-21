@@ -31,6 +31,7 @@ namespace NutriTechBackOffice.Controllers
         public async Task<IActionResult> GetUsers() =>
             Ok(await _mediator.Send(new GetUsersQuery()));
 
+
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -55,12 +56,23 @@ namespace NutriTechBackOffice.Controllers
           
 
         // PUT api/<UserController>/5
-        [HttpPut("{id}")]
+        [HttpPut("Patients/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> Put(int id, [FromBody] UpdateUserForm userForm) =>
-            Ok(await _mediator.Send(new UpdateUserCommand(userForm)));
+        public async Task<IActionResult> PutAsync(string id, [FromBody] UpdatePatientForm patientForm) =>
+            Ok(await _mediator.Send(new UpdatePatientCommand(id, patientForm)));
+
+
+
+        // GET api/<UserController>/Patients/
+        [HttpGet("Patients")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> GetPatients() =>
+            Ok(await _mediator.Send(new GetPatientsQuery()));
+
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
