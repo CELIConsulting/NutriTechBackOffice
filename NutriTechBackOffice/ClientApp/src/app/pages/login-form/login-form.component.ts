@@ -4,6 +4,7 @@ import { UsersService } from '../../services/users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LogInService } from '../../services/log-in.service';
 
 
 @Component({
@@ -18,24 +19,18 @@ export class LoginFormComponent {
   });
 
 
-  constructor(private fb: FormBuilder, private userService: UsersService, public dialog: MatDialog, private router: Router) { }
+  constructor(private fb: FormBuilder, private logInService: LogInService, public dialog: MatDialog, private router: Router) { }
 
 
   onSubmit() {
-    this.userService.getUserById(this.loginForm.get('email').value).subscribe(
+    this.logInService.authenticate({ 'Email': this.loginForm.get('email').value, 'Password': this.loginForm.get('password').value }).subscribe(
       data => {
-        if (data.password == this.loginForm.get('password').value) {
-          sessionStorage.setItem("usuarioOk", "Y");
-          this.router.navigate(['/home'])
-        }
-        else {
-         
-          this.dialog.open(PopUpComponent, { data: { title:"Ups hubo un error!",message: "Las credenciales son invalidas."}});
-         
-        }
+        sessionStorage.setItem("sessionToken", data.headers.get("authorization"));
+        this.router.navigate(['/home'])
       },
       err => {
-        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "El usuario no esta registrado, hable con su nutricionista " } });      }
+        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "Las credenciales son invalidas." } });
+      }
     )
   }
 }

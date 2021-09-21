@@ -12,6 +12,10 @@ using System.Reflection;
 using Google.Cloud.Firestore;
 using AutoMapper;
 using NutriTechBackOffice.Services.Users.Automapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using FirebaseAdmin.Auth;
+using FirebaseAdmin;
 
 namespace NutriTechBackOffice
 {
@@ -38,10 +42,24 @@ namespace NutriTechBackOffice
             AddSwagger(services);
             services.AddSingleton<FirestoreDb>(
                 provider => FirestoreDb.Create(GetFirestoreProjectId()));
+            services.AddSingleton<FirebaseAuth>(FirebaseAuth.GetAuth(FirebaseApp.Create(GetFirestoreProjectId())));
 
-           services.AddAutoMapper(typeof(ConfigurationMapperProfile));
+            services.AddAutoMapper(typeof(ConfigurationMapperProfile));
             services.AddControllersWithViews();
-
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = $"https://securetoken.google.com/{GetFirestoreProjectId()}";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = $"https://securetoken.google.com/{GetFirestoreProjectId()}",
+                        ValidateAudience = true,
+                        ValidAudience = GetFirestoreProjectId(),
+                        ValidateLifetime = true
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +89,8 @@ namespace NutriTechBackOffice
             }
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
