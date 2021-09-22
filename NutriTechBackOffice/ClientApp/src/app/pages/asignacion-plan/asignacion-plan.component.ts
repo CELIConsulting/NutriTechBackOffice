@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 import { Paciente } from '../../interfaces/paciente';
 import { PacienteForm } from '../../interfaces/paciente-form';
@@ -31,7 +32,8 @@ export class AsignacionPlanComponent implements OnInit {
     private fb: FormBuilder,
     private planesService: PlanesService,
     private usersService: UsersService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private router: Router) {
 
     this.obtenerPacientes();
     this.obtenerPlanes();
@@ -39,11 +41,13 @@ export class AsignacionPlanComponent implements OnInit {
 
   ngOnInit() {
     this.asignacionPlanForm = this.fb.group({
-      pacientes: [null, Validators.required],
+      pacientes: [{value: '', disabled: this.modoEdicion}, Validators.required],
       planesAlimentacion: [],
       notasAdicionales: [null, Validators.maxLength(this.maxLengthNotas)],
     });
 
+    //Fix: Firing mat-error message with notasAdicionales when typing
+    this.asignacionPlanForm.controls['notasAdicionales'].markAsTouched();
   }
 
   obtenerPlanes() {
@@ -69,6 +73,12 @@ export class AsignacionPlanComponent implements OnInit {
   asignarPlan() {
     this.pacienteFormActualizado = this.buildUpdatedPaciente();
     this.updatePacienteData(this.pacienteFormActualizado);
+  }
+
+  private refreshPantalla() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/asignacion-plan']);
+    }); 
   }
 
   private buildUpdatedPaciente(): PacienteForm {
@@ -119,11 +129,15 @@ export class AsignacionPlanComponent implements OnInit {
   updatePacienteData(pacienteForm: PacienteForm) {
     this.usersService.updatePaciente(this.pacienteSeleccionado.email, pacienteForm).subscribe
       (
-        (pacienteOK) => { this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue asignado al paciente correctamente." } }); }
+        (pacienteOK) => {
+          this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue asignado al paciente correctamente." } });
+          this.refreshPantalla();
+        }
         ,
         (error) => { this.dialog.open(PopUpComponent, { data: { title: "Oops!", message: "No se pudo asignar un plan al paciente." } }); }
       );
   }
+
 }
 
 

@@ -19,14 +19,14 @@
                 <mat-select formControlName="pacientes" [(ngModel)]="pacienteSeleccionado" [disabled]="modoEdicion" required>
                   <mat-option [value]="null">-- Seleccione un paciente --</mat-option>
                   <mat-option *ngFor="let paciente of pacientesRegistrados" [value]="paciente">
-                    {{paciente.apellido}}, {{paciente.nombre}}
+                    {{paciente.apellido | uppercase }}, {{paciente.nombre | uppercase}}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="asignacionPlanForm.controls['pacientes'].hasError('required')">Por favor elija un paciente</mat-error>
               </mat-form-field>
             </div>
 
-            
+
             <!--Visualizar plan actual del paciente-->
             <div class="col">
               <div *ngIf="pacienteSeleccionado">
@@ -101,11 +101,13 @@
           <section class="row">
             <div class="col">
               <mat-form-field class="mid-width">
-                <textarea matInput rows="10" [(ngModel)]="notasAdicionales" placeholder="Ingrese las indicaciones al paciente..." formControlName="notasAdicionales"></textarea>
+                <textarea matInput rows="5" [(ngModel)]="notasAdicionales" placeholder="Ingrese las indicaciones al paciente..." formControlName="notasAdicionales"></textarea>
+                <mat-error *ngIf="asignacionPlanForm.controls['notasAdicionales'].hasError('maxlength')">
+                  Los comentarios no pueden superar los <strong>{{maxLengthNotas}} caracteres</strong>.
+                </mat-error>
               </mat-form-field>
-              <mat-error *ngIf="asignacionPlanForm.controls['notasAdicionales'].hasError('maxLength')">
-                Los comentarios no pueden superar los {{maxLengthNotas}} caracteres.
-              </mat-error>
+
+              <p *ngIf="notasAdicionales.length <= maxLengthNotas">Caracteres restantes: {{maxLengthNotas - notasAdicionales?.length}}</p>
             </div>
           </section>
 
