@@ -22,7 +22,7 @@ namespace NutriTechBackOffice.Services.Users.Commands
         {
             usersRef = firestore.Collection("Users");
             _mapper = mapper;
-            _firebaseAuth = firebaseAuth
+            _firebaseAuth = firebaseAuth;
         }
         public async Task<User> Handle(InsertUserCommand request, CancellationToken cancellationToken)
         {
@@ -48,6 +48,7 @@ namespace NutriTechBackOffice.Services.Users.Commands
                 Email = "user@example.com",
                 EmailVerified = false,
                 PhoneNumber = "+11234567890",
+
                 Password = "secretPassword",
                 DisplayName = "John Doe",
                 PhotoUrl = "http://www.example.com/12345678/photo.png",
