@@ -20,7 +20,7 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "GOOGLE_APPLICATION_CREDENTIALS": "/home/ihribernik/.ssh/service-account-file.json",
+                "GOOGLE_APPLICATION_CREDENTIALS": "%USERPROFILE%\\.ssh\\service-account-file.json",
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
