@@ -43,18 +43,7 @@ namespace NutriTechBackOffice.Services.Users.Commands
                     break;
             }
             result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
-            UserRecordArgs args = new UserRecordArgs()
-            {
-                Email = "user@example.com",
-                EmailVerified = false,
-                PhoneNumber = "+11234567890",
-
-                Password = "secretPassword",
-                DisplayName = "John Doe",
-                PhotoUrl = "http://www.example.com/12345678/photo.png",
-                Disabled = false,
-            };
-
+            var args = _mapper.Map<UserRecordArgs>(user);
             UserRecord userRecord = await this._firebaseAuth.CreateUserAsync(args);
             if (result == null)
                 return null;

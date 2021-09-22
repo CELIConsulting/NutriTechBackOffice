@@ -25,13 +25,15 @@ export class LoginFormComponent {
 
 
   onSubmit() {
-    this.auth.auth.signInWithEmailAndPassword(this.loginForm.get('email').value, this.loginForm.get('password').value)
-      .then((user) => {
-        sessionStorage.setItem("usuarioOk", "Y");
-        this.router.navigate(['/home']);
-      })
-      .catch(err => {
-        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "Las credenciales son invalidas." } });
-      });
+    new Promise((resolve, reject) => {
+      this.auth.auth.signInWithEmailAndPassword(this.loginForm.get('email').value, this.loginForm.get('password').value)
+        .then((user) => {
+          this.router.navigate(['/home']);
+        })
+        .catch(err => {
+          this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "Las credenciales son invalidas." } });
+        });
+    });
+
   }
 }

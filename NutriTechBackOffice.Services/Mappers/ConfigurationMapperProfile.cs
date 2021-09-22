@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
+using FirebaseAdmin.Auth;
 using NutriTechBackOffice.Domain.Entities;
 using NutriTechBackOffice.Services.Planes.Forms;
 using NutriTechBackOffice.Services.Users.Forms;
@@ -69,7 +70,12 @@ namespace NutriTechBackOffice.Services.Users.Automapper
                 .ForMember(dest => dest.Merienda, opt => opt.MapFrom(src => src.Merienda));
 
             CreateMap<User, UserRecordArgs>()
-                .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre));
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
+                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Telefono))
+                .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.Nombre))
+                .ForMember(dest => dest.Disabled, opt => opt.MapFrom(src => false))
+                ;
 
         }
     }

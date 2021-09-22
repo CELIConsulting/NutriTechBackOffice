@@ -1,5 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NutriTechBackOffice.Services.Planes.Commands;
@@ -14,6 +15,7 @@ namespace NutriTechBackOffice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PlanController : ControllerBase
     {
         private readonly IMediator _mediator;
