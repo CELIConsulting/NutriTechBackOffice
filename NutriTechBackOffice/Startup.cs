@@ -43,7 +43,6 @@ namespace NutriTechBackOffice
             services.AddSingleton<FirestoreDb>(
                 provider => FirestoreDb.Create(GetFirestoreProjectId()));
             services.AddSingleton<FirebaseAuth>(FirebaseAuth.GetAuth(FirebaseApp.Create(GetFirestoreProjectId())));
-
             services.AddAutoMapper(typeof(ConfigurationMapperProfile));
             services.AddControllersWithViews();
             services

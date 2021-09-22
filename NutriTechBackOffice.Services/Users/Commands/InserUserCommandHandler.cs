@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NutriTechBackOffice.Services.Users.Queries;
 using AutoMapper;
+using FirebaseAdmin.Auth;
 
 namespace NutriTechBackOffice.Services.Users.Commands
 {
@@ -16,7 +17,7 @@ namespace NutriTechBackOffice.Services.Users.Commands
         private CollectionReference usersRef;
         private WriteResult result;
         private readonly IMapper _mapper;
-        public InserUserCommandHandler(FirestoreDb firestore, IMapper mapper)
+        public InserUserCommandHandler(FirestoreDb firestore, IMapper mapper, FirebaseAuth firebaseAuth)
         {
             usersRef = firestore.Collection("Users");
             _mapper = mapper;
