@@ -38,6 +38,7 @@ import { AngularFireModule } from '@angular/fire/';
 import { environment } from 'src/environments/environment';
 import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,9 +77,9 @@ import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan
     MatRadioModule,
     ReactiveFormsModule,
     MatDialogModule,
-    AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
   ],
