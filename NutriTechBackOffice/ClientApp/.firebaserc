@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "nutritechistea-d3f24": {
+      "hosting": {
+        "NutriTechBackOffice": [
+          "nutritechistea-d3f24"
+        ]
+      }
+    }
+  }
+}
