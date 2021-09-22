@@ -19,7 +19,6 @@ const routes: Routes = [
     path: 'home',
     canActivate: [AngularFireAuthGuard],
     component: HomeComponent
-  
   },
   {
     path: 'user-form',
@@ -34,7 +33,7 @@ const routes: Routes = [
   {
     path: 'asignacion-plan',
     component: AsignacionPlanComponent,
-    canActivate: [UserLoginGuard],
+    canActivate: [AngularFireAuthGuard],
   },
 ]
 

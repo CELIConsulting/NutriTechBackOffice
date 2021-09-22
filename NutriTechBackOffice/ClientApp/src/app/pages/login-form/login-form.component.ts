@@ -4,7 +4,9 @@ import { UsersService } from '../../services/users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LogInService } from '../../services/log-in.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+
 
 
 @Component({
@@ -19,18 +21,25 @@ export class LoginFormComponent {
   });
 
 
-  constructor(private fb: FormBuilder, private logInService: LogInService, public dialog: MatDialog, private router: Router) { }
+  constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router, public auth: AngularFireAuth) { }
 
 
   onSubmit() {
-    this.logInService.authenticate({ 'Email': this.loginForm.get('email').value, 'Password': this.loginForm.get('password').value }).subscribe(
-      data => {
-        sessionStorage.setItem("sessionToken", data.headers.get("authorization"));
-        this.router.navigate(['/home'])
-      },
-      err => {
+    // this.logInService.authenticate({ 'Email': this.loginForm.get('email').value, 'Password': this.loginForm.get('password').value }).subscribe(
+    //   data => {
+    //     sessionStorage.setItem("sessionToken", data.headers.get("authorization"));
+    //     this.router.navigate(['/home'])
+    //   },
+    //   err => {
+    //     this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "Las credenciales son invalidas." } });
+    //   }
+    // )
+
+    this.auth.auth.signInWithEmailAndPassword(this.loginForm.get('email').value, this.loginForm.get('password').value)
+      .then((user) => { sessionStorage.setItem("usuarioOk", "Y"), this.router.navigate(['/home']); })
+      .catch(err => {
         this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "Las credenciales son invalidas." } });
-      }
-    )
+      });
+
   }
 }
