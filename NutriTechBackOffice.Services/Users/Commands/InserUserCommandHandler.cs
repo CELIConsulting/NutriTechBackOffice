@@ -17,10 +17,12 @@ namespace NutriTechBackOffice.Services.Users.Commands
         private CollectionReference usersRef;
         private WriteResult result;
         private readonly IMapper _mapper;
+        private readonly FirebaseAuth _firebaseAuth;
         public InserUserCommandHandler(FirestoreDb firestore, IMapper mapper, FirebaseAuth firebaseAuth)
         {
             usersRef = firestore.Collection("Users");
             _mapper = mapper;
+            _firebaseAuth = firebaseAuth
         }
         public async Task<User> Handle(InsertUserCommand request, CancellationToken cancellationToken)
         {
@@ -41,6 +43,18 @@ namespace NutriTechBackOffice.Services.Users.Commands
                     break;
             }
             result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
+            UserRecordArgs args = new UserRecordArgs()
+            {
+                Email = "user@example.com",
+                EmailVerified = false,
+                PhoneNumber = "+11234567890",
+                Password = "secretPassword",
+                DisplayName = "John Doe",
+                PhotoUrl = "http://www.example.com/12345678/photo.png",
+                Disabled = false,
+            };
+
+            UserRecord userRecord = await this._firebaseAuth.CreateUserAsync(args);
             if (result == null)
                 return null;
             return user;
