@@ -17,6 +17,7 @@ using NutriTechBackOffice.Services.Users.Commands;
 using NutriTechBackOffice.Services.Users.Forms;
 using Google.Cloud.Firestore;
 using AutoMapper;
+using FirebaseAdmin.Auth;
 
 namespace NutriTechBackOffice.Test.Controllers
 {
@@ -25,6 +26,7 @@ namespace NutriTechBackOffice.Test.Controllers
         private readonly FirestoreTestFixture _fixture;
         private readonly Mock<IMediator> mediatrMock;
         private readonly Mock<FirestoreDb> firebaseMock;
+        private readonly Mock<FirebaseAuth> fireauthMock;
         private GetUsersQuery _queryUser;
         private GetUsersHandler _getUsersHandler;
         private readonly Mapper _mapper;
@@ -34,6 +36,7 @@ namespace NutriTechBackOffice.Test.Controllers
             this._fixture = fixture;
             this.mediatrMock = new Mock<IMediator>();
             this.firebaseMock = new Mock<FirestoreDb>();
+            this.fireauthMock = new Mock<FirebaseAuth>();
             _queryUser = new GetUsersQuery();
             _getUsersHandler = new GetUsersHandler(firebaseMock.Object);
         }
@@ -63,7 +66,7 @@ namespace NutriTechBackOffice.Test.Controllers
             };
             InsertUserCommand _insertComand = new InsertUserCommand(insertForm);
             CancellationToken _cancellationToken = new CancellationToken();
-            InserUserCommandHandler _insertUser = new InserUserCommandHandler(this.firebaseMock.Object,_mapper);
+            InserUserCommandHandler _insertUser = new InserUserCommandHandler(this.firebaseMock.Object,_mapper, fireauthMock.Object);
             var result = await _insertUser.Handle(_insertComand, _cancellationToken);
             result.Should().NotBeNull();
         }

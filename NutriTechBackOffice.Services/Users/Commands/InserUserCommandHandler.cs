@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NutriTechBackOffice.Services.Users.Queries;
 using AutoMapper;
+using FirebaseAdmin.Auth;
 
 namespace NutriTechBackOffice.Services.Users.Commands
 {
@@ -16,10 +17,12 @@ namespace NutriTechBackOffice.Services.Users.Commands
         private CollectionReference usersRef;
         private WriteResult result;
         private readonly IMapper _mapper;
-        public InserUserCommandHandler(FirestoreDb firestore, IMapper mapper)
+        private readonly FirebaseAuth _firebaseAuth;
+        public InserUserCommandHandler(FirestoreDb firestore, IMapper mapper, FirebaseAuth firebaseAuth)
         {
             usersRef = firestore.Collection("Users");
             _mapper = mapper;
+            _firebaseAuth = firebaseAuth;
         }
         public async Task<User> Handle(InsertUserCommand request, CancellationToken cancellationToken)
         {
@@ -40,6 +43,8 @@ namespace NutriTechBackOffice.Services.Users.Commands
                     break;
             }
             result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
+            var args = _mapper.Map<UserRecordArgs>(user);
+            UserRecord userRecord = await this._firebaseAuth.CreateUserAsync(args);
             if (result == null)
                 return null;
             return user;

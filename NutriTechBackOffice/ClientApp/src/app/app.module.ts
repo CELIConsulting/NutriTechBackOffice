@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatIconModule } from '@angular/material/icon'
-import { MatGridListModule } from '@angular/material/grid-list'
-import { MatButtonModule } from '@angular/material/button'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -29,9 +29,15 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
-import { MatDialogModule } from "@angular/material/dialog"
+import { MatDialogModule } from "@angular/material/dialog";
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
+import { from } from 'rxjs';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire/';
+import { environment } from 'src/environments/environment';
 import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
+
 
 @NgModule({
   declarations: [
@@ -70,12 +76,15 @@ import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    AngularFireAuthModule,
+    AngularFireAuthGuardModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
   ],
   bootstrap: [AppComponent],
-  entryComponents:[PopUpComponent],
+  entryComponents: [PopUpComponent],
 
 })
 export class AppModule { }

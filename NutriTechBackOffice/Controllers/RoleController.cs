@@ -1,5 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NutriTechBackOffice.Services.Roles.Commands;
@@ -14,14 +15,13 @@ namespace NutriTechBackOffice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoleController : ControllerBase
     {
         public readonly IMediator _mediator;
-        private readonly FirestoreDb _firestore;
-        public RoleController(IMediator mediator, FirestoreDb firestore)
+        public RoleController(IMediator mediator)
         {
             _mediator = mediator;
-            _firestore = firestore;
         }
         // GET: api/<RoleController>
         [HttpGet]

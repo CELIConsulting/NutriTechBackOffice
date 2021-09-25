@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
+using FirebaseAdmin.Auth;
 using NutriTechBackOffice.Domain.Entities;
 using NutriTechBackOffice.Services.Planes.Forms;
 using NutriTechBackOffice.Services.Users.Forms;
@@ -48,10 +49,10 @@ namespace NutriTechBackOffice.Services.Users.Automapper
 
             //Nutricionista
             CreateMap<InsertUserForm, Nutricionista>()
-           .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre))
-           .ForMember(dest => dest.Apellido, opt => opt.MapFrom(src => src.Apellido))
-           .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-           .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
+                .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre))
+                .ForMember(dest => dest.Apellido, opt => opt.MapFrom(src => src.Apellido))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.Rol, opt => opt.MapFrom(src => src.Rol))
                 .ForMember(dest => dest.FechaNacimiento, opt => opt.MapFrom(src => src.FechaNacimiento))
                 .ForMember(dest => dest.Telefono, opt => opt.MapFrom(src => src.Telefono));
@@ -68,6 +69,13 @@ namespace NutriTechBackOffice.Services.Users.Automapper
                 .ForMember(dest => dest.Desayuno, opt => opt.MapFrom(src => src.Desayuno))
                 .ForMember(dest => dest.Merienda, opt => opt.MapFrom(src => src.Merienda));
 
+            CreateMap<User, UserRecordArgs>()
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
+                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Telefono))
+                .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.Nombre))
+                .ForMember(dest => dest.Disabled, opt => opt.MapFrom(src => false))
+                ;
 
         }
     }

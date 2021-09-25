@@ -6,8 +6,12 @@ import { FormUserComponent } from './pages/form-user/form-user.component';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { AppComponent } from './app.component';
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { UserLoginGuard } from './user-login.guard';
 import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
+
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo([""]);
 
 const routes: Routes = [
   {
@@ -16,24 +20,27 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate: [UserLoginGuard],
-    component: HomeComponent
-  
+    component: HomeComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe:  redirectUnauthorizedToLogin},
   },
   {
     path: 'user-form',
     component: FormUserComponent,
-    canActivate: [UserLoginGuard],
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe:  redirectUnauthorizedToLogin},
   },
   {
     path: 'plan-form',
     component: PlanFormComponent,
-    canActivate: [UserLoginGuard],
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe:  redirectUnauthorizedToLogin},
   },
   {
     path: 'asignacion-plan',
     component: AsignacionPlanComponent,
-    canActivate: [UserLoginGuard],
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe:  redirectUnauthorizedToLogin},
   },
 ]
 
