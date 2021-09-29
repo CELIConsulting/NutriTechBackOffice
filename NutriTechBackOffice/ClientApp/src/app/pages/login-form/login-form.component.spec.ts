@@ -23,7 +23,7 @@ describe('LoginFormComponent', () => {
         MatCardModule,
         MatInputModule,
         MatRadioModule,
-        MatSelectModule,
+        MatSelectModule
       ]
     }).compileComponents();
   }));
