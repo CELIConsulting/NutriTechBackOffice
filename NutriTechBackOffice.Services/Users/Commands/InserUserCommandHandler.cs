@@ -42,14 +42,19 @@ namespace NutriTechBackOffice.Services.Users.Commands
                     //user = _mapper.Map<User>(request.Usuario);
                     break;
             }
-            result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
-            var args = _mapper.Map<UserRecordArgs>(user);
-            UserRecord userRecord = await this._firebaseAuth.CreateUserAsync(args);
-            if (result == null)
+            try
+            {
+                var args = _mapper.Map<UserRecordArgs>(user);
+                UserRecord userRecord = await this._firebaseAuth.CreateUserAsync(args);
+                result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
+                if (result == null)
+                    return null;
+                return user;
+            }
+            catch (Exception)
+            {
                 return null;
-            return user;
-
-
+            }
         }
     }
 }

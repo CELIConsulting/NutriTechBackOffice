@@ -75,11 +75,17 @@ namespace NutriTechBackOffice.Controllers
 
 
         // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{email}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        public void Delete(int id) =>
-            Ok();
+        public async Task<IActionResult> Delete(string email)
+        {
+            var result = await _mediator.Send(new DeleteUserCommand( email));
+            if (result == false)
+                return BadRequest();
+            else
+                return Ok();
+        }
     }
 }

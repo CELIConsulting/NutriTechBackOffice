@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { UserLoginGuard } from './user-login.guard';
 import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
+import { ListadoUsuariosComponent } from './pages/listado-usuarios/listado-usuarios.component';
+import { ActivatedRoute, Params } from '@angular/router';
+import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo([""]);
@@ -42,6 +45,21 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe:  redirectUnauthorizedToLogin},
   },
+
+  {
+    path: 'listado-usuarios',
+    component: ListadoUsuariosComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+
+  {
+    path: 'modificar-usuarios/:email',
+    component: ModificarUsuariosComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+
 ]
 
 @NgModule({
