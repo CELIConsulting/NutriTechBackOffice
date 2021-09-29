@@ -37,6 +37,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/';
 import { environment } from 'src/environments/environment';
 import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
+import { ListadoUsuariosComponent } from './pages/listado-usuarios/listado-usuarios.component';
+import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan
     PopUpComponent,
     PlanFormComponent,
     AsignacionPlanComponent,
+    ListadoUsuariosComponent,
+    ModificarUsuariosComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
