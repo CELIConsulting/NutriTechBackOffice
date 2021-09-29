@@ -4,7 +4,7 @@
 
 .sidenav {
   width: 200px;
-  background-color: #8BC34A;
+  background-color: #558B2F;
 }
 
 .sidenav .mat-toolbar {
@@ -15,9 +15,28 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  color: #437023;
+}
+
+.colorToolbar{
+  color:#558B2F;
 }
 
 
 .active-list-item {
-  color: #558B2F;
+  color: #b0ff8f;
+}
+
+.img-center{
+  position: absolute;
+  top: 35px;
+  left: 100px;
+  transform: translate(-50%, -50%);
+}
+
+.font-family 
+{
+  font-family:'Bonheur Royale', cursive;
+  font-size: 58px;
+  margin: 0 auto;
 }

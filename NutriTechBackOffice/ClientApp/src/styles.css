@@ -71,3 +71,25 @@ hr {
 .mb-2rem {
   margin-bottom: 2rem;
 }
+
+.img-div-center{
+  height: 800px;
+  position: relative;
+}
+.img-centro-vert-hor{
+  width: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fondoform {
+  background-image: url(assets/img/35767-comida.jpg);
+  background-size: 100%;
+}
+
+
+
+
+

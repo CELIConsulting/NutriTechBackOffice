@@ -3,12 +3,12 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item [routerLink]="['/home']" routerLinkActive="active-list-item">Home</a>
-      <a mat-list-item [routerLink]="['/user-form']" routerLinkActive="active-list-item">User form</a>
-      <a mat-list-item [routerLink]="['/plan-form']" routerLinkActive="active-list-item">Plan form</a>
-      <a mat-list-item [routerLink]="['/asignacion-plan']" routerLinkActive="active-list-item">Asignacion del Plan</a>
+    <mat-toolbar><img style="width: 30%;" class="img-center" src="assets/img/logosin fondo.png"></mat-toolbar>
+    <mat-nav-list>      
+      <a mat-list-item [routerLink]="['/home']" routerLinkActive="active-list-item"><span class="material-icons-outlined">home</span>Home</a>
+      <a mat-list-item [routerLink]="['/user-form']" routerLinkActive="active-list-item"><span class="material-icons-outlined">person_add</span>User form</a>
+      <a mat-list-item [routerLink]="['/plan-form']" routerLinkActive="active-list-item"><span class="material-icons-outlined">library_books</span>Plan form</a>
+      <a mat-list-item [routerLink]="['/asignacion-plan']" routerLinkActive="active-list-item"><span class="material-icons-outlined">restaurant_menu</span>Asignacion del Plan</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -20,7 +20,7 @@
               *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>NutriTechBackOffice</span>
+      <div class="font-family">NutriTechBackOffice</div>
     </mat-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>

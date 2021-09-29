@@ -18,6 +18,7 @@ export class LoginFormComponent {
   loginForm = this.fb.group({
     email: [null, [Validators.required, Validators.email]],
     password: [null, [Validators.required]],
+    hide: true
   });
 
 
