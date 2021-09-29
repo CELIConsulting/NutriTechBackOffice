@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using Google.Cloud.Firestore;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Services.Roles.Commands;
-using Services.Roles.Forms;
-using Services.Roles.Queries;
+using NutriTechBackOffice.Services.Roles.Commands;
+using NutriTechBackOffice.Services.Roles.Forms;
+using NutriTechBackOffice.Services.Roles.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace NutriTechBackOffice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoleController : ControllerBase
     {
         public readonly IMediator _mediator;

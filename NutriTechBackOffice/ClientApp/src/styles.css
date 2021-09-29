@@ -18,5 +18,78 @@ code {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*Custom classes to inherit among components*/
+hr {
+  width: 80%;
+  margin: 1rem 0;
+}
+
+.plan-card {
+  min-width: 120px;
+  margin: 20px auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mid-width {
+  width: 75%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1.5rem;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+  .col:last-child {
+    margin-right: 0;
+  }
+
+.header-ml-0 {
+  margin-left: 0;
+}
+
+.btnAdd, .btnRemove {
+  margin: 0px 5px;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.ml-5 {
+}
+
+.mb-2rem {
+  margin-bottom: 2rem;
+}
+
+.img-div-center{
+  height: 800px;
+  position: relative;
+}
+.img-centro-vert-hor{
+  width: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fondoform {
+  background-image: url(assets/img/35767-comida.jpg);
+  background-size: 100%;
+}
+
+
+
+
+

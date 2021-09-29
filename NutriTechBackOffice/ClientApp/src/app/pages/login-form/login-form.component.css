@@ -1,0 +1,38 @@
+.full-width {
+  width: 100%;
+}
+
+.login-card {
+  width:300px;
+  min-width: 120px;
+  margin: 150px auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-radio-button {
+  display: block;
+  width: 100%;
+  padding: .5rem 1rem;
+  line-height: 1.5;
+  border-radius: .3rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0px;
+}
+
+.fondoform {
+  background-image: url(../../../assets/img/35767-comida.jpg);
+  background-size: 100%;
+}

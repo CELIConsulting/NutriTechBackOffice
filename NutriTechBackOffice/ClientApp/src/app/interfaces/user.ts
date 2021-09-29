@@ -1,13 +1,13 @@
-import { Role } from "./role";
-
 export interface User {
-  id: string;
   nombre: string;
   apellido: string;
   email: string;
   password: string;
-  rol: Role;
+  rol: string;
+  fechaNacimiento?: Date;
+  telefono: string;
   lastUpdated: LastUpdated;
 }
+
 export interface LastUpdated {
 }

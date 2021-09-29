@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Services.Users.Queries;
-using Services;
-using Domain.Entities;
+using NutriTechBackOffice.Services.Users.Queries;
 using MediatR;
 using System;
 using System.Reflection;
+using Google.Cloud.Firestore;
+using AutoMapper;
+using NutriTechBackOffice.Services.Users.Automapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using FirebaseAdmin.Auth;
+using FirebaseAdmin;
 
 namespace NutriTechBackOffice
 {
@@ -20,6 +24,7 @@ namespace NutriTechBackOffice
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -35,6 +40,25 @@ namespace NutriTechBackOffice
             });
             services.AddMediatR(typeof(GetUsersQuery).GetTypeInfo().Assembly);
             AddSwagger(services);
+            services.AddSingleton<FirestoreDb>(
+                provider => FirestoreDb.Create(GetFirestoreProjectId()));
+            services.AddSingleton<FirebaseAuth>(FirebaseAuth.GetAuth(FirebaseApp.Create(GetFirestoreProjectId())));
+            services.AddAutoMapper(typeof(ConfigurationMapperProfile));
+            services.AddControllersWithViews();
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = $"https://securetoken.google.com/{GetFirestoreProjectId()}";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = $"https://securetoken.google.com/{GetFirestoreProjectId()}",
+                        ValidateAudience = true,
+                        ValidAudience = GetFirestoreProjectId(),
+                        ValidateLifetime = true
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +88,8 @@ namespace NutriTechBackOffice
             }
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -104,5 +130,7 @@ namespace NutriTechBackOffice
                 });
             });
         }
+        public string GetFirestoreProjectId() =>
+            Configuration["project_id"];
     }
 }
