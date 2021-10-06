@@ -1,5 +1,6 @@
 <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
-  <mat-card class="login-card">
+  <img src="assets/img/gif nutritech.gif" *ngIf="loading" class="img-centro-vert-hor" style="width:100%;">
+  <mat-card class="login-card" *ngIf="!loading">   
     <mat-card-header>
           <mat-card-title>NutriTech</mat-card-title>
           <mat-card-subtitle>By CELI Consulting</mat-card-subtitle>
@@ -34,7 +35,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions class="text-center">
-      <button mat-raised-button color="primary" class="mat-radio-button" type="submit">Ingresar</button>
+      <button mat-raised-button color="primary" class="mat-radio-button" type="submit" [disabled]="loginForm.invalid">Ingresar</button>
     </mat-card-actions>
   </mat-card>
 </form>
