@@ -6,6 +6,10 @@
   <mat-grid-list cols="2" rowHeight="2:1">
     <mat-grid-tile>       
       <div class="mat-elevation-z8">
+        <mat-form-field appearance="standard">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Paciente" #input>
+        </mat-form-field>
       <table mat-table [dataSource]="dataSource" matSort>
   
         <ng-container matColumnDef="nombre">
@@ -17,6 +21,14 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
           <td mat-cell *matCellDef="let row"> {{row.apellido}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row" style="text-align: right;">
+          <a><mat-icon class="pointer" matTooltip="Información Paciente" style="color:#2e86c1;">info</mat-icon></a> 
+          <a><mat-icon class="pointer" matTooltip="Editar Paciente" style="color:#28b463">edit</mat-icon></a>  
+          </td>
+        </ng-container>
   
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;">
@@ -26,10 +38,24 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div></mat-grid-tile>
     <mat-grid-tile>    
-        2
+      <mat-card>
+        <mat-card-title>Informacion Del Paciente</mat-card-title>
+        <mat-card-subtitle>{{nombrePaciente}}</mat-card-subtitle>
+        <mat-card-content>Datos de los pacientes, altura, peso y medidas <br>(para obtener la informacion apretar boton informacion de la tabla)
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+          </ng-container>
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+          </ng-container>
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+          </ng-container>        
+        </mat-card-content>
+      </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
-  
-  
-
 </app-navigation>

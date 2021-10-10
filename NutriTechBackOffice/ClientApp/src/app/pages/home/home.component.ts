@@ -4,7 +4,9 @@ import { UsersService } from 'src/app/services/users.service';
 import { User } from '../../interfaces/user';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { userInfo } from 'os';
+import { isNullOrUndefined } from 'util';
+import { EMPTY } from 'rxjs';
+import { Paciente } from 'src/app/interfaces/paciente';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +15,10 @@ import { userInfo } from 'os';
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns: string[] = ['nombre', 'apellido'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'acciones'];
   dataSource: MatTableDataSource<User>;
   pacientes: User[];
+  paciente: User;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -30,7 +33,7 @@ export class HomeComponent implements OnInit {
     this.usersService.getPatients()
       .subscribe(
         patient => {        
-          if(/*patient[i].planAsignado!=null*/true){
+          if(patient[i].planAsignado == null){
             this.pacientes = patient;
             this.dataSource = new MatTableDataSource(this.pacientes);
   
@@ -44,6 +47,16 @@ export class HomeComponent implements OnInit {
           console.log(error)
         });
 
+  }
+
+  obtenerInformacion(paciente)
+  {
+      
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

@@ -4,3 +4,20 @@
     justify-content: center;
     height: 100px;
 }
+
+table {
+    width: 100%;
+}
+
+th{
+    width: 20%;
+}
+
+.pointer{
+    cursor:pointer;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
