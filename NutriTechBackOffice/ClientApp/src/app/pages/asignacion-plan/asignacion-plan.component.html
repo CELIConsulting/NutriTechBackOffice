@@ -107,7 +107,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <p *ngIf="notasAdicionales.length <= maxLengthNotas">Caracteres restantes: {{maxLengthNotas - notasAdicionales?.length}}</p>
+              <p *ngIf="notasAdicionales?.length <= maxLengthNotas">Caracteres restantes: {{maxLengthNotas - notasAdicionales?.length}}</p>
             </div>
           </section>
 
