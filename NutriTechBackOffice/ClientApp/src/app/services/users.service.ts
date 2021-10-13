@@ -60,5 +60,4 @@ export class UsersService {
   updatePaciente(email: string, paciente: PacienteForm): Observable<Paciente> {
     return this.http.put<Paciente>(`${env.apiBaseUrl}/User/Patients/${email}`, paciente, this.httpOptions);
   }
-
 }
