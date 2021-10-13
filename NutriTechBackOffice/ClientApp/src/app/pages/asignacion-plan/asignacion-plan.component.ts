@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 import { Paciente } from '../../interfaces/paciente';
 import { PacienteForm } from '../../interfaces/paciente-form';
 import { PlanAlimentacion } from '../../interfaces/plan-alimentacion';
 import { PlanAsignado } from '../../interfaces/plan-asignado';
+import { LoadingSpinnerService } from '../../services/loading-spinner.service';
 import { PlanesService } from '../../services/planes.service';
 import { UsersService } from '../../services/users.service';
 
@@ -28,12 +29,15 @@ export class AsignacionPlanComponent implements OnInit {
   planSeleccionado: string;
   notasAdicionales: string;
 
+  loading$ = this.loader.loading$;
+
   constructor(
     private fb: FormBuilder,
     private planesService: PlanesService,
     private usersService: UsersService,
     private dialog: MatDialog,
-    private router: Router) {
+    private router: Router,
+    private loader: LoadingSpinnerService) {
 
     this.obtenerPacientes();
     this.obtenerPlanes();
@@ -41,7 +45,7 @@ export class AsignacionPlanComponent implements OnInit {
 
   ngOnInit() {
     this.asignacionPlanForm = this.fb.group({
-      pacientes: [{value: '', disabled: this.modoEdicion}, Validators.required],
+      pacientes: [{ value: '', disabled: this.modoEdicion }, Validators.required],
       planesAlimentacion: [],
       notasAdicionales: [null, Validators.maxLength(this.maxLengthNotas)],
     });
@@ -51,17 +55,15 @@ export class AsignacionPlanComponent implements OnInit {
   }
 
   obtenerPlanes() {
-    console.log("Sending request to get planes");
     this.planesService.getAllPlans()
       .subscribe(
         (planes) => {
           this.planesDisponibles = planes;
         },
         (error) => { console.error("No se pudo obtener los planes disponibles") })
-  }
 
+  }
   obtenerPacientes() {
-    console.log("Sending request to get pacientes");
     this.usersService.getPatients()
       .subscribe(
         (pacientes) => {
@@ -73,12 +75,6 @@ export class AsignacionPlanComponent implements OnInit {
   asignarPlan() {
     this.pacienteFormActualizado = this.buildUpdatedPaciente();
     this.updatePacienteData(this.pacienteFormActualizado);
-  }
-
-  private refreshPantalla() {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/asignacion-plan']);
-    }); 
   }
 
   private buildUpdatedPaciente(): PacienteForm {
@@ -127,15 +123,38 @@ export class AsignacionPlanComponent implements OnInit {
   }
 
   updatePacienteData(pacienteForm: PacienteForm) {
+
+    this.disableFormWhileLoading();
+
     this.usersService.updatePaciente(this.pacienteSeleccionado.email, pacienteForm).subscribe
       (
         (pacienteOK) => {
           this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue asignado al paciente correctamente." } });
-          this.refreshPantalla();
+          
+          this.dialog.afterAllClosed.subscribe(() => {
+            this.refreshPantalla()
+          })
         }
         ,
         (error) => { this.dialog.open(PopUpComponent, { data: { title: "Oops!", message: "No se pudo asignar un plan al paciente." } }); }
       );
+  }
+
+
+  private refreshPantalla() {
+    console.log("Refreshing component...")
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
+  private disableFormWhileLoading() {
+    this.asignacionPlanForm.disable({ onlySelf: true });
+  }
+
+  private enableFormWhileFinished() {
+    this.asignacionPlanForm.enable({ onlySelf: true });
   }
 
 }

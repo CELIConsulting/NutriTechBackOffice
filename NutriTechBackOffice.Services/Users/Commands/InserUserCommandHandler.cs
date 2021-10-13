@@ -51,7 +51,7 @@ namespace NutriTechBackOffice.Services.Users.Commands
                     return null;
                 return user;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
