@@ -4,8 +4,6 @@ import { UsersService } from 'src/app/services/users.service';
 import { User } from '../../interfaces/user';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { isNullOrUndefined } from 'util';
-import { EMPTY } from 'rxjs';
 import { Paciente } from 'src/app/interfaces/paciente';
 
 @Component({
@@ -16,9 +14,12 @@ import { Paciente } from 'src/app/interfaces/paciente';
 export class HomeComponent implements OnInit {
 
   displayedColumns: string[] = ['nombre', 'apellido', 'acciones'];
+  displayedColumnsPaciente: string[] = ['altura', 'peso', 'medidas'];
   dataSource: MatTableDataSource<User>;
+  dataSourcePaciente: MatTableDataSource<User>;
   pacientes: User[];
-  paciente: User;
+  paciente: User[];
+  mostrar = true;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -29,18 +30,21 @@ export class HomeComponent implements OnInit {
   }
 
   cargarGrilla() {
-    var i=0;
+    var pacienteFiltrado=new Array();
     this.usersService.getPatients()
       .subscribe(
-        patient => {        
-          if(patient[i].planAsignado == null){
-            this.pacientes = patient;
-            this.dataSource = new MatTableDataSource(this.pacientes);
-  
+        patient => {
+          patient.forEach(element => {
+            
+            if(element.planAsignado!=null)
+            {             
+              pacienteFiltrado.push(element);
+              this.pacientes = pacienteFiltrado;
+            }
+          });        
+            this.dataSource = new MatTableDataSource(pacienteFiltrado);
             this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            i++;
-          }         
+            this.dataSource.sort = this.sort;     
         },
         error => {
           console.error("No se pudo obtener a los pacientes con planes")
@@ -49,9 +53,27 @@ export class HomeComponent implements OnInit {
 
   }
 
-  obtenerInformacion(paciente)
+  obtenerInformacion(email)
   {
-      
+    debugger;
+    this.dataSourcePaciente = new MatTableDataSource();
+    this.mostrar = false;
+    this.usersService.getPatients()
+    .subscribe(
+      patients => {
+        var pacienteFiltrado=new Array();
+        pacienteFiltrado.push(patients.find(m=>m.email==email));
+        this.paciente = pacienteFiltrado
+        var objetivo = document.getElementById('nombreId');
+        objetivo.innerHTML = this.paciente[0].nombre;     
+        this.dataSourcePaciente = new MatTableDataSource(this.paciente);
+        this.dataSourcePaciente.paginator = this.paginator;
+        this.dataSourcePaciente.sort = this.sort;                
+      },
+      error => {
+        console.error("No se pudo obtener el paciente")
+        console.log(error)
+      });
   }
 
   applyFilter(event: Event) {
