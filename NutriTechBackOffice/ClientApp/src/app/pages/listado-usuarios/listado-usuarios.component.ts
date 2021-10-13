@@ -7,6 +7,7 @@ import { User } from '../../interfaces/user';
 import { MatDialog } from '@angular/material';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 import { UsersService } from '../../services/users.service';
+import { LoadingSpinnerService } from '../../services/loading-spinner.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { UsersService } from '../../services/users.service';
 })
 export class ListadoUsuariosComponent implements OnInit {
 
+  loading$ = this.loader.loading$;
 
   displayedColumns: string[] = ['nombre', 'apellido', 'rol', 'email', 'telefono', 'fechaNacimiento', 'eliminar', 'modificar'];
   dataSource: MatTableDataSource<User>;
@@ -23,10 +25,7 @@ export class ListadoUsuariosComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private usersService: UsersService, private dialog: MatDialog) {
-
-
-
+  constructor(private usersService: UsersService, private dialog: MatDialog, private loader: LoadingSpinnerService) {
   }
 
   cargarGrilla() {

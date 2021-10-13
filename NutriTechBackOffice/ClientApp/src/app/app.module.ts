@@ -24,6 +24,8 @@ import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan
 import { MaterialModule } from './material.module';
 import { ListadoUsuariosComponent } from './pages/listado-usuarios/listado-usuarios.component';
 import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { NetworkInterceptor } from './services/interceptors/network.interceptor';
 
 
 @NgModule({
@@ -40,13 +42,14 @@ import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar
     AsignacionPlanComponent,
     ListadoUsuariosComponent,
     ModificarUsuariosComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     LayoutModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
@@ -55,6 +58,11 @@ import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar
     MaterialModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NetworkInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [PopUpComponent],

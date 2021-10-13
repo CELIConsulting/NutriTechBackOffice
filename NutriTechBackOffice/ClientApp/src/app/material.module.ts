@@ -1,9 +1,32 @@
 import { NgModule } from "@angular/core";
-import{
+import {
+  MatToolbarModule,
+  MatIconModule,
+  MatGridListModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatDividerModule,
+  MatListModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatCardModule,
+  MatMenuModule,
+  MatInputModule,
+  MatSelectModule,
+  MatRadioModule,
+  MatDialogModule,
+  MatSliderModule,
+  MatProgressSpinnerModule
+} from '@angular/material'
+
+@NgModule({
+  imports: [
     MatToolbarModule,
     MatIconModule,
     MatGridListModule,
     MatButtonModule,
+    MatToolbarModule,
     MatSidenavModule,
     MatDividerModule,
     MatListModule,
@@ -17,49 +40,29 @@ import{
     MatRadioModule,
     MatDialogModule,
     MatSliderModule,
-} from '@angular/material'
-
-@NgModule({
-    imports:[
-        MatToolbarModule,
-        MatIconModule,
-        MatGridListModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatListModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatCardModule,
-        MatMenuModule,
-        MatInputModule,
-        MatSelectModule,
-        MatRadioModule,
-        MatDialogModule,
-        MatSliderModule,
-    ],
-    exports:[
-        MatToolbarModule,
-        MatIconModule,
-        MatGridListModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatListModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatCardModule,
-        MatMenuModule,
-        MatInputModule,
-        MatSelectModule,
-        MatRadioModule,
-        MatDialogModule,
-        MatSliderModule,
-    ]
+    MatProgressSpinnerModule
+  ],
+  exports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatMenuModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatDialogModule,
+    MatSliderModule,
+    MatProgressSpinnerModule
+  ]
 })
 
-export class MaterialModule{}
+export class MaterialModule { }

@@ -37,7 +37,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\services\interceptors\network.interceptor.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NutriTechBackOffice.Services\NutriTechBackOffice.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\services\interceptors\network.interceptor.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

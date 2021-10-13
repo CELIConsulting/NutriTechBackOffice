@@ -7,6 +7,8 @@ import { RolesService } from '../../services/roles.service';
 import { UsersService } from '../../services/users.service';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 import { MatDialog } from '@angular/material';
+import { LoadingSpinnerService } from '../../services/loading-spinner.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-form-user',
@@ -22,16 +24,19 @@ export class FormUserComponent {
     rol: [null, Validators.required],
   });
   roles: any[] = [];
-  
 
-  constructor(private fb: FormBuilder, private roleService: RolesService, private usersService: UsersService, public dialog: MatDialog) {
+  loading$ = this.loader.loading$;
+
+  constructor(private fb: FormBuilder, private roleService: RolesService, private usersService: UsersService, public dialog: MatDialog, private loader: LoadingSpinnerService, private router: Router) {
     this.fillRoles();
   }
 
   fillRoles() {
+    this.disableFormWhileLoading();
     this.roleService.getRoles().subscribe(
       data => {
-        this.roles = data.map(item => { return { nombre: item.nombre} })
+        this.roles = data.map(item => { return { nombre: item.nombre } })
+        this.enableFormWhileFinished();
       },
       err => {
         console.log(err)
@@ -48,21 +53,48 @@ export class FormUserComponent {
         'Password': this.userForm.value['password'],
         'Rol': this.userForm.value['rol'].nombre,
         //TODO: Agregar inputs al form
-        'FechaNacimiento': null, 
+        'FechaNacimiento': null,
         'Telefono': null,
       };
+
+      this.disableFormWhileLoading();
 
       this.usersService.addUser(user).subscribe(
         data => {
           this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente registrado." } });
 
+          this.dialog.afterAllClosed.subscribe(() => {
+            this.refreshPantalla()
+          })
         },
         err => {
           this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo agregar el usuario." } });
+          console.error(err);
 
+          this.dialog.afterAllClosed.subscribe(() => {
+            this.enableFormWhileFinished();
+          })
         }
       )
 
     }
   }
+
+  private refreshPantalla() {
+    console.log("Refreshing component...")
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
+
+  private disableFormWhileLoading() {
+    this.userForm.disable({ onlySelf: true });
+  }
+
+  private enableFormWhileFinished() {
+    this.userForm.enable({ onlySelf: true });
+  }
+
 }

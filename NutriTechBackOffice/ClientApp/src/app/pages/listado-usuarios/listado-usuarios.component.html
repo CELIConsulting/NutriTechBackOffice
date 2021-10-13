@@ -1,3 +1,6 @@
+<!--Loading Spinner-->
+<app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
+
 <app-navigation>
   <mat-card>
     <button mat-raised-button class="mat-elevation-z8" color="primary" type="submit" [routerLink]="['/user-form']">Agregar Usuario</button>
@@ -42,14 +45,14 @@
 
       <ng-container matColumnDef="eliminar">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Eliminar</th>
-        <td mat-cell *matCellDef="let row" >
-          <button mat-raised-button color="primary" (click)="eliminar(row.email)" >Eliminar</button>
+        <td mat-cell *matCellDef="let row">
+          <button mat-raised-button color="primary" (click)="eliminar(row.email)">Eliminar</button>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="modificar">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header > Modificar</th>
-        <td mat-cell *matCellDef="let row"> 
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Modificar</th>
+        <td mat-cell *matCellDef="let row">
           <button mat-raised-button color="primary" type="submit" [routerLink]="['/modificar-usuarios/', row.email]">Modificar</button>
         </td>
       </ng-container>
