@@ -76,7 +76,8 @@ namespace NutriTechBackOffice.Services.Users.Automapper
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.Nombre))
                 .ForMember(dest => dest.Disabled, opt => opt.MapFrom(src => false))
                 ;
-
+            CreateMap<User, InsertUserForm>();
+            CreateMap<InsertUserForm, User>();
         }
     }
 }

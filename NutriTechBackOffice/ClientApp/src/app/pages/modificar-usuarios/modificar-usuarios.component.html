@@ -1,4 +1,62 @@
-
 <app-navigation>
-  <p>modificar-usuarios works!</p>
-  <</app-navigation>
+  <form [formGroup]="userModificacionForm" (ngSubmit)="onSubmit()">
+    <mat-card class="user-card">
+      <mat-card-header>
+        <mat-card-title>Modificacion del usuario</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nombre" formControlName="firstName" required>
+              <mat-error *ngIf="userModificacionForm.controls['firstName'].hasError('required')">
+                El nombre es <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Apellido" formControlName="lastName" required>
+              <mat-error *ngIf="userModificacionForm.controls['lastName'].hasError('required')">
+                El apellido es  <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="email" formControlName="email"  readonly>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Roles</mat-label>
+              <mat-select formControlName="rol" [(ngModel)]="rolSeleccionado" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let rol of roles" [value]="rol.nombre">
+                  {{rol.nombre}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="userModificacionForm.controls['rol'].hasError('required')">Por favor elija un rol</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Contraseña" formControlName="password" type="password">
+              <mat-error *ngIf="userModificacionForm.controls['password'].hasError('required')">
+                La contraseña es <strong>obligatoria</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Modificar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+
+</app-navigation>

@@ -41,6 +41,16 @@ export class UsersService {
     return this.http.get<Array<User>>(`${env.apiBaseUrl}/User/`, this.httpOptions)
   }
 
+  //DELETE: Borrar un usuario
+  deleteUser(email: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${env.apiBaseUrl}/User/${email}`, this.httpOptions);
+  }
+
+  //PUT: Actualizar la información de un usuario
+  updateUser(email: string, user: UserForm): Observable<User> {
+    return this.http.put<User>(`${env.apiBaseUrl}/User/${email}`, user, this.httpOptions);
+  }
+
   //GET: Obtener los usuarios que tengan rol de paciente
   getPatients(): Observable<Array<Paciente>> {
     return this.http.get<Array<Paciente>>(`${env.apiBaseUrl}/User/Patients/`, this.httpOptions)
@@ -51,7 +61,4 @@ export class UsersService {
     return this.http.put<Paciente>(`${env.apiBaseUrl}/User/Patients/${email}`, paciente, this.httpOptions);
   }
 
-  deleteUser(email: string): Observable<boolean> {
-    return this.http.delete<boolean>(`${env.apiBaseUrl}/User/${email}`, this.httpOptions);
-  }
 }

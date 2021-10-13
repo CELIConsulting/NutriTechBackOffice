@@ -54,6 +54,16 @@ namespace NutriTechBackOffice.Controllers
                 return Ok(result);
         }
 
+        // PUT api/<UserController>/5
+        [HttpPut("{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> PutAsync(string email, [FromBody] InsertUserForm userForm) =>
+            Ok(await _mediator.Send(new UpdateUserCommand(email, userForm)));
+
+
+
 
         // PUT api/<UserController>/5
         [HttpPut("Patients/{id}")]
