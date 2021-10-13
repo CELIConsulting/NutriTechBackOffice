@@ -51,6 +51,7 @@ export class UsersService {
     return this.http.put<Paciente>(`${env.apiBaseUrl}/User/Patients/${email}`, paciente, this.httpOptions);
   }
 
+  //DELETE: Eliminar usuario
   deleteUser(email: string): Observable<boolean> {
     return this.http.delete<boolean>(`${env.apiBaseUrl}/User/${email}`, this.httpOptions);
   }

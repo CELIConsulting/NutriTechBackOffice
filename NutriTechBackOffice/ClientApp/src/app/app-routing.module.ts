@@ -25,25 +25,25 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe:  redirectUnauthorizedToLogin},
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'user-form',
     component: FormUserComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe:  redirectUnauthorizedToLogin},
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'plan-form',
     component: PlanFormComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe:  redirectUnauthorizedToLogin},
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'asignacion-plan',
     component: AsignacionPlanComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe:  redirectUnauthorizedToLogin},
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
 
   {
@@ -66,7 +66,7 @@ const routes: Routes = [
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }),
   ],
   exports: [RouterModule],
 })
