@@ -62,8 +62,7 @@ export class ModificarUsuariosComponent implements OnInit {
         this.userModificacionForm.controls.lastName.setValue(this.usuarioModificar.apellido);
         this.userModificacionForm.controls.email.setValue(this.usuarioModificar.email);
         this.userModificacionForm.controls.password.setValue(this.usuarioModificar.password);
-        this.rolSeleccionado= this.usuarioModificar.rol;
-    
+        this.rolSeleccionado = this.usuarioModificar.rol;
       },
       err => {
 
