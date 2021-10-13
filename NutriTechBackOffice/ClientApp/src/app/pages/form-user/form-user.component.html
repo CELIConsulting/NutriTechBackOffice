@@ -1,3 +1,6 @@
+<!--Loading Spinner-->
+<app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
+
 <app-navigation>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <mat-card class="user-card">
@@ -26,7 +29,7 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="email" formControlName="email" [errorStateMatcher]="matcher" required>
+              <input matInput placeholder="Email" formControlName="email" [errorStateMatcher]="matcher" required>
               <mat-error *ngIf="userForm.controls['email'].hasError('required')">
                 El email es <strong>obligatorio</strong>
               </mat-error>
@@ -51,7 +54,7 @@
         <div class="row">
           <div class="col-4">
             <mat-form-field class="full-width">
-              <input matInput placeholder="Contraseña" formControlName="password" type="password">
+              <input matInput placeholder="Contraseña" formControlName="password" type="password" required>
               <mat-error *ngIf="userForm.controls['password'].hasError('required')">
                 La contraseña es <strong>obligatoria</strong>
               </mat-error>
@@ -60,7 +63,7 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit">Guardar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Guardar</button>
       </mat-card-actions>
     </mat-card>
   </form>

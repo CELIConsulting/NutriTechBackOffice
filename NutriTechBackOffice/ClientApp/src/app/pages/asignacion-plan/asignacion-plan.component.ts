@@ -149,13 +149,12 @@ export class AsignacionPlanComponent implements OnInit {
     });
   }
 
-
   private disableFormWhileLoading() {
-    this.asignacionPlanForm.disable({ onlySelf: false });
+    this.asignacionPlanForm.disable({ onlySelf: true });
   }
 
-  private enableFormWhileLoading() {
-    this.asignacionPlanForm.enable({ onlySelf: false });
+  private enableFormWhileFinished() {
+    this.asignacionPlanForm.enable({ onlySelf: true });
   }
 
 }
