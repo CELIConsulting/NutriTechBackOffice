@@ -2,6 +2,7 @@
 <app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
 
 <app-navigation>
+
   <mat-card>
     <button mat-raised-button class="mat-elevation-z8" color="primary" type="submit" [routerLink]="['/user-form']">Agregar Usuario</button>
     <mat-form-field>
