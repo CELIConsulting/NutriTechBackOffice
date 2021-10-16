@@ -17,7 +17,8 @@ import {
   MatRadioModule,
   MatDialogModule,
   MatSliderModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTooltipModule
 } from '@angular/material'
 
 @NgModule({
@@ -40,7 +41,8 @@ import {
     MatRadioModule,
     MatDialogModule,
     MatSliderModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   exports: [
     MatToolbarModule,
@@ -61,7 +63,8 @@ import {
     MatRadioModule,
     MatDialogModule,
     MatSliderModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ]
 })
 

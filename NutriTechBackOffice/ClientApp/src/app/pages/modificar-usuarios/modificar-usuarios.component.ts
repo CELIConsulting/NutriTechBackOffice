@@ -1,4 +1,4 @@
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Role } from '../../interfaces/role';
@@ -30,7 +30,7 @@ export class ModificarUsuariosComponent implements OnInit {
     rol: [null, Validators.required],
   });
   roles: any[] = [];
-  constructor(private fb: FormBuilder, private roleService: RolesService, private usersService: UsersService, public dialog: MatDialog, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private roleService: RolesService, private usersService: UsersService, public dialog: MatDialog, private activatedRoute: ActivatedRoute, private router: Router) {
     this.fillRoles();
   }
 
@@ -49,8 +49,6 @@ export class ModificarUsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.cargarUsuario();
-  
-   
   }
 
   cargarUsuario() {
@@ -69,6 +67,15 @@ export class ModificarUsuariosComponent implements OnInit {
       }
     )
   }
+
+
+  private navigateToUserList() {
+    let currentUrl = 'listado-usuarios';
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
   onSubmit() {
     if (this.userModificacionForm.valid) {
       let user: UserForm = {
@@ -76,17 +83,21 @@ export class ModificarUsuariosComponent implements OnInit {
         'Apellido': this.userModificacionForm.value['lastName'],
         'Email': this.userModificacionForm.value['email'],
         'Password': this.userModificacionForm.value['password'],
-        'Rol': this.userModificacionForm.value['rol'].nombre,
+        'Rol': this.userModificacionForm.value['rol'],
         //TODO: Agregar inputs al form
         'FechaNacimiento': null,
         'Telefono': null,
       };
 
       //servicio de actualizacion
+      console.dir(user);
       this.usersService.updateUser(user.Email, user).subscribe(
         data => {
           this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente modificado." } });
 
+          this.dialog.afterAllClosed.subscribe(() => {
+            this.navigateToUserList()
+          })
         },
         err => {
           this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el usuario." } });
