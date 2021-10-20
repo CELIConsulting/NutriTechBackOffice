@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FirebaseAdmin.Auth;
 using Google.Cloud.Firestore;
 using MediatR;
 using Newtonsoft.Json;
@@ -17,24 +18,39 @@ namespace NutriTechBackOffice.Services.Users.Commands
         private CollectionReference _userRef;
         private IMapper _mapper;
         private DocumentSnapshot _user;
+        private readonly FirebaseAuth _firebaseAuth;
 
-        public DeleteUserCommandHandler(FirestoreDb firestore)
+
+        public DeleteUserCommandHandler(FirestoreDb firestore, FirebaseAuth firebaseAuth)
         {
             _userRef = firestore.Collection("Users");
-           
+            _firebaseAuth = firebaseAuth;
+
         }
 
         public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            _user = await _userRef.Document(request.Email).GetSnapshotAsync();
-            if (_user.Exists)
+            try
             {
-                await _userRef.Document(request.Email).DeleteAsync();
-                return true;
+                _user = await _userRef.Document(request.Email).GetSnapshotAsync();
+                if (_user.Exists)
+                {
+                    UserRecord userRecord = await this._firebaseAuth.GetUserByEmailAsync(request.Email);
+                    await this._firebaseAuth.DeleteUserAsync(userRecord.Uid);
+                    await _userRef.Document(request.Email).DeleteAsync();
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
 
             }
-            else {
-                return false;
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
