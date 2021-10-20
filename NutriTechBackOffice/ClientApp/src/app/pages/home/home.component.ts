@@ -93,9 +93,7 @@ export class HomeComponent implements OnInit {
         this.paciente = pacienteFiltrado
         var objetivo = document.getElementById('nombreId');
         objetivo.innerHTML = this.paciente[0].nombre;     
-        this.dataSourcePaciente = new MatTableDataSource(this.paciente);
-        this.dataSourcePaciente.paginator = this.paginator;
-        this.dataSourcePaciente.sort = this.sort;                
+        this.dataSourcePaciente = new MatTableDataSource(this.paciente);              
       },
       error => {
         console.error("No se pudo obtener el paciente")
