@@ -6,8 +6,5 @@ export interface User {
   rol: string;
   fechaNacimiento?: Date;
   telefono: string;
-  lastUpdated: LastUpdated;
-}
-
-export interface LastUpdated {
+  lastUpdated: Date;
 }

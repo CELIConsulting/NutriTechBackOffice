@@ -1,4 +1,3 @@
-import { LastUpdated } from "./user";
 
 export interface PlanAlimentacion {
   nombre: string;
@@ -10,5 +9,5 @@ export interface PlanAlimentacion {
   merienda: Array<string>;
   cena: Array<string>;
   colacion: Array<string>;
-  lastUpdated: LastUpdated
+  lastUpdated: Date;
 }
