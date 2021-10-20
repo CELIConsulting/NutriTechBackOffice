@@ -53,11 +53,22 @@ export class UsersService {
 
   //GET: Obtener los usuarios que tengan rol de paciente
   getPatients(): Observable<Array<Paciente>> {
-    return this.http.get<Array<Paciente>>(`${env.apiBaseUrl}/User/Patients/`, this.httpOptions)
+    return this.http.get<Array<Paciente>>(`${env.apiBaseUrl}/User/Patients/`, this.httpOptions);
+  }
+
+  //GET: Obtener paciente por mail
+  getPatientById(email: string): Observable<Paciente> {
+    return this.http.get<Paciente>(`${env.apiBaseUrl}/User/Patients/${email}`, this.httpOptions);
   }
 
   //PUT: Actualizar la información del paciente
   updatePaciente(email: string, paciente: PacienteForm): Observable<Paciente> {
     return this.http.put<Paciente>(`${env.apiBaseUrl}/User/Patients/${email}`, paciente, this.httpOptions);
   }
+
+  //PUT: Actualizar la información del usuario quitando los campos del paciente
+  updateUserWithoutPatientData(email: string, paciente: PacienteForm): Observable<User> {
+    return this.http.put<User>(`${env.apiBaseUrl}/User/Patients/Convert/${email}`, paciente, this.httpOptions);
+  }
+
 }

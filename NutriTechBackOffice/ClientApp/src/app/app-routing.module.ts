@@ -54,7 +54,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'modificar-usuarios/:email',
+    path: 'modificar-usuarios/:email/:rol',
     component: ModificarUsuariosComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },

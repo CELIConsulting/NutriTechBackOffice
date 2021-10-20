@@ -54,7 +54,7 @@
       <ng-container matColumnDef="modificar">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Modificar</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-raised-button color="primary" type="submit" [routerLink]="['/modificar-usuarios/', row.email]">Modificar</button>
+          <button mat-raised-button color="primary" type="submit" [routerLink]="['/modificar-usuarios/', row.email, row.rol]">Modificar</button>
         </td>
       </ng-container>
 

@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit {
 
   obtenerInformacion(email)
   {
-    debugger;
     this.dataSourcePaciente = new MatTableDataSource();
     this.mostrar = false;
     this.usersService.getPatients()
