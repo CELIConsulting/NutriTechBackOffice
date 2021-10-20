@@ -99,7 +99,7 @@ export class AsignacionPlanComponent implements OnInit {
     return {
       planAlimentacion: this.asignacionPlanForm.controls["planesAlimentacion"].value,
       notasAdicionales: this.asignacionPlanForm.controls["notasAdicionales"].value,
-      lastAsignacion: []
+      lastAsignacion: new Date(),
     };
   }
 
@@ -130,7 +130,7 @@ export class AsignacionPlanComponent implements OnInit {
       (
         (pacienteOK) => {
           this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue asignado al paciente correctamente." } });
-          
+
           this.dialog.afterAllClosed.subscribe(() => {
             this.refreshPantalla()
           })
