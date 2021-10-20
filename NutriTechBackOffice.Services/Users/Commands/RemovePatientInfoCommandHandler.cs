@@ -64,9 +64,6 @@ namespace NutriTechBackOffice.Services.Users.Commands
 
         private async Task<WriteResult> UpdateUserInFirestoreDB(Paciente paciente)
         {
-            //string jsonPatient = JsonConvert.SerializeObject(paciente);
-            //var firestorePatient = JsonConvert.DeserializeObject<ExpandoObject>(jsonPatient);
-
             //Eliminar campos del documento del paciente
             #region Fields to update
             var fieldsToUpdate = new Dictionary<string, object>();
@@ -89,19 +86,3 @@ namespace NutriTechBackOffice.Services.Users.Commands
         }
     }
 }
-
-
-
-//public string Nombre { get; set; }
-//public string Apellido { get; set; }
-//public string Email { get; set; }
-//public string Password { get; set; }
-//public string Rol { get; set; }
-//public Timestamp? FechaNacimiento { get; set; }
-//public string Telefono { get; set; }
-//public Timestamp LastUpdated { get; set; }
-//public float? Altura { get; set; }
-//public float? Peso { get; set; }
-//public float? MedidaCintura { get; set; }
-//public string TipoAlimentacion { get; set; }
-//public PlanAsignacion PlanAsignado { get; set; }
