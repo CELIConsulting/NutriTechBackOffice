@@ -23,6 +23,8 @@ export class LoginFormComponent {
     hide: true   
   });
 
+  //Flag
+  hide = true;
 
   constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router, public auth: AngularFireAuth) { }
 

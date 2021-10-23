@@ -29,13 +29,13 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="Email" formControlName="email" readonly>
+              <input matInput placeholder="Email" formControlName="email" >
             </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field>
               <mat-label>Roles</mat-label>
-              <mat-select formControlName="rol" [ngModel]="rolSeleccionado" (ngModelChange)="refreshForm($event)" required>
+              <mat-select formControlName="rol" [(ngModel)]="rolSeleccionado" required disabled>
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let rol of roles" [value]="rol.nombre">
                   {{rol.nombre}}

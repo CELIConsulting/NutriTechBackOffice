@@ -41,7 +41,7 @@ export class ModificarUsuariosComponent implements OnInit {
   userModificacionForm = this.fb.group({
     firstName: [null, Validators.required],
     lastName: [null, Validators.required],
-    email: [null],
+    email: [{ value: '', disabled: true }],
     password: [null, Validators.required],
     rol: [null, Validators.required],
   });
@@ -181,7 +181,7 @@ export class ModificarUsuariosComponent implements OnInit {
   }
 
   private updateWithRolSelection() {
-    if ((this.rolParam == ADMIN && this.rolSeleccionado == PACIENTE) || (this.rolParam == NUTRICIONISTA && this.rolSeleccionado == PACIENTE) ) {
+    if ((this.rolParam == ADMIN && this.rolSeleccionado == PACIENTE) || (this.rolParam == NUTRICIONISTA && this.rolSeleccionado == PACIENTE)) {
       let paciente = this.buildPacienteForm();
       this.updatePacienteInfo(paciente.Email, paciente);
     }
