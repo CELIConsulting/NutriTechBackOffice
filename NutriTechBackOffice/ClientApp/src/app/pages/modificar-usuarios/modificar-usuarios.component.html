@@ -1,3 +1,6 @@
+<!--Loading Spinner-->
+<app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
+
 <app-navigation>
   <form [formGroup]="userModificacionForm" (ngSubmit)="onSubmit()">
     <mat-card class="user-card">
@@ -26,13 +29,13 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="email" formControlName="email"  readonly>
+              <input matInput placeholder="Email" formControlName="email" readonly>
             </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field>
               <mat-label>Roles</mat-label>
-              <mat-select formControlName="rol" [(ngModel)]="rolSeleccionado" required>
+              <mat-select formControlName="rol" [ngModel]="rolSeleccionado" (ngModelChange)="refreshForm($event)" required>
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let rol of roles" [value]="rol.nombre">
                   {{rol.nombre}}
@@ -45,16 +48,69 @@
         <div class="row">
           <div class="col-4">
             <mat-form-field class="full-width">
-              <input matInput placeholder="Contraseña" formControlName="password" type="password">
+              <input matInput placeholder="Contraseña" formControlName="password" [type]="hide? 'password' : 'text'">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               <mat-error *ngIf="userModificacionForm.controls['password'].hasError('required')">
                 La contraseña es <strong>obligatoria</strong>
               </mat-error>
             </mat-form-field>
           </div>
         </div>
+
+        <!--Paciente form BEGIN  -->
+        <section *ngIf="rolSeleccionado === 'Paciente'">
+          
+          <span>Datos del paciente:</span>
+          <!-- Altura -->
+          <div class="row">
+            <div class="col-2">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Altura" formControlName="altura" type="number">
+                <mat-error *ngIf="userModificacionForm.controls['altura'].hasError('min')">
+                  La altura no puede ser <strong>menor que cero</strong>.
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Peso -->
+            <div class="col-2">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Peso" formControlName="peso" type="number">
+                <mat-error *ngIf="userModificacionForm.controls['peso'].hasError('min')">
+                  El peso no puede ser <strong>menor que cero</strong>.
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Medida de cintura -->
+            <div class="col-2">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Medida de cintura" formControlName="medidaCintura" type="number">
+                <mat-error *ngIf="userModificacionForm.controls['medidaCintura'].hasError('min')">
+                  La medida de la cintura no puede ser <strong>menor que cero</strong>.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Tipo Alimentacion -->
+          <div class="row">
+            <div class="col-6">
+              <mat-form-field class="full-width">
+                <textarea matInput rows="5" [(ngModel)]="tipoAlimentacion" placeholder="Ingrese su tipo de alimentación..." formControlName="tipoAlimentacion"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </section>
+        <!--Paciente form END  -->
+
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit">Modificar</button>
+        <button mat-raised-button color="primary"
+                type="submit"
+                [disabled]="userModificacionForm.invalid">
+          Modificar
+        </button>
       </mat-card-actions>
     </mat-card>
   </form>

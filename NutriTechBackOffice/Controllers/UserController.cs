@@ -63,9 +63,7 @@ namespace NutriTechBackOffice.Controllers
             Ok(await _mediator.Send(new UpdateUserCommand(email, userForm)));
 
 
-
-
-        // PUT api/<UserController>/5
+        // PUT api/<UserController>/Patients/id
         [HttpPut("Patients/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -73,6 +71,13 @@ namespace NutriTechBackOffice.Controllers
         public async Task<IActionResult> PutAsync(string id, [FromBody] UpdatePatientForm patientForm) =>
             Ok(await _mediator.Send(new UpdatePatientCommand(id, patientForm)));
 
+        //PUT api/<UserController>/Patients/Convert/id
+        [HttpPut("Patients/Convert/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> UpdateUserFromPatient(string id, [FromBody] UpdatePatientForm patientForm) =>
+            Ok(await _mediator.Send(new RemovePatientInfoCommand(id, patientForm)));
 
 
         // GET api/<UserController>/Patients/
@@ -83,6 +88,13 @@ namespace NutriTechBackOffice.Controllers
         public async Task<IActionResult> GetPatients() =>
             Ok(await _mediator.Send(new GetPatientsQuery()));
 
+        //GET api/<UserController>/Patients/1
+        [HttpGet("Patients/{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> GetPatientById(string email) =>
+            Ok(await _mediator.Send(new GetPatientByIdQuery(email)));
 
         // DELETE api/<UserController>/5
         [HttpDelete("{email}")]
@@ -91,7 +103,7 @@ namespace NutriTechBackOffice.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> Delete(string email)
         {
-            var result = await _mediator.Send(new DeleteUserCommand( email));
+            var result = await _mediator.Send(new DeleteUserCommand(email));
             if (result == false)
                 return BadRequest();
             else

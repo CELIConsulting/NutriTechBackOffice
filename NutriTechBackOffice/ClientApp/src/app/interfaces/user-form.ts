@@ -1,5 +1,3 @@
-import { Role } from "./role";
-
 export interface UserForm {
   Nombre: string;
   Apellido: string;

@@ -26,6 +26,9 @@ import { ListadoUsuariosComponent } from './pages/listado-usuarios/listado-usuar
 import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { NetworkInterceptor } from './services/interceptors/network.interceptor';
+import { BarGraphicComponent } from './components/bar-graphic/bar-graphic.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { PiechartGridComponent } from './components/piechart-grid/piechart-grid.component';
 
 
 @NgModule({
@@ -43,6 +46,8 @@ import { NetworkInterceptor } from './services/interceptors/network.interceptor'
     ListadoUsuariosComponent,
     ModificarUsuariosComponent,
     LoadingSpinnerComponent,
+    BarGraphicComponent,
+    PiechartGridComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -55,7 +60,8 @@ import { NetworkInterceptor } from './services/interceptors/network.interceptor'
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
     AngularFireModule.initializeApp(environment.firebase),
-    MaterialModule
+    MaterialModule,
+    NgxChartsModule
   ],
   providers: [
     {
