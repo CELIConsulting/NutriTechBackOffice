@@ -29,6 +29,7 @@ export class FormUserComponent {
   roles: any[] = [];
 
   loading$ = this.loader.loading$;
+  hide = true;
 
   //Moment.js for DatePicker
   moment = _moment
