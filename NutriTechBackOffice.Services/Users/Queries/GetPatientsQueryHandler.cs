@@ -2,6 +2,7 @@
 using MediatR;
 using Newtonsoft.Json;
 using NutriTechBackOffice.Domain.Entities;
+using NutriTechBackOffice.Services.Users.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NutriTechBackOffice.Services.Users.Queries
 {
-    public class GetPatientsQueryHandler :  IRequestHandler<GetPatientsQuery, List<Paciente>>
+    public class GetPatientsQueryHandler : IRequestHandler<GetPatientsQuery, List<Paciente>>
     {
         private CollectionReference _usersRef;
         private QuerySnapshot _patientsFound;
@@ -32,7 +33,7 @@ namespace NutriTechBackOffice.Services.Users.Queries
                 {
                     if (document.Exists)
                     {
-                        Dictionary<string, object> patient = document.ToDictionary();
+                        Dictionary<string, object> patient = SerializedUserHelper.GetUser(document);
 
                         string patientJSON = JsonConvert.SerializeObject(patient);
                         Paciente newPatient = JsonConvert.DeserializeObject<Paciente>(patientJSON);
@@ -44,11 +45,14 @@ namespace NutriTechBackOffice.Services.Users.Queries
                 return _patients;
 
             }
-            catch
+            catch (Exception e)
             {
 
                 throw;
             }
         }
+
     }
 }
+
+

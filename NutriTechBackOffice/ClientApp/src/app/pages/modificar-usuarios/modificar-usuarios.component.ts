@@ -7,10 +7,12 @@ import { UserForm } from '../../interfaces/user-form';
 import { RolesService } from '../../services/roles.service';
 import { UsersService } from '../../services/users.service';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
-import { MatDialog } from '@angular/material';
+import { MatDatepicker, MatDialog } from '@angular/material';
 import { Paciente } from '../../interfaces/paciente';
 import { LoadingSpinnerService } from '../../services/loading-spinner.service';
 import { PacienteForm } from '../../interfaces/paciente-form';
+import * as _moment from 'moment';
+import { Moment } from 'moment';
 
 const PACIENTE = "Paciente";
 const ADMIN = "Admin"
@@ -38,12 +40,17 @@ export class ModificarUsuariosComponent implements OnInit {
   //Spinner
   loading$ = this.loader.loading$;
 
+  //MomentJS
+  moment = _moment;
+
   userModificacionForm = this.fb.group({
     firstName: [null, Validators.required],
     lastName: [null, Validators.required],
-    email: [{ value: '', disabled: true }],
+    email: [{ value: '', disabled: true}],
     password: [null, Validators.required],
     rol: [null, Validators.required],
+    fechaNac: [null, Validators.required],
+    phoneNumber: [null],
   });
 
   roles: any[] = [];
@@ -135,22 +142,6 @@ export class ModificarUsuariosComponent implements OnInit {
     }
   }
 
-  private fillFormWithUserData(userData: User) {
-    this.userModificacionForm.controls.firstName.setValue(userData.nombre);
-    this.userModificacionForm.controls.lastName.setValue(userData.apellido);
-    this.userModificacionForm.controls.email.setValue(userData.email);
-    this.userModificacionForm.controls.password.setValue(userData.password);
-    this.rolSeleccionado = userData.rol;
-  }
-
-  private fillFormWithPatientData(patientData: Paciente) {
-    this.fillFormWithUserData(patientData);
-    this.userModificacionForm.controls.altura.setValue(patientData.altura);
-    this.userModificacionForm.controls.peso.setValue(patientData.peso);
-    this.userModificacionForm.controls.medidaCintura.setValue(patientData.medidaCintura);
-    this.userModificacionForm.controls.tipoAlimentacion.setValue(patientData.tipoAlimentacion);
-  }
-
   navigateToUserList() {
     let currentUrl = 'listado-usuarios';
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -162,11 +153,76 @@ export class ModificarUsuariosComponent implements OnInit {
     if (this.userModificacionForm.valid) {
 
       if (this.rolParam == this.rolSeleccionado) {
+        
         this.updateWithoutRolSelection();
       } else {
         this.updateWithRolSelection();
       }
     }
+  }
+
+
+  private fillFormWithUserData(userData: User) {
+    this.userModificacionForm.controls.firstName.setValue(userData.nombre);
+    this.userModificacionForm.controls.lastName.setValue(userData.apellido);
+    this.userModificacionForm.controls.email.setValue(userData.email);
+    this.userModificacionForm.controls.password.setValue(userData.password);
+    this.userModificacionForm.controls.fechaNac.setValue(userData.fechaNacimiento? this.buildMomentForPicker(userData.fechaNacimiento) : null);
+    this.userModificacionForm.controls.phoneNumber.setValue(userData.telefono);
+    this.rolSeleccionado = userData.rol;
+  }
+
+  private fillFormWithPatientData(patientData: Paciente) {
+    this.fillFormWithUserData(patientData);
+    this.userModificacionForm.controls.altura.setValue(patientData.altura);
+    this.userModificacionForm.controls.peso.setValue(patientData.peso);
+    this.userModificacionForm.controls.medidaCintura.setValue(patientData.medidaCintura);
+    this.userModificacionForm.controls.tipoAlimentacion.setValue(patientData.tipoAlimentacion);
+  }
+
+  private buildMomentForPicker(fechaNac: Date): Moment {
+    let date = new Date(fechaNac);
+    let day = date.getUTCDate();
+    let month = date.getUTCMonth();
+    let year = date.getUTCFullYear();
+    return _moment([year, month, day])
+  }
+
+  private buildDateFromPicker():Date {
+    let moment: Moment = this.userModificacionForm.value['fechaNac'];
+    let stringDate = moment.format();
+    return new Date(stringDate);
+  }
+
+  private buildPacienteForm(): PacienteForm {
+    let userForm = this.buildUserForm();
+    let paciente: PacienteForm;
+
+    try {
+      paciente = userForm as PacienteForm;
+      paciente.Altura = this.userModificacionForm.value['altura'];
+      paciente.Peso = this.userModificacionForm.value['peso'];
+      paciente.MedidaCintura = this.userModificacionForm.value['medidaCintura'];
+      paciente.TipoAlimentacion = this.userModificacionForm.value['tipoAlimentacion'];
+      return paciente;
+
+    } catch (e) {
+      console.log(`Couldn't build Paciente form because ${e}`);
+    }
+
+    return null;
+  }
+
+  private buildUserForm(): UserForm {
+    return {
+      'Nombre': this.userModificacionForm.value['firstName'],
+      'Apellido': this.userModificacionForm.value['lastName'],
+      'Email': this.userModificacionForm.getRawValue()['email'],
+      'Password': this.userModificacionForm.value['password'],
+      'Rol': this.userModificacionForm.value['rol'],
+      'FechaNacimiento': this.buildDateFromPicker(),
+      'Telefono': this.userModificacionForm.value['phoneNumber']
+    };
   }
 
   private updateWithoutRolSelection() {
@@ -192,40 +248,7 @@ export class ModificarUsuariosComponent implements OnInit {
     }
   }
 
-
-  private buildPacienteForm(): PacienteForm {
-    let userForm = this.buildUserForm();
-    let paciente: PacienteForm;
-
-    try {
-      paciente = userForm as PacienteForm;
-      paciente.Altura = this.userModificacionForm.value['altura'];
-      paciente.Peso = this.userModificacionForm.value['peso'];
-      paciente.MedidaCintura = this.userModificacionForm.value['medidaCintura'];
-      paciente.TipoAlimentacion = this.userModificacionForm.value['tipoAlimentacion'];
-      return paciente;
-
-    } catch (e) {
-      console.log(`Couldn't build Paciente form because ${e}`);
-    }
-
-    return null;
-  }
-
-  private buildUserForm(): UserForm {
-    return {
-      'Nombre': this.userModificacionForm.value['firstName'],
-      'Apellido': this.userModificacionForm.value['lastName'],
-      'Email': this.userModificacionForm.value['email'],
-      'Password': this.userModificacionForm.value['password'],
-      'Rol': this.userModificacionForm.value['rol'],
-      //TODO: Agregar inputs al form
-      'FechaNacimiento': null,
-      'Telefono': null,
-    };
-  }
-
-  updateUserFromPatient(email: string, paciente: PacienteForm) {
+  private updateUserFromPatient(email: string, paciente: PacienteForm) {
     this.disableFormWhileLoading();
 
     this.usersService.updateUserWithoutPatientData(email, paciente).subscribe(
@@ -248,22 +271,21 @@ export class ModificarUsuariosComponent implements OnInit {
     );
   }
 
-
   private updatePacienteInfo(email: string, pacienteForm: PacienteForm) {
     this.disableFormWhileLoading();
 
     this.usersService.updatePaciente(email, pacienteForm).subscribe(
       data => {
-        this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El paciente fue correctamente modificado." } });
+        let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El paciente fue correctamente modificado." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        popupRef.afterClosed().subscribe(() => {
           this.navigateToUserList()
         })
       },
       err => {
-        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el paciente." } });
+        let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el paciente." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        popupRef.afterClosed().subscribe(() => {
           this.enableFormWhileFinished();
         })
       }
@@ -276,16 +298,16 @@ export class ModificarUsuariosComponent implements OnInit {
 
     this.usersService.updateUser(email, userForm).subscribe(
       data => {
-        this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente modificado." } });
+        let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente modificado." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        popupRef.afterClosed().subscribe(() => {
           this.navigateToUserList()
         })
       },
       err => {
-        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el usuario." } });
+        let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el usuario." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        popupRef.afterClosed().subscribe(() => {
           this.enableFormWhileFinished();
         })
       }

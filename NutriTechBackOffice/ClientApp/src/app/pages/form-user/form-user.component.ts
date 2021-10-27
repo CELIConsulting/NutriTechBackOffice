@@ -9,6 +9,7 @@ import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 import { MatDialog } from '@angular/material';
 import { LoadingSpinnerService } from '../../services/loading-spinner.service';
 import { Router, RouterModule } from '@angular/router';
+import * as _moment from 'moment';
 
 @Component({
   selector: 'app-form-user',
@@ -21,11 +22,16 @@ export class FormUserComponent {
     lastName: [null, Validators.required],
     email: [null, [Validators.required, Validators.email]],
     password: [null, Validators.required],
+    fechaNac: [null, Validators.required],
+    phoneNumber: [null],
     rol: [null, Validators.required],
   });
   roles: any[] = [];
 
   loading$ = this.loader.loading$;
+
+  //Moment.js for DatePicker
+  moment = _moment
 
   constructor(private fb: FormBuilder, private roleService: RolesService, private usersService: UsersService, public dialog: MatDialog, private loader: LoadingSpinnerService, private router: Router) {
     this.fillRoles();
@@ -46,19 +52,20 @@ export class FormUserComponent {
 
   onSubmit() {
     if (this.userForm.valid) {
+
       let user: UserForm = {
         'Nombre': this.userForm.value['firstName'],
         'Apellido': this.userForm.value['lastName'],
         'Email': this.userForm.value['email'],
         'Password': this.userForm.value['password'],
         'Rol': this.userForm.value['rol'].nombre,
-        //TODO: Agregar inputs al form
-        'FechaNacimiento': null,
-        'Telefono': null,
+        'FechaNacimiento': this.userForm.value['fechaNac'],
+        'Telefono': this.userForm.value['phoneNumber'],
       };
 
       this.disableFormWhileLoading();
-
+      //Comment
+      console.log(user);
       this.usersService.addUser(user).subscribe(
         data => {
           this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente registrado." } });

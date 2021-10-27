@@ -3,6 +3,7 @@ using Google.Cloud.Firestore;
 using MediatR;
 using Newtonsoft.Json;
 using NutriTechBackOffice.Domain.Entities;
+using NutriTechBackOffice.Services.Users.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -30,9 +31,9 @@ namespace NutriTechBackOffice.Services.Users.Commands
 
             if (userWithMail.Exists)
             {
-                if (GetExistingUser(userWithMail).Email.Equals(request.Email))
+                try
                 {
-                    try
+                    if (GetExistingUser(userWithMail).Email.Equals(request.Email))
                     {
                         User usuarioActualizado = _mapper.Map<User>(request.UserForm);
                         result = await UpdateUserInFirestoreDB(usuarioActualizado);
@@ -41,26 +42,25 @@ namespace NutriTechBackOffice.Services.Users.Commands
                         {
                             return usuarioActualizado;
                         }
-
                     }
-
-                    catch (Exception)
-                    {
-                        throw;
-                    }
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
 
             return null;
         }
 
-        private User GetExistingUser(DocumentSnapshot userWithMail) {
-            Dictionary<string, object> user = userWithMail.ToDictionary();
+        private User GetExistingUser(DocumentSnapshot userWithMail)
+        {
+            Dictionary<string, object> user = SerializedUserHelper.GetUser(userWithMail);
             string json = JsonConvert.SerializeObject(user);
             return JsonConvert.DeserializeObject<Paciente>(json);
         }
 
-        private async Task<WriteResult> UpdateUserInFirestoreDB(User usuario) 
+        private async Task<WriteResult> UpdateUserInFirestoreDB(User usuario)
         {
             string jsonUsuarios = JsonConvert.SerializeObject(usuario);
             var firestoreUsuarios = JsonConvert.DeserializeObject<ExpandoObject>(jsonUsuarios);

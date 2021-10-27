@@ -2,6 +2,7 @@
 using MediatR;
 using Newtonsoft.Json;
 using NutriTechBackOffice.Domain.Entities;
+using NutriTechBackOffice.Services.Users.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,7 +27,7 @@ namespace NutriTechBackOffice.Services.Users.Queries
 
             if (existingPatient.Exists)
             {
-                Dictionary<string, object> patient = existingPatient.ToDictionary();
+                Dictionary<string, object> patient = SerializedUserHelper.GetUser(existingPatient); 
                 string json = JsonConvert.SerializeObject(patient);
                 Paciente newPatient = JsonConvert.DeserializeObject<Paciente>(json);
                 return newPatient;

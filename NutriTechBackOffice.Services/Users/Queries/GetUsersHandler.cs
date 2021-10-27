@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Google.Cloud.Firestore;
 using NutriTechBackOffice.Services;
 using Newtonsoft.Json;
-
+using NutriTechBackOffice.Services.Users.Helpers;
 
 namespace NutriTechBackOffice.Services.Users.Queries
 {
@@ -26,17 +26,29 @@ namespace NutriTechBackOffice.Services.Users.Queries
         public async Task<List<User>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             existingUsers = await usersRef.GetSnapshotAsync();
-            foreach (var document in existingUsers)
+
+            try
             {
-                if (document.Exists)
+                foreach (var document in existingUsers)
                 {
-                    Dictionary<string, object> user = document.ToDictionary();
-                    string json = JsonConvert.SerializeObject(user);
-                    User newUser = JsonConvert.DeserializeObject<User>(json);
-                    _users.Add(newUser);
+                    if (document.Exists)
+                    {
+                        Dictionary<string, object> user = SerializedUserHelper.GetUser(document);
+
+                        string json = JsonConvert.SerializeObject(user);
+                        User newUser = JsonConvert.DeserializeObject<User>(json);
+                        _users.Add(newUser);
+                    }
                 }
+                return _users;
             }
-            return _users;
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
+
+       
     }
 }

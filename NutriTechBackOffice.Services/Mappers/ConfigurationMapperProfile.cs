@@ -15,10 +15,10 @@ namespace NutriTechBackOffice.Services.Users.Automapper
         {
             //Paciente
             CreateMap<InsertUserForm, Paciente>()
-                 .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre))
-                 .ForMember(dest => dest.Apellido, opt => opt.MapFrom(src => src.Apellido))
-                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
+                .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre))
+                .ForMember(dest => dest.Apellido, opt => opt.MapFrom(src => src.Apellido))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.Rol, opt => opt.MapFrom(src => src.Rol))
                 .ForMember(dest => dest.FechaNacimiento, opt => opt.MapFrom(src => src.FechaNacimiento))
                 .ForMember(dest => dest.Telefono, opt => opt.MapFrom(src => src.Telefono));
@@ -72,10 +72,10 @@ namespace NutriTechBackOffice.Services.Users.Automapper
             CreateMap<User, UserRecordArgs>()
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
-                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Telefono))
+                //.ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => String.Concat("+", src.Telefono)))
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.Nombre))
-                .ForMember(dest => dest.Disabled, opt => opt.MapFrom(src => false))
-                ;
+                .ForMember(dest => dest.Disabled, opt => opt.MapFrom(src => false));
+
             CreateMap<User, InsertUserForm>();
             CreateMap<InsertUserForm, User>();
         }

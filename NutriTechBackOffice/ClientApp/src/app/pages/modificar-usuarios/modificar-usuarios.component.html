@@ -29,7 +29,7 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="Email" formControlName="email" >
+              <input matInput placeholder="Email" formControlName="email">
             </mat-form-field>
           </div>
           <div class="col">
@@ -56,10 +56,27 @@
             </mat-form-field>
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <input matInput [matDatepicker]="datePicker" formControlName="fechaNac" placeholder="Seleccionar fecha de nacimiento">
+              <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #datePicker></mat-datepicker>
+              <mat-error *ngIf="userModificacionForm.controls['fechaNac'].hasError('required')">
+                La fecha de nacimiento es <strong>obligatoria</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Teléfono" formControlName="phoneNumber">
+            </mat-form-field>
+          </div>
+        </div>
 
         <!--Paciente form BEGIN  -->
         <section *ngIf="rolSeleccionado === 'Paciente'">
-          
+
           <span>Datos del paciente:</span>
           <!-- Altura -->
           <div class="row">
