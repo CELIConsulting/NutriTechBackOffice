@@ -1,4 +1,5 @@
-﻿using NutriTechBackOffice.Domain.Entities;
+﻿using Google.Cloud.Firestore;
+using NutriTechBackOffice.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

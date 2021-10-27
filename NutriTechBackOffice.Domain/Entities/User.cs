@@ -24,7 +24,7 @@ namespace NutriTechBackOffice.Domain.Entities
         public string Rol { get; set; }
 
         [FirestoreProperty]
-        public Timestamp? FechaNacimiento { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
 
         [FirestoreProperty]
         public string Telefono { get; set; }

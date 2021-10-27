@@ -27,23 +27,24 @@ namespace NutriTechBackOffice.Services.Users.Commands
         public async Task<User> Handle(InsertUserCommand request, CancellationToken cancellationToken)
         {
             var user = new User();
-            switch (request.Usuario.Rol)
-            {
-                case "Paciente":
-                    user = _mapper.Map<Paciente>(request.Usuario);
-                    break;
-                case "Admin":
-                    user = _mapper.Map<Administrador>(request.Usuario);
-                    break;
-                case "Nutricionista":
-                    user = _mapper.Map<Nutricionista>(request.Usuario);
-                    break;
-                default:
-                    //user = _mapper.Map<User>(request.Usuario);
-                    break;
-            }
             try
             {
+                switch (request.Usuario.Rol)
+                {
+                    case "Paciente":
+                        user = _mapper.Map<Paciente>(request.Usuario);
+                        break;
+                    case "Admin":
+                        user = _mapper.Map<Administrador>(request.Usuario);
+                        break;
+                    case "Nutricionista":
+                        user = _mapper.Map<Nutricionista>(request.Usuario);
+                        break;
+                    default:
+                        //user = _mapper.Map<User>(request.Usuario);
+                        break;
+                }
+
                 var args = _mapper.Map<UserRecordArgs>(user);
                 UserRecord userRecord = await this._firebaseAuth.CreateUserAsync(args);
                 result = await this.usersRef.Document(request.Usuario.Email).SetAsync(user);
