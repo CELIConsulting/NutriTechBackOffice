@@ -29,13 +29,13 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="Email" formControlName="email" readonly>
+              <input matInput placeholder="Email" formControlName="email">
             </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field>
               <mat-label>Roles</mat-label>
-              <mat-select formControlName="rol" [ngModel]="rolSeleccionado" (ngModelChange)="refreshForm($event)" required>
+              <mat-select formControlName="rol" [(ngModel)]="rolSeleccionado" required disabled>
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let rol of roles" [value]="rol.nombre">
                   {{rol.nombre}}
@@ -56,10 +56,27 @@
             </mat-form-field>
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <input matInput [matDatepicker]="datePicker" formControlName="fechaNac" placeholder="Seleccionar fecha de nacimiento">
+              <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+              <mat-datepicker #datePicker></mat-datepicker>
+              <mat-error *ngIf="userModificacionForm.controls['fechaNac'].hasError('required')">
+                La fecha de nacimiento es <strong>obligatoria</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Teléfono" formControlName="phoneNumber">
+            </mat-form-field>
+          </div>
+        </div>
 
         <!--Paciente form BEGIN  -->
         <section *ngIf="rolSeleccionado === 'Paciente'">
-          
+
           <span>Datos del paciente:</span>
           <!-- Altura -->
           <div class="row">

@@ -40,7 +40,7 @@ namespace NutriTechBackOffice.Services.Users.Commands
 
                         if (result != null)
                         {
-                            return (User)pacienteAConvertir;
+                            return pacienteAConvertir;
                         }
 
                     }
@@ -86,3 +86,4 @@ namespace NutriTechBackOffice.Services.Users.Commands
         }
     }
 }
+

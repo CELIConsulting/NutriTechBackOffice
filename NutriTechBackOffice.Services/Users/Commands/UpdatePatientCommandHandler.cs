@@ -3,6 +3,7 @@ using Google.Cloud.Firestore;
 using MediatR;
 using Newtonsoft.Json;
 using NutriTechBackOffice.Domain.Entities;
+using NutriTechBackOffice.Services.Users.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -30,9 +31,9 @@ namespace NutriTechBackOffice.Services.Users.Commands
 
             if (userWithMail.Exists)
             {
-                if (GetExistingUser(userWithMail).Email.Equals(request.Email))
+                try
                 {
-                    try
+                    if (GetExistingUser(userWithMail).Email.Equals(request.Email))
                     {
                         Paciente pacienteActualizado = _mapper.Map<Paciente>(request.Paciente);
                         result = await UpdateUserInFirestoreDB(pacienteActualizado);
@@ -43,24 +44,24 @@ namespace NutriTechBackOffice.Services.Users.Commands
                         }
 
                     }
-
-                    catch (Exception)
-                    {
-                        throw;
-                    }
+                }
+                catch (Exception e)
+                {
+                    throw;
                 }
             }
 
             return null;
         }
 
-        private Paciente GetExistingUser(DocumentSnapshot userWithMail) {
-            Dictionary<string, object> user = userWithMail.ToDictionary();
+        private Paciente GetExistingUser(DocumentSnapshot userWithMail)
+        {
+            Dictionary<string, object> user = SerializedUserHelper.GetUser(userWithMail);
             string json = JsonConvert.SerializeObject(user);
             return JsonConvert.DeserializeObject<Paciente>(json);
         }
 
-        private async Task<WriteResult> UpdateUserInFirestoreDB(Paciente paciente) 
+        private async Task<WriteResult> UpdateUserInFirestoreDB(Paciente paciente)
         {
             string jsonPaciente = JsonConvert.SerializeObject(paciente);
             var firestorePaciente = JsonConvert.DeserializeObject<ExpandoObject>(jsonPaciente);

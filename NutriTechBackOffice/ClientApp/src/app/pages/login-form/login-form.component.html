@@ -22,13 +22,11 @@
       </div>
       <div class="row">
         <div class="col">
-          <mat-form-field class="full-width">           
-            <input matInput [type]="hide ? 'text' : 'password'" placeholder="Ingrese su contraseña" formControlName="password" type="password" required>
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-            </button>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Ingrese su contraseña" formControlName="password" [type]="hide? 'password' : 'text'" required>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
-             La contraseña es <strong>obligatoria</strong>
+              La contraseña es <strong>obligatoria</strong>
             </mat-error>
           </mat-form-field>
         </div>

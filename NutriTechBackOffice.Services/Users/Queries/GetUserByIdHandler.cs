@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NutriTechBackOffice.Services.Users.Helpers;
 
 namespace NutriTechBackOffice.Services.Users.Queries
 {
@@ -25,7 +26,7 @@ namespace NutriTechBackOffice.Services.Users.Queries
             existingUser = await usersRef.Document(request.Id.ToString()).GetSnapshotAsync();
             if (existingUser.Exists)
             {
-                Dictionary<string, object> user = existingUser.ToDictionary();
+                Dictionary<string, object> user = SerializedUserHelper.GetUser(existingUser);
                 string json = JsonConvert.SerializeObject(user);
                 User newUser = JsonConvert.DeserializeObject<User>(json);
                 return newUser;

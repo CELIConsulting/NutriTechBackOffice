@@ -18,8 +18,11 @@ import {
   MatDialogModule,
   MatSliderModule,
   MatProgressSpinnerModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDatepickerModule,
+  MAT_DATE_LOCALE,
 } from '@angular/material'
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter'
 
 @NgModule({
   imports: [
@@ -42,7 +45,9 @@ import {
     MatDialogModule,
     MatSliderModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMomentDateModule,
+    MatDatepickerModule
   ],
   exports: [
     MatToolbarModule,
@@ -64,7 +69,13 @@ import {
     MatDialogModule,
     MatSliderModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMomentDateModule,
+    MatDatepickerModule
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: false } }
   ]
 })
 
