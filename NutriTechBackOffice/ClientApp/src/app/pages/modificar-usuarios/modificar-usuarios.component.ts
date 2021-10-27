@@ -253,10 +253,9 @@ export class ModificarUsuariosComponent implements OnInit {
 
     this.usersService.updateUserWithoutPatientData(email, paciente).subscribe(
       response => {
-        console.log(response);
-        this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente modificado." } });
+        let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente modificado." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        popupRef.afterClosed().subscribe(() => {
           this.navigateToUserList()
         })
 
