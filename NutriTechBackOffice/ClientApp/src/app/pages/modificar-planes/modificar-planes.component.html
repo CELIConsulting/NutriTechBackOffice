@@ -1,0 +1,84 @@
+<!--Loading Spinner-->
+<app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
+
+<app-navigation>
+  <form [formGroup]="planModificacionForm" (ngSubmit)="onSubmit()">
+    <mat-card class="plan-card">
+      <mat-card-header>
+        <mat-card-title>Modificacion del plan</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nombre" formControlName="nombre" required readonly>
+              <mat-error *ngIf="planModificacionForm.controls['nombre'].hasError('required')">
+                El nombre es <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Tipo" formControlName="tipo" required>
+              <mat-error *ngIf="planModificacionForm.controls['tipo'].hasError('required')">
+                El tipo es  <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="cantidadAguaDiaria" formControlName="cantidadAgua" >
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="cantidadColacionesDiarias" formControlName="cantidadColaciones">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Desayuno" formControlName="desayuno" >
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Almuerzo" formControlName="almuerzo">
+              </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Merienda" formControlName="merienda">
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Cena" formControlName="cena">
+              </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Colaciones" formControlName="colacion">
+              </mat-form-field>
+            </div>
+        </div>
+        <mat-card-actions>
+            <button mat-raised-button color="primary"
+                    type="submit"
+                    [disabled]="planModificacionForm.invalid">
+              Modificar
+            </button>
+          </mat-card-actions>
+      </mat-card-content>
+    </mat-card>
+  </form>
+
+</app-navigation>
+

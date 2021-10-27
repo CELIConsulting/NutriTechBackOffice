@@ -47,5 +47,38 @@ namespace NutriTechBackOffice.Controllers
             return Ok(await _mediator.Send(new GetAllPlansQuery()));
 
         }
+
+        // GET api/<PlanController>/nombre
+        [HttpGet("{nombre}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> GetPlansAsync(string nombre)
+        {
+            return Ok(await _mediator.Send(new GetPlanByIdQuery(nombre)));
+
+        }
+
+        // PUT api/<PlanController>/nombre
+        [HttpPut("{nombre}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> PutAsync(string nombre, [FromBody] InsertPlanForm planForm) =>
+            Ok(await _mediator.Send(new UpdatePlanCommand(nombre, planForm)));
+
+        // DELETE api/<PlanController>/nombre
+        [HttpDelete("{nombre}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> Delete(string nombre)
+        {
+            var result = await _mediator.Send(new DeletePlanCommand(nombre));
+            if (result == false)
+                return BadRequest();
+            else
+                return Ok();
+        }
     }
 }
