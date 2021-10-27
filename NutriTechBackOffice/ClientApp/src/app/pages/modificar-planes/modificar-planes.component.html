@@ -29,53 +29,53 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="cantidadAguaDiaria" formControlName="cantidadAgua" >
+              <input matInput placeholder="cantidadAguaDiaria" type="number" formControlName="cantidadAgua">
             </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="cantidadColacionesDiarias" formControlName="cantidadColaciones">
+              <input matInput placeholder="cantidadColacionesDiarias" type="number" formControlName="cantidadColaciones">
             </mat-form-field>
           </div>
         </div>
         <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <input matInput placeholder="Desayuno" formControlName="desayuno" >
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field class="full-width">
-                <input matInput placeholder="Almuerzo" formControlName="almuerzo">
-              </mat-form-field>
-            </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Desayuno" formControlName="desayuno">
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Almuerzo" formControlName="almuerzo">
+            </mat-form-field>
+          </div>
         </div>
         <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <input matInput placeholder="Merienda" formControlName="merienda">
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field class="full-width">
-                <input matInput placeholder="Cena" formControlName="cena">
-              </mat-form-field>
-            </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Merienda" formControlName="merienda">
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Cena" formControlName="cena">
+            </mat-form-field>
+          </div>
         </div>
         <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <input matInput placeholder="Colaciones" formControlName="colacion">
-              </mat-form-field>
-            </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Colaciones" formControlName="colacion">
+            </mat-form-field>
+          </div>
         </div>
         <mat-card-actions>
-            <button mat-raised-button color="primary"
-                    type="submit"
-                    [disabled]="planModificacionForm.invalid">
-              Modificar
-            </button>
-          </mat-card-actions>
+          <button mat-raised-button color="primary"
+                  type="submit"
+                  [disabled]="planModificacionForm.invalid">
+            Modificar
+          </button>
+        </mat-card-actions>
       </mat-card-content>
     </mat-card>
   </form>

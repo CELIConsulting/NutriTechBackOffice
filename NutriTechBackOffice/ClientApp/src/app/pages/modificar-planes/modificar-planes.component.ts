@@ -31,11 +31,11 @@ export class ModificarPlanesComponent implements OnInit {
     tipo: [null, Validators.required],
     cantidadAgua: [null],
     cantidadColaciones: [null, Validators.required],
-    desayuno: [null, Validators.required],
-    almuerzo: [null, Validators.required],
-    merienda: [null, Validators.required],
-    cena: [null, Validators.required],
-    colacion: [null, Validators.required],
+    desayuno: [null],
+    almuerzo: [null],
+    merienda: [null],
+    cena: [null],
+    colacion: [null],
   });
 
   roles: any[] = [];
@@ -99,23 +99,29 @@ export class ModificarPlanesComponent implements OnInit {
   }
 
   private buildPlanForm(): PlanAlimentacionForm {
+    let desayuno = this.planModificacionForm.value['desayuno'].split(',');
+    let almuerzo = this.planModificacionForm.value['almuerzo'];
+    let merienda = this.planModificacionForm.value['merienda'];
+    let cena = this.planModificacionForm.value['cena'];
+    let colacion = this.planModificacionForm.value['colacion'];
+
+
     return {
       'Nombre': this.planModificacionForm.value['nombre'],
       'Tipo': this.planModificacionForm.value['tipo'],
       'CantAguaDiaria': this.planModificacionForm.value['cantidadAgua'],
       'CantColacionesDiarias': this.planModificacionForm.value['cantidadColaciones'],
-      'Desayuno': this.planModificacionForm.value['desayuno'],
-      'Almuerzo': this.planModificacionForm.value['almuerzo'],
-      'Merienda': this.planModificacionForm.value['merienda'],
-      'Cena': this.planModificacionForm.value['cena'],
-      'Colacion': this.planModificacionForm.value['colacion'],
+      'Desayuno': Array.isArray(desayuno) ? desayuno.map(i => i.trim()).toString().split(',') : [desayuno],
+      'Almuerzo': Array.isArray(almuerzo) ? almuerzo.map(i => i.trim()).toString().split(',') : [almuerzo],
+      'Merienda': Array.isArray(merienda) ? merienda.map(i => i.trim()).toString().split(',') : [merienda],
+      'Cena': Array.isArray(cena) ? cena.map(i => i.trim()).toString().split(',') : [cena],
+      'Colacion': Array.isArray(colacion) ? colacion.map(i => i.trim()).toString().split(',') : [colacion],
     };
   }
 
   private updatePlanInfo(nombre: string, planForm: PlanAlimentacionForm) {
     this.disableFormWhileLoading();
 
-    debugger;
     this.planService.updatePlan(nombre, planForm).subscribe(
       data => {
         this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue correctamente modificado." } });
