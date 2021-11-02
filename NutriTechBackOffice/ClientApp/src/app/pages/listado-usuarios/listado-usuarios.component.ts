@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
 import { MatDialog } from "@angular/material";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { Observable } from "rxjs";
+import { AuthService } from "src/app/services/auth.service";
 import { PopUpComponent } from "../../components/pop-up/pop-up.component";
 import { User } from "../../interfaces/user";
 import { LoadingSpinnerService } from "../../services/loading-spinner.service";
@@ -32,19 +33,22 @@ export class ListadoUsuariosComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  //validate claims of the loged user
+  isAdmin: boolean;
+  isNutritionist: boolean;
+
   constructor(
     private usersService: UsersService,
     private dialog: MatDialog,
     private loader: LoadingSpinnerService,
-    public auth: AngularFireAuth
+    private authService: AuthService
   ) { }
 
-  cargarGrilla() {
+  loadAdminGrid() {
     this.usersService.getUsers().subscribe(
       (user) => {
         this.usuarios = user;
         this.dataSource = new MatTableDataSource(this.usuarios);
-
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
@@ -54,13 +58,40 @@ export class ListadoUsuariosComponent implements OnInit {
       }
     );
   }
+
+  loadNutrittionistGrid() {
+    this.usersService.getPatients().subscribe(
+      (user) => {
+        this.usuarios = user;
+        this.dataSource = new MatTableDataSource(this.usuarios);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      (error) => {
+        console.error("No se pudo obtener a los usuarios registrados");
+        console.log(error);
+      }
+    );
+  }
+
+  cargarGrilla() {
+    if (this.isAdmin) {
+      console.log('es un admin');
+      this.loadAdminGrid();
+    } else if (this.isNutritionist) {
+      console.log('es una notricionista');
+      this.loadNutrittionistGrid();
+    }
+  }
+
   ngOnInit() {
+    this.isAdmin = this.authService.isAdminUser();
+    this.isNutritionist = this.authService.isNutrittionistUser();
     this.cargarGrilla();
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

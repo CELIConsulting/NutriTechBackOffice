@@ -1,29 +1,28 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-import { User } from 'firebase';
-import { Subject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { User } from "firebase";
+import { Subject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
-
 
   uid: string = null;
   user: User = null;
   claims: any = {};
   isAdmin = false;
+  isNutrittionist = false;
 
   isLoggedInSubject = new Subject<boolean>();
   userSubject = new Subject();
   claimsSubject = new Subject();
   isAdminSubject = new Subject<boolean>();
+  isNuttritionistSubject = new Subject<boolean>();
 
-  constructor(private afAuth: AngularFireAuth,
-    private router: Router) {
+  constructor(private afAuth: AngularFireAuth) {
 
-    // the only subscription to authState
+    // the only subsription to authState
     this.afAuth.authState
       .subscribe(
         authUser => {
@@ -35,8 +34,10 @@ export class AuthService {
             this.claims = authUser.getIdTokenResult()
               .then(idTokenResult => {
                 this.claims = idTokenResult.claims;
-                this.isAdmin = this.hasClaim('admin');
+                this.isAdmin = this.hasClaim('Admin');
                 this.isAdminSubject.next(this.isAdmin);
+                this.isAdmin = this.hasClaim('Nutricionista');
+                this.isNuttritionistSubject.next(this.isNutrittionist);
                 this.claimsSubject.next(this.claims);
               });
           }
@@ -45,6 +46,14 @@ export class AuthService {
           }
         }
       );
+  }
+
+  isAdminUser() {
+    return this.isAdmin;
+  }
+
+  isNutrittionistUser() {
+    return this.isNutrittionist;
   }
 
   login(email, password): Promise<any> {
@@ -73,7 +82,4 @@ export class AuthService {
     this.userSubject.next(this.user);
   }
 
-  // this.auth.idTokenResult.subscribe((idTokenResult) => {
-  //   const claims = idTokenResult.claims;
-  // });
 }
