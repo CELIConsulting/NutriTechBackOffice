@@ -10,4 +10,10 @@ table {
   td, th {
     width: 10%;
   }
-  
+  .mat-column-cantidadAgua {
+    text-align: center;
+  }
+
+  .mat-column-cantidadColaciones {
+    text-align: center;
+  }

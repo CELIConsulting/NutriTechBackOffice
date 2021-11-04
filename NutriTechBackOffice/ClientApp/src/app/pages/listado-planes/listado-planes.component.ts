@@ -17,8 +17,8 @@ export class ListadoPlanesComponent implements OnInit {
   displayedColumns: string[] = 
   ['nombre', 
   'tipo', 
-  'cantidadAguaDiaria', 
-  'cantidadColacionesDiarias', 
+  'cantidadAgua', 
+  'cantidadColaciones', 
   'desayuno', 
   'almuerzo', 
   'merienda', 
@@ -36,6 +36,7 @@ export class ListadoPlanesComponent implements OnInit {
   }
 
   cargarGrilla() {
+    debugger;
     this.planesService.getAllPlans()
       .subscribe(
         planes => {

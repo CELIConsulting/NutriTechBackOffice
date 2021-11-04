@@ -24,14 +24,14 @@
         <td mat-cell *matCellDef="let row"> {{row.tipo}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="cantidadAguaDiaria">
+      <ng-container matColumnDef="cantidadAgua">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad de Agua Diaria </th>
-        <td mat-cell *matCellDef="let row"> {{row.cantidadAguaDiaria}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.cantAguaDiaria}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="cantidadColacionesDiarias">
+      <ng-container matColumnDef="cantidadColaciones">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad de Colaciones Diarias </th>
-        <td mat-cell *matCellDef="let row"> {{row.cantidadColacionesDiarias}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.cantColacionesDiarias}} </td>
       </ng-container>
 
       <ng-container matColumnDef="desayuno">
@@ -62,7 +62,7 @@
       <ng-container matColumnDef="eliminar">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Eliminar</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-raised-button color="primary" (click)="eliminar(row.email)">Eliminar</button>
+          <button mat-raised-button color="primary" (click)="eliminar(row.nombre)">Eliminar</button>
         </td>
       </ng-container>
 
