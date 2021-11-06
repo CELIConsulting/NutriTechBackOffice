@@ -12,6 +12,7 @@ import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan
 import { ListadoUsuariosComponent } from './pages/listado-usuarios/listado-usuarios.component';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
+import { PatientHistoryComponent } from './pages/patient-history/patient-history.component';
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo([""]);
@@ -59,7 +60,12 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
-
+  {
+    path:'patient-history/:email',
+    component: PatientHistoryComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  }
 ]
 
 @NgModule({

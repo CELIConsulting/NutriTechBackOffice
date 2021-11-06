@@ -3,7 +3,6 @@ import { MatDialog } from "@angular/material";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Observable } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import { PopUpComponent } from "../../components/pop-up/pop-up.component";
 import { User } from "../../interfaces/user";
@@ -27,6 +26,7 @@ export class ListadoUsuariosComponent implements OnInit {
     "fechaNacimiento",
     "eliminar",
     "modificar",
+    "verCargaDiaria"
   ];
   dataSource: MatTableDataSource<User>;
   usuarios: User[];
@@ -75,18 +75,10 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   cargarGrilla() {
-    if (this.isAdmin) {
-      console.log('es un admin');
-      this.loadAdminGrid();
-    } else if (this.isNutritionist) {
-      console.log('es una notricionista');
-      this.loadNutrittionistGrid();
-    }
+    this.loadNutrittionistGrid();
   }
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdminUser();
-    this.isNutritionist = this.authService.isNutrittionistUser();
     this.cargarGrilla();
   }
 

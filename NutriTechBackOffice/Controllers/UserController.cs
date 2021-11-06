@@ -96,6 +96,15 @@ namespace NutriTechBackOffice.Controllers
         public async Task<IActionResult> GetPatientById(string email) =>
             Ok(await _mediator.Send(new GetPatientByIdQuery(email)));
 
+        //GET api/<UserController>/Patients/1/DailyUpload
+        [HttpGet("Patients/DailyUpload/{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> GetDailyUploadPatientById(string email) =>
+            Ok(await _mediator.Send(new GetDailyUploadPatientByIdQuery(email)));
+
         // DELETE api/<UserController>/5
         [HttpDelete("{email}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
