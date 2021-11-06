@@ -13,10 +13,7 @@
           <!--Nombre-->
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="Nombre" formControlName="nombre" required>
-              <mat-error *ngIf="planModificacionForm.controls['nombre'].hasError('required')">
-                El nombre es <strong>obligatorio</strong>
-              </mat-error>
+              <input matInput placeholder="Nombre" formControlName="nombre">
             </mat-form-field>
           </div>
 
@@ -52,9 +49,6 @@
               <mat-error *ngIf="planModificacionForm.controls['cantColaciones'].hasError('required')">
                 La cantidad de colaciones permitidas es un campo <strong>obligatorio</strong>
               </mat-error>
-              <!--<mat-error *ngIf="planModificacionForm.controls['cantColaciones'].hasError('pattern') && planModificacionForm.controls['cantColaciones'].value < 0">
-                La cantidad de colaciones permitidas tiene que ser un número entero
-              </mat-error>-->
             </mat-form-field>
           </div>
 
@@ -274,9 +268,9 @@
 
       </mat-card-content>
 
-        <mat-card-actions>
-          <button mat-raised-button color="primary" type="submit">Guardar</button>
-        </mat-card-actions>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="planModificacionForm.invalid">Guardar</button>
+      </mat-card-actions>
     </mat-card>
   </form>
 </app-navigation>

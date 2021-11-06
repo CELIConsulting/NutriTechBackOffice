@@ -36,7 +36,6 @@ export class ListadoPlanesComponent implements OnInit {
   }
 
   cargarGrilla() {
-    debugger;
     this.planesService.getAllPlans()
       .subscribe(
         planes => {

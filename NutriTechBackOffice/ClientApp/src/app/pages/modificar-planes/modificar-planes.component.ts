@@ -34,17 +34,17 @@ export class ModificarPlanesComponent implements OnInit {
 
   //Spinner
   loading$ = this.loader.loading$;
-
+  
   planModificacionForm = this.fb.group({
-    nombre: [null, Validators.required],
+    nombre: [{ value: '', disabled: true }],
     tipo: [null, Validators.required],
-    litrosAgua: [null],
+    litrosAgua: [null, Validators.required],
     cantColaciones: [null, Validators.required],
-    desayuno: [null, Validators.required],
-    almuerzo: [null, Validators.required],
-    merienda: [null, Validators.required],
-    cena: [null, Validators.required],
-    colacion: [null, Validators.required],
+    desayuno: [null],
+    almuerzo: [null],
+    merienda: [null],
+    cena: [null],
+    colacion: [null],
   });
 
   roles: any[] = [];
@@ -92,11 +92,6 @@ export class ModificarPlanesComponent implements OnInit {
     this.planModificacionForm.controls.tipo.setValue(planData.tipo);
     this.planModificacionForm.controls.litrosAgua.setValue(planData.cantAguaDiaria);
     this.planModificacionForm.controls.cantColaciones.setValue(planData.cantColacionesDiarias);
-    this.planModificacionForm.controls.desayuno.setValue(planData.desayuno);
-    this.planModificacionForm.controls.almuerzo.setValue(planData.almuerzo);
-    this.planModificacionForm.controls.merienda.setValue(planData.merienda);
-    this.planModificacionForm.controls.cena.setValue(planData.cena);
-    this.planModificacionForm.controls.colacion.setValue(planData.colacion);
   }
 
 
@@ -114,11 +109,7 @@ export class ModificarPlanesComponent implements OnInit {
 
   private buildplanModificacionForm(): PlanAlimentacionForm {
     return {
-      // 'Nombre': this.planModificacionForm.value['nombre'],
-      // 'Tipo': this.planModificacionForm.value['tipo'],
-      // 'CantAguaDiaria': this.planModificacionForm.value['litrosAgua'],
-      // 'CantColacionesDiarias': this.planModificacionForm.value['colaciones'],
-      'Nombre': this.planModificacionForm.value['nombre'],
+      'Nombre': this.planModificacionForm.getRawValue()['nombre'],
       'Tipo': this.planModificacionForm.value['tipo'],
       'CantAguaDiaria': this.planModificacionForm.value['litrosAgua'],
       'CantColacionesDiarias': this.planModificacionForm.value['cantColaciones'],
@@ -132,8 +123,6 @@ export class ModificarPlanesComponent implements OnInit {
 
   private updatePlanInfo(nombre: string, planModificacionForm: PlanAlimentacionForm) {
     this.disableFormWhileLoading();
-
-    debugger;
     this.planService.updatePlan(nombre, planModificacionForm).subscribe(
       data => {
         this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue correctamente modificado." } });
