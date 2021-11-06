@@ -37,10 +37,8 @@ namespace NutriTechBackOffice.Services.Users.Queries
             {
                 foreach (var item in existingPatientDailyUpload)
                 {
-                    Dictionary<string, object> userDailyUpload = item.ToDictionary();
-                    string json = JsonConvert.SerializeObject(userDailyUpload);
-                    DailyUploadRegistry  dailyUploadRegistry = JsonConvert.DeserializeObject<DailyUploadRegistry>(json);
-                    Debug.WriteLine("objecto final {0}, nombre de la imagen: {1}", dailyUploadRegistry, dailyUploadRegistry.ImageName);
+                    DailyUploadRegistry dailyUploadRegistry = item.ConvertTo<DailyUploadRegistry>();
+                    Debug.WriteLine("objecto final {0}, nombre de la imagen: {1}", dailyUploadRegistry, dailyUploadRegistry.imageName);
                     //dailyUploadRegistry.UrlImage = Convert.ToBase64String();
                     DailyUploads.Add(dailyUploadRegistry);
                 }

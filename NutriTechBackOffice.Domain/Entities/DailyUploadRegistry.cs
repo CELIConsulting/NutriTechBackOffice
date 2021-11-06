@@ -9,14 +9,14 @@ namespace NutriTechBackOffice.Domain.Entities
     public class DailyUploadRegistry
     {
         [FirestoreProperty]
-        public string ImageName { get; set; }
+        public string imageName { get; set; }
         [FirestoreProperty]
-        public string UrlImage { get; set; }
+        public string urlImage { get; set; }
         [FirestoreProperty]
-        public string DoExcersice { get; set; }
+        public bool doExcersice { get; set; }
         [FirestoreProperty]
-        public string Observations { get; set; }
-        [FirestoreProperty, ServerTimestamp]
-        public Timestamp LastAssignment { get; set; }
+        public string observations { get; set; }
+        [FirestoreProperty]
+        public DateTimeOffset lastAssignment { get; set; }
     }
 }

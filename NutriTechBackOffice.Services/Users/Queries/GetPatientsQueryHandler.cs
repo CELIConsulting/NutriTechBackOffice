@@ -33,10 +33,11 @@ namespace NutriTechBackOffice.Services.Users.Queries
                 {
                     if (document.Exists)
                     {
-                        Dictionary<string, object> patient = SerializedUserHelper.GetUser(document);
+                        //Dictionary<string, object> patient = SerializedUserHelper.GetUser(document);
 
-                        string patientJSON = JsonConvert.SerializeObject(patient);
-                        Paciente newPatient = JsonConvert.DeserializeObject<Paciente>(patientJSON);
+                        //string patientJSON = JsonConvert.SerializeObject(patient);
+                        //Paciente newPatient = JsonConvert.DeserializeObject<Paciente>(patientJSON);
+                        Paciente newPatient = document.ConvertTo<Paciente>();
                         _patients.Add(newPatient);
                     }
 
