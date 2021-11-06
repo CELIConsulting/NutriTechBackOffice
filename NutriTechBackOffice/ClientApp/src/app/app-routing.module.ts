@@ -12,6 +12,8 @@ import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan
 import { ListadoUsuariosComponent } from './pages/listado-usuarios/listado-usuarios.component';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
+import { ListadoPlanesComponent } from './pages/listado-planes/listado-planes.component';
+import { ModificarPlanesComponent } from './pages/modificar-planes/modificar-planes.component';
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo([""]);
@@ -54,11 +56,26 @@ const routes: Routes = [
   },
 
   {
+    path: 'listado-planes',
+    component: ListadoPlanesComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+
+  {
     path: 'modificar-usuarios/:email/:rol',
     component: ModificarUsuariosComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
+
+  {
+    path: 'modificar-planes/:nombre',
+    component: ModificarPlanesComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+
 
 ]
 

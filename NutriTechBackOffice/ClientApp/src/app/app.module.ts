@@ -29,6 +29,8 @@ import { NetworkInterceptor } from './services/interceptors/network.interceptor'
 import { BarGraphicComponent } from './components/bar-graphic/bar-graphic.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PiechartGridComponent } from './components/piechart-grid/piechart-grid.component';
+import { ListadoPlanesComponent } from './pages/listado-planes/listado-planes.component';
+import { ModificarPlanesComponent } from './pages/modificar-planes/modificar-planes.component';
 
 
 @NgModule({
@@ -48,6 +50,8 @@ import { PiechartGridComponent } from './components/piechart-grid/piechart-grid.
     LoadingSpinnerComponent,
     BarGraphicComponent,
     PiechartGridComponent,
+    ListadoPlanesComponent,
+    ModificarPlanesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

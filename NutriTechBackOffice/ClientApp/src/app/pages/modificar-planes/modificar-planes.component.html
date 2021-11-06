@@ -1,0 +1,278 @@
+<!--Loading Spinner-->
+<app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
+
+<app-navigation>
+  <form [formGroup]="planModificacionForm" (ngSubmit)="updatePlan()">
+    <mat-card class="plan-card">
+      <mat-card-header>
+        <mat-card-title class="header-ml-0">Información del plan:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+
+          <!--Nombre-->
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nombre" formControlName="nombre">
+            </mat-form-field>
+          </div>
+
+
+          <!--Cantidad de agua diaria-->
+          <div class="col">
+            <mat-form-field>
+              <input matInput type="number" placeholder="Litros por dia" formControlName="litrosAgua" required>
+              <mat-error *ngIf="planModificacionForm.controls['litrosAgua'].hasError('required')">
+                La cantidad de litros de agua a tomar es un campo <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <!--Tipo-->
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Tipo" formControlName="tipo" required>
+              <mat-error *ngIf="planModificacionForm.controls['tipo'].hasError('required')">
+                El tipo es <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!--Colaciones-->
+          <div class="col">
+            <mat-form-field>
+              <input matInput type="number" step="1" placeholder="Colaciones por dia" formControlName="cantColaciones" required>
+              <mat-error *ngIf="planModificacionForm.controls['cantColaciones'].hasError('required')">
+                La cantidad de colaciones permitidas es un campo <strong>obligatorio</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <!-- Seccion desayuno -->
+        <section class="row">
+          <div class="col">
+
+            <div>
+              <h6>Desayuno:</h6>
+              <mat-form-field class="mid-width">
+                <input matInput type="text" placeholder="Ingrese una opción para el desayuno..." formControlName="desayuno" />
+              </mat-form-field>
+              <button mat-fab color="primary" class="btnAdd" type="button" (click)="addOpcionDesayuno()">+</button>
+            </div>
+
+            <div *ngIf="Desayuno && Desayuno.length">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Opciones cargadas para el desayuno</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="mb-5" *ngFor="let opcion of Desayuno; let position = index">
+                    <td>
+                      {{opcion}}
+                    </td>
+                    <td>
+                      <button mat-icon-button type="button" (click)="removeOpcionDesayuno(position)">
+                        <mat-icon aria-label="Delete breakfast option button">delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="!Desayuno.length">
+              <span>No se han cargado todavía opciones para el desayuno.</span>
+            </div>
+
+          </div>
+        </section>
+
+        <hr />
+
+        <!-- Seccion Almuerzo -->
+        <section class="row">
+          <div class="col">
+
+            <div>
+              <h6>Almuerzo:</h6>
+              <mat-form-field class="mid-width">
+                <input matInput type="text" placeholder="Ingrese una opción para el almuerzo..." formControlName="almuerzo" />
+              </mat-form-field>
+              <button mat-fab color="primary" class="btnAdd" type="button" (click)="addOpcionAlmuerzo()">+</button>
+            </div>
+
+            <div *ngIf="Almuerzo && Almuerzo.length">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Opciones cargadas para el almuerzo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="mb-5" *ngFor="let opcion of Almuerzo; let position = index">
+                    <td>
+                      {{opcion}}
+                    </td>
+                    <td>
+                      <button mat-icon-button type="button" (click)="removeOpcionAlmuerzo(position)">
+                        <mat-icon aria-label="Delete lunch option button">delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="!Almuerzo.length">
+              <span>No se han cargado todavía opciones para el almuerzo.</span>
+            </div>
+
+          </div>
+        </section>
+
+
+        <hr />
+
+        <!-- Seccion Merienda -->
+        <section class="row">
+          <div class="col">
+
+            <div>
+              <h6>Merienda:</h6>
+              <mat-form-field class="mid-width">
+                <input matInput type="text" placeholder="Ingrese una opción para la merienda..." formControlName="merienda" />
+              </mat-form-field>
+              <button mat-fab color="primary" class="btnAdd" type="button" (click)="addOpcionMerienda()">+</button>
+            </div>
+
+            <div *ngIf="Merienda && Merienda.length">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Opciones cargadas para la merienda</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="mb-5" *ngFor="let opcion of Merienda; let position = index">
+                    <td>
+                      {{opcion}}
+                    </td>
+                    <td>
+                      <button mat-icon-button type="button" (click)="removeOpcionMerienda(position)">
+                        <mat-icon aria-label="Delete snack option button">delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="!Merienda.length">
+              <span>No se han cargado todavía opciones para la merienda.</span>
+            </div>
+
+          </div>
+        </section>
+
+        <hr />
+
+        <!-- Seccion Cena -->
+        <section class="row">
+          <div class="col">
+
+            <div>
+              <h6>Cena:</h6>
+              <mat-form-field class="mid-width">
+                <input matInput type="text" placeholder="Ingrese una opción para la cena..." formControlName="cena" />
+              </mat-form-field>
+              <button mat-fab color="primary" class="btnAdd" type="button" (click)="addOpcionCena()">+</button>
+            </div>
+
+            <div *ngIf="Cena && Cena.length">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Opciones cargadas para la cena</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="mb-5" *ngFor="let opcion of Cena; let position = index">
+                    <td>
+                      {{opcion}}
+                    </td>
+                    <td>
+                      <button mat-icon-button type="button" (click)="removeOpcionCena(position)">
+                        <mat-icon aria-label="Delete dinner option button">delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="!Cena.length">
+              <span>No se han cargado todavía opciones para la cena.</span>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Seccion Colacion -->
+        <section class="row">
+          <div class="col">
+
+            <div>
+              <h6>Colación:</h6>
+              <mat-form-field class="mid-width">
+                <input matInput type="text" placeholder="Ingrese una opción para la colacion..." formControlName="colacion" />
+              </mat-form-field>
+              <button mat-fab color="primary" class="btnAdd" type="button" (click)="addOpcionColacion()">+</button>
+            </div>
+
+            <div *ngIf="Colacion && Colacion.length">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Opciones cargadas para la colación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="mb-5" *ngFor="let opcion of Colacion; let position = index">
+                    <td>
+                      {{opcion}}
+                    </td>
+                    <td>
+                      <button mat-icon-button type="button" (click)="removeOpcionColacion(position)">
+                        <mat-icon aria-label="Delete snack option button">delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="!Colacion.length">
+              <span>No se han cargado todavía opciones para la colacion.</span>
+            </div>
+
+          </div>
+        </section>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="planModificacionForm.invalid">Guardar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</app-navigation>
+
+
