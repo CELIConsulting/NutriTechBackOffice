@@ -30,6 +30,6 @@ namespace NutriTechBackOffice.Domain.Entities
         public string Telefono { get; set; }
 
         [FirestoreProperty, ServerTimestamp]
-        public Timestamp LastUpdated { get; set; }
+        public object LastUpdated { get; set; }
     }
 }

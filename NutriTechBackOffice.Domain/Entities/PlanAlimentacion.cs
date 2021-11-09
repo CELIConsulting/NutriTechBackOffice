@@ -36,6 +36,6 @@ namespace NutriTechBackOffice.Domain.Entities
         public List<string> Colacion { get; set; }
 
         [FirestoreProperty, ServerTimestamp]
-        public Timestamp LastUpdated { get; set; }
+        public object LastUpdated { get; set; }
     }
 }

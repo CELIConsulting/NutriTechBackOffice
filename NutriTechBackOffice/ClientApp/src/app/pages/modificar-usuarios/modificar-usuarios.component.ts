@@ -204,10 +204,9 @@ export class ModificarUsuariosComponent implements OnInit {
       paciente.MedidaCintura = this.userModificacionForm.value['medidaCintura'];
       paciente.TipoAlimentacion = this.userModificacionForm.value['tipoAlimentacion'];
       paciente.PlanAsignado = this.pacienteModificar.planAsignado;
-      //Fix problem with generated ValueKind value in lastAssignment field
-      paciente.PlanAsignado.lastAssignment = null;
+      //Fijarse si el paciente ya tiene un plan asignado o no para que no rompa al asignar lastAssignment
+      if (paciente.PlanAsignado) { paciente.PlanAsignado.lastAssignment = null; }
 
-      console.log(paciente);
       return paciente;
 
     } catch (e) {

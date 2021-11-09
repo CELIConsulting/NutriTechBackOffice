@@ -123,7 +123,6 @@ export class AsignacionPlanComponent implements OnInit {
   }
 
   updatePacienteData(pacienteForm: PacienteForm) {
-    console.log(pacienteForm);
     this.disableFormWhileLoading();
 
     this.usersService.updatePaciente(this.pacienteSeleccionado.email, pacienteForm).subscribe
@@ -137,6 +136,7 @@ export class AsignacionPlanComponent implements OnInit {
         }
         ,
         (error) => {
+          console.log(error)
           this.dialog.open(PopUpComponent, { data: { title: "Oops!", message: "No se pudo asignar un plan al paciente." } });
         }
       );
