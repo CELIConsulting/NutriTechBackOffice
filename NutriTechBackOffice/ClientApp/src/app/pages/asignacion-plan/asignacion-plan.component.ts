@@ -99,7 +99,7 @@ export class AsignacionPlanComponent implements OnInit {
     return {
       planAlimentacion: this.asignacionPlanForm.controls["planesAlimentacion"].value,
       notasAdicionales: this.asignacionPlanForm.controls["notasAdicionales"].value,
-      lastAsignacion: new Date(),
+      lastAssignment: null,
     };
   }
 
