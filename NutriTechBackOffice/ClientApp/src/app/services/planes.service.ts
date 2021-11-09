@@ -30,4 +30,19 @@ export class PlanesService {
     return this.http.get<Array<PlanAlimentacion>>(`${env.apiBaseUrl}/Plan/`, this.httpOptions);
   }
 
+  //GET: Obtener plan por nombre
+  getPlanById(nombre: String): Observable<PlanAlimentacion> {
+    return this.http.get<PlanAlimentacion>(`${env.apiBaseUrl}/Plan/${nombre}`, this.httpOptions)
+  }
+
+  //DELETE: Borrar un plan
+  deletePlan(nombre: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${env.apiBaseUrl}/Plan/${nombre}`, this.httpOptions);
+  }
+
+  //PUT: Actualizar la información de un plan
+  updatePlan(nombre: string, plan: PlanAlimentacionForm): Observable<PlanAlimentacion> {
+    return this.http.put<PlanAlimentacion>(`${env.apiBaseUrl}/Plan/${nombre}`, plan, this.httpOptions);
+  }
+
 }
