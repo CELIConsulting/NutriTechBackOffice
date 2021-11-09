@@ -63,9 +63,7 @@ namespace NutriTechBackOffice.Services.Planes.Commands
 
         private async Task<WriteResult> UpdatePlanInFirestoreDB(PlanAlimentacion plan)
         {
-            string jsonPlanes = JsonConvert.SerializeObject(plan);
-            var firestorePlanes = JsonConvert.DeserializeObject<ExpandoObject>(jsonPlanes);
-            return await this._PlansRef.Document(plan.Nombre).UpdateAsync(firestorePlanes);
+            return await this._PlansRef.Document(plan.Nombre).SetAsync(plan, SetOptions.MergeAll);
         }
     }
 }
