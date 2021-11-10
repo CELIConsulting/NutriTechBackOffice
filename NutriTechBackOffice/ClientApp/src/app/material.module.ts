@@ -20,6 +20,7 @@ import {
   MatProgressSpinnerModule,
   MatTooltipModule,
   MatDatepickerModule,
+  MatCheckboxModule,
   MAT_DATE_LOCALE,
 } from '@angular/material'
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter'
@@ -47,7 +48,8 @@ import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/m
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatMomentDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatToolbarModule,
@@ -71,7 +73,8 @@ import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/m
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatMomentDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },

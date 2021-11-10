@@ -1,7 +1,6 @@
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Role } from '../../interfaces/role';
 import { User } from '../../interfaces/user';
 import { UserForm } from '../../interfaces/user-form';
 import { RolesService } from '../../services/roles.service';
@@ -46,7 +45,7 @@ export class ModificarUsuariosComponent implements OnInit {
   userModificacionForm = this.fb.group({
     firstName: [null, Validators.required],
     lastName: [null, Validators.required],
-    email: [{ value: '', disabled: true}],
+    email: [{ value: '', disabled: true }],
     password: [null, Validators.required],
     rol: [null, Validators.required],
     fechaNac: [null, Validators.required],
@@ -153,7 +152,7 @@ export class ModificarUsuariosComponent implements OnInit {
     if (this.userModificacionForm.valid) {
 
       if (this.rolParam == this.rolSeleccionado) {
-        
+
         this.updateWithoutRolSelection();
       } else {
         this.updateWithRolSelection();
@@ -167,7 +166,7 @@ export class ModificarUsuariosComponent implements OnInit {
     this.userModificacionForm.controls.lastName.setValue(userData.apellido);
     this.userModificacionForm.controls.email.setValue(userData.email);
     this.userModificacionForm.controls.password.setValue(userData.password);
-    this.userModificacionForm.controls.fechaNac.setValue(userData.fechaNacimiento? this.buildMomentForPicker(userData.fechaNacimiento) : null);
+    this.userModificacionForm.controls.fechaNac.setValue(userData.fechaNacimiento ? this.buildMomentForPicker(userData.fechaNacimiento) : null);
     this.userModificacionForm.controls.phoneNumber.setValue(userData.telefono);
     this.rolSeleccionado = userData.rol;
   }
@@ -188,7 +187,7 @@ export class ModificarUsuariosComponent implements OnInit {
     return _moment([year, month, day])
   }
 
-  private buildDateFromPicker():Date {
+  private buildDateFromPicker(): Date {
     let moment: Moment = this.userModificacionForm.value['fechaNac'];
     let stringDate = moment.format();
     return new Date(stringDate);
@@ -204,6 +203,10 @@ export class ModificarUsuariosComponent implements OnInit {
       paciente.Peso = this.userModificacionForm.value['peso'];
       paciente.MedidaCintura = this.userModificacionForm.value['medidaCintura'];
       paciente.TipoAlimentacion = this.userModificacionForm.value['tipoAlimentacion'];
+      paciente.PlanAsignado = this.pacienteModificar.planAsignado;
+      //Fijarse si el paciente ya tiene un plan asignado o no para que no rompa al asignar lastAssignment
+      if (paciente.PlanAsignado) { paciente.PlanAsignado.lastAssignment = null; }
+
       return paciente;
 
     } catch (e) {
@@ -250,7 +253,6 @@ export class ModificarUsuariosComponent implements OnInit {
 
   private updateUserFromPatient(email: string, paciente: PacienteForm) {
     this.disableFormWhileLoading();
-
     this.usersService.updateUserWithoutPatientData(email, paciente).subscribe(
       response => {
         let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente modificado." } });

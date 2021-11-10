@@ -7,5 +7,4 @@ export interface Paciente extends User {
   medidaCintura: number;
   tipoAlimentacion: string;
   planAsignado: PlanAsignado;
-  lastAssignment: Date;
 }
