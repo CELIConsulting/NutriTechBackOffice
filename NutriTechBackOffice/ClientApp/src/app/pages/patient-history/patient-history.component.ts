@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { DailyUpload } from "src/app/interfaces/daily-upload";
 import { AuthService } from "src/app/services/auth.service";
 import { LoadingSpinnerService } from "src/app/services/loading-spinner.service";
 import { UsersService } from "src/app/services/users.service";
@@ -13,6 +14,8 @@ import { UsersService } from "src/app/services/users.service";
 export class PatientHistoryComponent implements OnInit {
   loading$ = this.loader.loading$;
   emailParam: string;
+  dailyData: DailyUpload[];
+
 
   constructor(
     private usersService: UsersService,
@@ -33,15 +36,16 @@ export class PatientHistoryComponent implements OnInit {
     this.getRouteParams();
     this.usersService.getPattientDailyUpload(this.emailParam).subscribe(
       (resp) => {
-        console.log('Response: ',resp)
+        this.dailyData = resp;
+        console.log(this.dailyData);
       },
       (error) => {
-        console.log('Error: ',error)
+        console.log('Error: ', error);
       }
     );
   }
 
   ngOnInit() {
-    this.loadDailyUploads()
+    this.loadDailyUploads();
   }
 }

@@ -7,6 +7,8 @@ import { User } from '../interfaces/user';
 import { Paciente } from '../interfaces/paciente';
 import { PacienteForm } from '../interfaces/paciente-form';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { DailyUploadResponse } from '../interfaces/daily-upload-response';
+import { DailyUpload } from '../interfaces/daily-upload';
 
 @Injectable({
   providedIn: 'root'
@@ -72,8 +74,8 @@ export class UsersService {
   }
 
   //GET: trae toda la colecion de carga diaria de un usuario
-  getPattientDailyUpload(email: string) {
-    return this.http.get(`${env.apiBaseUrl}/User/Patients/DailyUpload/${email}`, this.httpOptions);
+  getPattientDailyUpload(email: string): Observable<DailyUpload[]> {
+    return this.http.get<DailyUpload[]>(`${env.apiBaseUrl}/User/Patients/DailyUpload/${email}`, this.httpOptions);
   }
 
 }

@@ -6,7 +6,7 @@ using System.Text;
 namespace NutriTechBackOffice.Domain.Entities
 {
     [FirestoreData]
-    public class DailyUploadRegistry
+    public class FoodUploadRegistry
     {
         [FirestoreProperty]
         public string imageName { get; set; }
