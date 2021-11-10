@@ -32,48 +32,25 @@ export class PiechartGridComponent implements OnInit {
   }
 
   cargarGrafico() {
-    var pacienteOmnivoro=new Array();
-    var pacienteVegetariano=new Array();
-    var pacienteVegano=new Array();
-    var pacienteSindefinir=new Array();
     this.usersService.getPatients()
       .subscribe(
-        patient => {
-          patient.forEach(element => {
-            
-            if(element.tipoAlimentacion=="Omnivoro")
-            {             
-              pacienteOmnivoro.push(element);
-            }
-            else if(element.tipoAlimentacion=="Vegetariano")
-            {
-              pacienteVegetariano.push(element);
-            }
-            else if(element.tipoAlimentacion=="Vegano")
-            {
-              pacienteVegano.push(element);
-            }
-            else if(element.tipoAlimentacion==null)
-            {
-              pacienteSindefinir.push(element);
-            }
-          }); 
+        patient => {         
           this.single = [
             {
               "name": "Omnivoros",
-              "value": pacienteOmnivoro.length
+              "value": patient.filter(elemento=>elemento.tipoAlimentacion=="Omnivoro").length
             },
             {
               "name": "Vegetarianos",
-              "value": pacienteVegetariano.length
+              "value": patient.filter(elemento=>elemento.tipoAlimentacion=="Vegetariano").length
             },
             {
               "name": "Veganos",
-              "value": pacienteVegano.length
+              "value": patient.filter(elemento=>elemento.tipoAlimentacion=="Vegano").length
             },
             {
               "name": "Sin Definir",
-              "value": pacienteSindefinir.length
+              "value": patient.filter(elemento=>elemento.tipoAlimentacion==null).length
             }
           ];
         },

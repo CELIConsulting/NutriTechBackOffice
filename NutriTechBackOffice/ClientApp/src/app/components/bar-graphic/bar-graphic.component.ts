@@ -40,29 +40,17 @@ export class BarGraphicComponent implements OnInit {
   }
 
   cargarGrafico() {
-    var pacienteConPlan=new Array();
-    var pacienteSinPlan=new Array();
     this.usersService.getPatients()
       .subscribe(
         patient => {
-          patient.forEach(element => {
-            
-            if(element.planAsignado!=null)
-            {             
-              pacienteConPlan.push(element);
-            }
-            else{
-              pacienteSinPlan.push(element);
-            }
-          }); 
           this.single = [
             {
               "name": "Con plan",
-              "value": pacienteConPlan.length
+              "value": patient.filter(elemento=>elemento.planAsignado!=null).length
             },
             {
               "name": "Sin plan",
-              "value": pacienteSinPlan.length
+              "value": patient.filter(elemento=>elemento.planAsignado==null).length
             }
           ];
         },

@@ -22,12 +22,17 @@ import { MaterialModule } from './material.module';
 import { AsignacionPlanComponent } from './pages/asignacion-plan/asignacion-plan.component';
 import { FormUserComponent } from './pages/form-user/form-user.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ListadoPlanesComponent } from './pages/listado-planes/listado-planes.component';
 import { ListadoUsuariosComponent } from './pages/listado-usuarios/listado-usuarios.component';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
+import { ModificarPlanesComponent } from './pages/modificar-planes/modificar-planes.component';
 import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
 import { PatientHistoryComponent } from './pages/patient-history/patient-history.component';
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { NetworkInterceptor } from './services/interceptors/network.interceptor';
+
+
+
 
 
 @NgModule({
@@ -48,6 +53,8 @@ import { NetworkInterceptor } from './services/interceptors/network.interceptor'
     BarGraphicComponent,
     PiechartGridComponent,
     PatientHistoryComponent,
+    ListadoPlanesComponent,
+    ModificarPlanesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

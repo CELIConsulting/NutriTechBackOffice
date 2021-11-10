@@ -41,7 +41,6 @@ namespace NutriTechBackOffice.Services.Users.Commands
                         user = _mapper.Map<Nutricionista>(request.Usuario);
                         break;
                     default:
-                        //user = _mapper.Map<User>(request.Usuario);
                         break;
                 }
 

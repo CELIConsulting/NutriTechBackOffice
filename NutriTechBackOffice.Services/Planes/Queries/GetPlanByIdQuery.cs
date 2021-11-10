@@ -8,12 +8,12 @@ namespace NutriTechBackOffice.Services.Planes.Queries
 {
     public class GetPlanByIdQuery: IRequest<PlanAlimentacion>
     {
-        private PlanAlimentacion _planAlimentacion;
+        public string Name { get; }
 
         //El id es el nombre del plan
-        public GetPlanByIdQuery(string id)
+        public GetPlanByIdQuery(string name)
         {
-
+            Name = name;
         }
 
     }
