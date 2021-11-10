@@ -62,9 +62,7 @@ namespace NutriTechBackOffice.Services.Users.Commands
 
         private async Task<WriteResult> UpdateUserInFirestoreDB(User usuario)
         {
-            string jsonUsuarios = JsonConvert.SerializeObject(usuario);
-            var firestoreUsuarios = JsonConvert.DeserializeObject<ExpandoObject>(jsonUsuarios);
-            return await this._usersRef.Document(usuario.Email).UpdateAsync(firestoreUsuarios);
+            return await this._usersRef.Document(usuario.Email).SetAsync(usuario, SetOptions.MergeAll);
         }
     }
 }

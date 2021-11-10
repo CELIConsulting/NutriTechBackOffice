@@ -15,7 +15,7 @@ namespace NutriTechBackOffice.Domain.Entities
         public string NotasAdicionales { get; set; }
 
         [FirestoreProperty, ServerTimestamp]
-        public Timestamp LastAssignment { get; set; }
+        public object LastAssignment { get; set; }
 
     }
 }
