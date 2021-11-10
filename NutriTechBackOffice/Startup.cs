@@ -10,6 +10,7 @@ using MediatR;
 using System;
 using System.Reflection;
 using Google.Cloud.Firestore;
+using Google.Cloud.Storage.V1;
 using AutoMapper;
 using NutriTechBackOffice.Services.Users.Automapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -43,6 +44,7 @@ namespace NutriTechBackOffice
             services.AddSingleton<FirestoreDb>(
                 provider => FirestoreDb.Create(GetFirestoreProjectId()));
             services.AddSingleton<FirebaseAuth>(FirebaseAuth.GetAuth(FirebaseApp.Create(GetFirestoreProjectId())));
+            services.AddSingleton<StorageClient>(StorageClient.Create());
             services.AddAutoMapper(typeof(ConfigurationMapperProfile));
             services.AddControllersWithViews();
             services
