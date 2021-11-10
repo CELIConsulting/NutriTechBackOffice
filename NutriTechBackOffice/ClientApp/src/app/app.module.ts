@@ -31,6 +31,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PiechartGridComponent } from './components/piechart-grid/piechart-grid.component';
 import { ListadoPlanesComponent } from './pages/listado-planes/listado-planes.component';
 import { ModificarPlanesComponent } from './pages/modificar-planes/modificar-planes.component';
+import { ProgresoPacienteComponent } from './pages/progreso-paciente/progreso-paciente.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { ModificarPlanesComponent } from './pages/modificar-planes/modificar-pla
     PiechartGridComponent,
     ListadoPlanesComponent,
     ModificarPlanesComponent,
+    ProgresoPacienteComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

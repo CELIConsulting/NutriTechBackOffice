@@ -14,6 +14,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
 import { ListadoPlanesComponent } from './pages/listado-planes/listado-planes.component';
 import { ModificarPlanesComponent } from './pages/modificar-planes/modificar-planes.component';
+import { ProgresoPacienteComponent } from './pages/progreso-paciente/progreso-paciente.component';
+
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo([""]);
@@ -76,6 +78,12 @@ const routes: Routes = [
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
 
+  {
+    path: 'progreso-paciente/:email',
+    component: ProgresoPacienteComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
 
 ]
 
