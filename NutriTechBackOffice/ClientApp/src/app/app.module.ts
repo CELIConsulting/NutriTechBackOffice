@@ -30,6 +30,7 @@ import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar
 import { PatientHistoryComponent } from './pages/patient-history/patient-history.component';
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { NetworkInterceptor } from './services/interceptors/network.interceptor';
+import { NoDataResultComponent } from './components/no-data-result/no-data-result.component';
 
 
 
@@ -55,6 +56,7 @@ import { NetworkInterceptor } from './services/interceptors/network.interceptor'
     PatientHistoryComponent,
     ListadoPlanesComponent,
     ModificarPlanesComponent,
+    NoDataResultComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -1,7 +1,7 @@
 <app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
 
 <app-navigation>
-  <div class="content">
+  <mat-card>
     <div fxLayout="row wrap" fxLayoutGap="16px grid">
       <h1 class="centrar-titulos">Cargas diarias realizadas</h1>
     </div>
@@ -9,7 +9,7 @@
       <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of dailyData">
         <mat-card class="example-card mat-elevation-z4">
           <mat-card-header class="text-overflow">
-            <mat-card-title>{{item.imageName}}</mat-card-title>
+            <mat-card-title>{{item.food || null}}</mat-card-title>
           </mat-card-header>
           <img mat-card-lg-image src={{item.urlImage}} alt="photo">
           <mat-card-content>
@@ -20,6 +20,6 @@
         </mat-card>
       </div>
     </div>
-  </div>
+  </mat-card>
 
 </app-navigation>

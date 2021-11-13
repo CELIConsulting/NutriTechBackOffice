@@ -2,88 +2,92 @@
 <app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
 
 <app-navigation>
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <mat-card class="user-card">
-      <mat-card-header>
-        <mat-card-title>Información del usuario</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="row">
-          <div class="col-sm-4">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Nombre" formControlName="firstName" required>
-              <mat-error *ngIf="userForm.controls['firstName'].hasError('required')">
-                El nombre es <strong>obligatorio</strong>
-              </mat-error>
-            </mat-form-field>
+  <div class="container">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <mat-card class="mat-elevation-z8 mt-5">
+        <mat-card-header>
+          <mat-card-title>Información del usuario</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Nombre" formControlName="firstName" required>
+                <mat-error *ngIf="userForm.controls['firstName'].hasError('required')">
+                  El nombre es <strong>obligatorio</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Apellido" formControlName="lastName" required>
+                <mat-error *ngIf="userForm.controls['lastName'].hasError('required')">
+                  El apellido es <strong>obligatorio</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
           </div>
-          <div class="col-sm-4">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Apellido" formControlName="lastName" required>
-              <mat-error *ngIf="userForm.controls['lastName'].hasError('required')">
-                El apellido es  <strong>obligatorio</strong>
-              </mat-error>
-            </mat-form-field>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Email" formControlName="email" [errorStateMatcher]="matcher" required>
+                <mat-error *ngIf="userForm.controls['email'].hasError('required')">
+                  El email es <strong>obligatorio</strong>
+                </mat-error>
+                <mat-error *ngIf="userForm.controls['email'].hasError('email')">
+                  El email es <strong>invalido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Contraseña" formControlName="password" [type]="hide? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="userForm.controls['password'].hasError('required')">
+                  La contraseña es <strong>obligatoria</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Email" formControlName="email" [errorStateMatcher]="matcher" required>
-              <mat-error *ngIf="userForm.controls['email'].hasError('required')">
-                El email es <strong>obligatorio</strong>
-              </mat-error>
-              <mat-error *ngIf="userForm.controls['email'].hasError('email')">
-                El email es <strong>invalido</strong>
-              </mat-error>
-            </mat-form-field>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="datePicker" formControlName="fechaNac"
+                  placeholder="Seleccionar fecha de nacimiento">
+                <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker></mat-datepicker>
+                <mat-error *ngIf="userForm.controls['fechaNac'].hasError('required')">
+                  La fecha de nacimiento es <strong>obligatoria</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Teléfono" formControlName="phoneNumber">
+              </mat-form-field>
+            </div>
           </div>
-          <div class="col-sm-4">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Contraseña" formControlName="password" [type]="hide? 'password' : 'text'">
-              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              <mat-error *ngIf="userForm.controls['password'].hasError('required')">
-                La contraseña es <strong>obligatoria</strong>
-              </mat-error>
-            </mat-form-field>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field>
+                <mat-label>Roles</mat-label>
+                <mat-select formControlName="rol" required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let rol of roles" [value]="rol">
+                    {{rol.nombre}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForm.controls['rol'].hasError('required')">Por favor elija un rol</mat-error>
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4">
-            <mat-form-field class="full-width">
-              <input matInput [matDatepicker]="datePicker" formControlName="fechaNac" placeholder="Seleccionar fecha de nacimiento">
-              <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-              <mat-datepicker #datePicker></mat-datepicker>
-              <mat-error *ngIf="userForm.controls['fechaNac'].hasError('required')">
-                La fecha de nacimiento es <strong>obligatoria</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-4">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Teléfono" formControlName="phoneNumber">
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4">
-            <mat-form-field>
-              <mat-label>Roles</mat-label>
-              <mat-select formControlName="rol" required>
-                <mat-option>--</mat-option>
-                <mat-option *ngFor="let rol of roles" [value]="rol">
-                  {{rol.nombre}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="userForm.controls['rol'].hasError('required')">Por favor elija un rol</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Guardar</button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+
 
 </app-navigation>

@@ -2,132 +2,136 @@
 <app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
 
 <app-navigation>
+  <div class="container">
+    <form [formGroup]="asignacionPlanForm" (ngSubmit)="asignarPlan()">
 
-  <form [formGroup]="asignacionPlanForm" (ngSubmit)="asignarPlan()">
-
-    <mat-card class="plan-card">
-      <mat-card-header>
-        <mat-card-title class="header-ml-0">Asignación de planes:</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-
-
-        <!-- VISUALIZACION PLAN ACTUAL -->
-        <section>
-          <div class="row">
-
-            <div class="col">
-              <mat-form-field>
-                <mat-label>Pacientes</mat-label>
-                <mat-select formControlName="pacientes" [(ngModel)]="pacienteSeleccionado" [disabled]="modoEdicion" required>
-                  <mat-option [value]="null">-- Seleccione un paciente --</mat-option>
-                  <mat-option *ngFor="let paciente of pacientesRegistrados" [value]="paciente">
-                    {{paciente.apellido | uppercase }}, {{paciente.nombre | uppercase}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="asignacionPlanForm.controls['pacientes'].hasError('required')">Por favor elija un paciente</mat-error>
-              </mat-form-field>
-            </div>
+      <mat-card class="plan-card mat-elevation-z8 mt-5">
+        <mat-card-header>
+          <mat-card-title class="header-ml-0">Asignación de planes:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
 
 
-            <!--Visualizar plan actual del paciente-->
-            <div class="col">
-              <div *ngIf="pacienteSeleccionado">
-                <p>
-                  Plan Asignado: <span *ngIf="pacienteSeleccionado.planAsignado?.planAlimentacion?.length;else noHayPlanAlimentacion">{{ pacienteSeleccionado.planAsignado?.planAlimentacion}}</span>
-                  <ng-template #noHayPlanAlimentacion>
-                    <span>No hay un plan cargado</span>
-                  </ng-template>
-                </p>
+          <!-- VISUALIZACION PLAN ACTUAL -->
+          <section>
+            <div class="row">
 
-                <!-- Mostrar las notas solamente si tiene un plan asignado -->
-                <p *ngIf="pacienteSeleccionado.planAsignado">
-                  Notas adicionales:
-                  <span *ngIf="pacienteSeleccionado.planAsignado?.notasAdicionales?.length;else noHayNotas">{{pacienteSeleccionado.planAsignado?.notasAdicionales}}</span>
-                  <ng-template #noHayNotas>
-                    <span>No hay notas cargadas</span>
-                  </ng-template>
-                </p>
+              <div class="col">
+                <mat-form-field>
+                  <mat-label>Pacientes</mat-label>
+                  <mat-select formControlName="pacientes" [(ngModel)]="pacienteSeleccionado" [disabled]="modoEdicion"
+                    required>
+                    <mat-option [value]="null">-- Seleccione un paciente --</mat-option>
+                    <mat-option *ngFor="let paciente of pacientesRegistrados" [value]="paciente">
+                      {{paciente.apellido | uppercase }}, {{paciente.nombre | uppercase}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="asignacionPlanForm.controls['pacientes'].hasError('required')">Por favor elija un
+                    paciente</mat-error>
+                </mat-form-field>
               </div>
 
-              <p *ngIf="!pacienteSeleccionado">No se selecciono paciente</p>
 
-            </div>
-          </div>
-        </section>
+              <!--Visualizar plan actual del paciente-->
+              <div class="col">
+                <div *ngIf="pacienteSeleccionado">
+                  <p>
+                    Plan Asignado: <span
+                      *ngIf="pacienteSeleccionado.planAsignado?.planAlimentacion?.length;else noHayPlanAlimentacion">{{
+                      pacienteSeleccionado.planAsignado?.planAlimentacion}}</span>
+                    <ng-template #noHayPlanAlimentacion>
+                      <span>No hay un plan cargado</span>
+                    </ng-template>
+                  </p>
 
+                  <!-- Mostrar las notas solamente si tiene un plan asignado -->
+                  <p *ngIf="pacienteSeleccionado.planAsignado">
+                    Notas adicionales:
+                    <span
+                      *ngIf="pacienteSeleccionado.planAsignado?.notasAdicionales?.length;else noHayNotas">{{pacienteSeleccionado.planAsignado?.notasAdicionales}}</span>
+                    <ng-template #noHayNotas>
+                      <span>No hay notas cargadas</span>
+                    </ng-template>
+                  </p>
+                </div>
 
+                <p *ngIf="!pacienteSeleccionado">No se selecciono paciente</p>
 
-        <!--TOGGLE FORM BUTTON-->
-        <div *ngIf="!modoEdicion; else volverAPaciente">
-          <button mat-raised-button color="primary"
-                  (click)="toggleFormAsignacion()"
-                  [disabled]="!pacienteSeleccionado "
-                  *ngIf="pacienteSeleccionado?.planAsignado">
-            Editar plan asignado
-          </button>
-
-          <button mat-raised-button color="primary"
-                  (click)="toggleFormAsignacion()"
-                  [disabled]="!pacienteSeleccionado"
-                  *ngIf="!pacienteSeleccionado?.planAsignado">
-            Asignar plan
-          </button>
-        </div>
-
-        <ng-template #volverAPaciente>
-          <button mat-raised-button color="primary"
-                  [disabled]="this.asignacionPlanForm.disabled"
-                  (click)="toggleFormAsignacion()">
-            Volver a seleccionar paciente
-          </button>
-        </ng-template>
-
-        <!--ALTA/MODIFICACION PLAN ASIGNADO-->
-        <section *ngIf="modoEdicion">
-
-          <div class="row">
-            <div class="col">
-              <mat-form-field>
-                <mat-label>Planes</mat-label>
-                <mat-select formControlName="planesAlimentacion" [(ngModel)]="planSeleccionado" required>
-                  <mat-option [value]="null">-- Seleccione un plan --</mat-option>
-                  <mat-option *ngFor="let plan of planesDisponibles" [value]="plan.nombre">
-                    {{plan.nombre | uppercase}} - {{plan.tipo | uppercase}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-
-          <!--Notas adicionales-->
-          <mat-label>Notas adicionales:</mat-label>
-          <section class="row">
-            <div class="col">
-              <mat-form-field class="mid-width">
-                <textarea matInput rows="5" [(ngModel)]="notasAdicionales" placeholder="Ingrese las indicaciones al paciente..." formControlName="notasAdicionales"></textarea>
-                <mat-error *ngIf="asignacionPlanForm.controls['notasAdicionales'].hasError('maxlength')">
-                  Los comentarios no pueden superar los <strong>{{maxLengthNotas}} caracteres</strong>.
-                </mat-error>
-              </mat-form-field>
-
-              <p *ngIf="notasAdicionales?.length <= maxLengthNotas">Caracteres restantes: {{maxLengthNotas - notasAdicionales?.length}}</p>
+              </div>
             </div>
           </section>
 
-          <!--Guardar cambios-->
-          <div class="row">
-            <div class="col">
-              <mat-card-actions>
-                <button mat-raised-button id="btnUpdate" color="primary" type="submit" [disabled]="!asignacionPlanForm.valid">Guardar cambios</button>
-              </mat-card-actions>
-            </div>
+
+
+          <!--TOGGLE FORM BUTTON-->
+          <div *ngIf="!modoEdicion; else volverAPaciente">
+            <button mat-raised-button color="primary" (click)="toggleFormAsignacion()"
+              [disabled]="!pacienteSeleccionado " *ngIf="pacienteSeleccionado?.planAsignado">
+              Editar plan asignado
+            </button>
+
+            <button mat-raised-button color="primary" (click)="toggleFormAsignacion()"
+              [disabled]="!pacienteSeleccionado" *ngIf="!pacienteSeleccionado?.planAsignado">
+              Asignar plan
+            </button>
           </div>
-        </section>
+
+          <ng-template #volverAPaciente>
+            <button mat-raised-button color="primary" [disabled]="this.asignacionPlanForm.disabled"
+              (click)="toggleFormAsignacion()">
+              Volver a seleccionar paciente
+            </button>
+          </ng-template>
+
+          <!--ALTA/MODIFICACION PLAN ASIGNADO-->
+          <section *ngIf="modoEdicion">
+
+            <div class="row">
+              <div class="col">
+                <mat-form-field>
+                  <mat-label>Planes</mat-label>
+                  <mat-select formControlName="planesAlimentacion" [(ngModel)]="planSeleccionado" required>
+                    <mat-option [value]="null">-- Seleccione un plan --</mat-option>
+                    <mat-option *ngFor="let plan of planesDisponibles" [value]="plan.nombre">
+                      {{plan.nombre | uppercase}} - {{plan.tipo | uppercase}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!--Notas adicionales-->
+            <mat-label>Notas adicionales:</mat-label>
+            <section class="row">
+              <div class="col">
+                <mat-form-field class="mid-width">
+                  <textarea matInput rows="5" [(ngModel)]="notasAdicionales"
+                    placeholder="Ingrese las indicaciones al paciente..." formControlName="notasAdicionales"></textarea>
+                  <mat-error *ngIf="asignacionPlanForm.controls['notasAdicionales'].hasError('maxlength')">
+                    Los comentarios no pueden superar los <strong>{{maxLengthNotas}} caracteres</strong>.
+                  </mat-error>
+                </mat-form-field>
+
+                <p *ngIf="notasAdicionales?.length <= maxLengthNotas">Caracteres restantes: {{maxLengthNotas -
+                  notasAdicionales?.length}}</p>
+              </div>
+            </section>
+
+            <!--Guardar cambios-->
+            <div class="row">
+              <div class="col">
+                <mat-card-actions>
+                  <button mat-raised-button id="btnUpdate" color="primary" type="submit"
+                    [disabled]="!asignacionPlanForm.valid">Guardar cambios</button>
+                </mat-card-actions>
+              </div>
+            </div>
+          </section>
 
 
-      </mat-card-content>
-    </mat-card>
-  </form>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
 
 </app-navigation>
