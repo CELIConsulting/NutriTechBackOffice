@@ -22,16 +22,16 @@ namespace NutriTechBackOffice.Domain.Entities
 
         [FirestoreProperty]
         public List<string> Desayuno { get; set; }
-        
+
         [FirestoreProperty]
         public List<string> Almuerzo { get; set; }
-        
+
         [FirestoreProperty]
         public List<string> Merienda { get; set; }
-        
+
         [FirestoreProperty]
         public List<string> Cena { get; set; }
-        
+
         [FirestoreProperty]
         public List<string> Colacion { get; set; }
 

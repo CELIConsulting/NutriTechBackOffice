@@ -6,7 +6,7 @@ using Google.Cloud.Firestore;
 namespace NutriTechBackOffice.Domain.Entities
 {
     [FirestoreData]
-    public class Administrador:User
+    public class Administrador : User
     {
     }
 }

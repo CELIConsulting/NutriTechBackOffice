@@ -1,14 +1,11 @@
 ﻿using Google.Cloud.Firestore;
 using Google.Cloud.Storage.V1;
 using MediatR;
-using Newtonsoft.Json;
 using NutriTechBackOffice.Domain.Entities;
-using NutriTechBackOffice.Services.Users.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +15,6 @@ namespace NutriTechBackOffice.Services.Users.Queries
     {
         private CollectionReference patientsRef;
         private QuerySnapshot existingPatientDailyUpload;
-        private CollectionReference collectionReference;
         private List<FoodUploadRegistry> DailyUploads;
         private const string DAILYUPLOAD = "DailyUpload";
         private const string BUCKETNAME = "nutritechistea-d3f24.appspot.com";
@@ -28,31 +24,39 @@ namespace NutriTechBackOffice.Services.Users.Queries
         {
             patientsRef = firestore.Collection("Users");
             storageClient = storage;
+            DailyUploads = new List<FoodUploadRegistry>();
         }
 
         public async Task<List<FoodUploadRegistry>> Handle(GetDailyUploadPatientByIdQuery request, CancellationToken cancellationToken)
         {
-            Task<QuerySnapshot> task = patientsRef.Document(request.Email.ToString()).Collection(DAILYUPLOAD).GetSnapshotAsync();
-            existingPatientDailyUpload = await task;
-            DailyUploads = new List<FoodUploadRegistry>();
-            if (existingPatientDailyUpload.Count != 0)
+            try
             {
-                foreach (DocumentSnapshot item in existingPatientDailyUpload)
+                Task<QuerySnapshot> task = patientsRef.Document(request.Email.ToString()).Collection(DAILYUPLOAD).GetSnapshotAsync();
+                existingPatientDailyUpload = await task;
+                if (existingPatientDailyUpload.Count != 0)
                 {
-                    FoodUploadRegistry dailyUploadRegistry = item.ConvertTo<FoodUploadRegistry>();
-
-                    using (MemoryStream stream = new MemoryStream())
+                    foreach (DocumentSnapshot item in existingPatientDailyUpload)
                     {
-                        storageClient.DownloadObject(BUCKETNAME, $"users/{request.Email}/foodUpload/{dailyUploadRegistry.imageName}", stream);
-                        dailyUploadRegistry.urlImage = $"data:image/jpeg;base64,{Convert.ToBase64String(stream.ToArray())}";
+                        FoodUploadRegistry dailyUploadRegistry = item.ConvertTo<FoodUploadRegistry>();
+
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            storageClient.DownloadObject(BUCKETNAME, $"users/{request.Email}/foodUpload/{dailyUploadRegistry.imageName}.jpg", stream);
+                            dailyUploadRegistry.urlImage = $"data:image/jpeg;base64,{Convert.ToBase64String(stream.ToArray())}";
+                        }
+
+                        DailyUploads.Add(dailyUploadRegistry);
                     }
 
-                    DailyUploads.Add(dailyUploadRegistry);
+                    return DailyUploads;
                 }
-
                 return DailyUploads;
             }
-            return DailyUploads;
+            catch (Exception error)
+            {
+                Debug.WriteLine(error);
+                return DailyUploads;
+            }
         }
     }
 }

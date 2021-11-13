@@ -4,80 +4,82 @@
 <app-navigation>
 
   <mat-card>
-    <button mat-raised-button class="mat-elevation-z8" color="primary" type="submit" [routerLink]="['/plan-form']">Agregar Plan</button>
+    <button mat-raised-button class="mat-elevation-z8" color="primary" type="submit"
+      [routerLink]="['/plan-form']">Agregar Plan</button>
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
 
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+          <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+          <td mat-cell *matCellDef="let row"> {{row.tipo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidadAgua">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad de Agua Diaria </th>
+          <td mat-cell *matCellDef="let row"> {{row.cantAguaDiaria}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidadColaciones">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad de Colaciones Diarias </th>
+          <td mat-cell *matCellDef="let row"> {{row.cantColacionesDiarias}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="desayuno">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Desayuno </th>
+          <td mat-cell *matCellDef="let row"> {{row.desayuno}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="almuerzo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Almuerzo </th>
+          <td mat-cell *matCellDef="let row"> {{row.almuerzo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="merienda">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Merienda </th>
+          <td mat-cell *matCellDef="let row"> {{row.merienda}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cena">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cena </th>
+          <td mat-cell *matCellDef="let row"> {{row.cena}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colacion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Colación </th>
+          <td mat-cell *matCellDef="let row"> {{row.colacion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="eliminar">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Eliminar</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-raised-button color="primary" (click)="eliminar(row.nombre)">Eliminar</button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modificar">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Modificar</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-raised-button color="primary" type="submit"
+              [routerLink]="['/modificar-planes/', row.nombre]">Modificar</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
   </mat-card>
 
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-        <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="tipo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
-        <td mat-cell *matCellDef="let row"> {{row.tipo}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="cantidadAgua">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad de Agua Diaria </th>
-        <td mat-cell *matCellDef="let row"> {{row.cantAguaDiaria}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="cantidadColaciones">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad de Colaciones Diarias </th>
-        <td mat-cell *matCellDef="let row"> {{row.cantColacionesDiarias}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="desayuno">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Desayuno </th>
-        <td mat-cell *matCellDef="let row"> {{row.desayuno}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="almuerzo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Almuerzo </th>
-        <td mat-cell *matCellDef="let row"> {{row.almuerzo}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="merienda">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Merienda </th>
-        <td mat-cell *matCellDef="let row"> {{row.merienda}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="cena">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cena </th>
-        <td mat-cell *matCellDef="let row"> {{row.cena}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="colacion">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Colación </th>
-        <td mat-cell *matCellDef="let row"> {{row.colacion}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="eliminar">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Eliminar</th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-raised-button color="primary" (click)="eliminar(row.nombre)">Eliminar</button>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="modificar">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Modificar</th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-raised-button color="primary" type="submit" [routerLink]="['/modificar-planes/', row.nombre]">Modificar</button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-      </tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-  </div>
 </app-navigation>

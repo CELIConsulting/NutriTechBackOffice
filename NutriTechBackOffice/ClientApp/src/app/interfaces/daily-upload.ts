@@ -6,4 +6,5 @@ export interface DailyUpload {
     doExcersice: boolean,
     observations: string,
     lastAssignment: Date,
+    food: string,
 }
