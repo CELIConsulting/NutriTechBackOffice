@@ -1,43 +1,43 @@
-.centrar-titulos{
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    height: 100px;
+.centrar-titulos {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100px;
 }
 
 table {
-    width: 100%;
+  width: 100%;
 }
 
-th{
-    width: 20%;
+th {
+  width: 20%;
 }
 
-.pointer{
-    cursor:pointer;
+.pointer {
+  cursor: pointer;
 }
 
 .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
+  font-size: 14px;
+  width: 100%;
+}
 
 .desplazado {
-    position: relative;
-    left: 200px;
-  }
+  position: relative;
+  left: 200px;
+}
 
-  .example-h2 {
-    margin: 10px;
-  }
-  
-  .example-section {
-    display: flex;
-    align-content: center;
-    align-items: center;
-    height: 60px;
-  }
-  
-  .example-margin {
-    margin: 0 10px;
-  }
+.example-h2 {
+  margin: 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}

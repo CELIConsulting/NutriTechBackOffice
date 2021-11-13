@@ -1,7 +1,5 @@
 ﻿using Google.Cloud.Firestore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NutriTechBackOffice.Domain.Entities
 {
@@ -18,5 +16,7 @@ namespace NutriTechBackOffice.Domain.Entities
         public string observations { get; set; }
         [FirestoreProperty]
         public DateTimeOffset lastAssignment { get; set; }
+        [FirestoreProperty]
+        public string food { get; set; }
     }
 }
