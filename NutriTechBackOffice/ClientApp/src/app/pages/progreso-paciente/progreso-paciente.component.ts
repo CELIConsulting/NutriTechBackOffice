@@ -5,6 +5,8 @@ import { User } from '../../interfaces/user';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { LoadingSpinnerService } from '../../services/loading-spinner.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DataProgressChart } from '../../interfaces/dataProgressChart';
+import { PhotoBodyProgress } from '../../interfaces/PhotoBodyProgress';
 
 @Component({
   selector: 'app-progreso-paciente',
@@ -17,9 +19,10 @@ export class ProgresoPacienteComponent implements OnInit {
   dataSource: MatTableDataSource<User>;
   dataSourcePaciente: MatTableDataSource<User>;
   paciente: User[];
+  listDataGrafic: DataProgressChart[];
   loading$ = this.loader.loading$;
 
-  multi: any[];
+  bodyProgressPhoto: PhotoBodyProgress[];
   view: any[] = [700, 300];
 
   // options
@@ -33,15 +36,16 @@ export class ProgresoPacienteComponent implements OnInit {
   xAxisLabel: string = 'Fecha';
   yAxisLabel: string = 'Peso';
   timeline: boolean = true;
-
+  
   constructor(private usersService: UsersService, private loader: LoadingSpinnerService, private activatedRoute: ActivatedRoute,) {
+
   }
 
   ngOnInit() {
     this.getRouteParams();
-    debugger
     this.cargarDatosGraficos(this.emailParam);
     this.obtenerInformacion(this.emailParam);
+    this.loadPhotoProgressUploads()
   }
 
   private getRouteParams() {
@@ -50,14 +54,32 @@ export class ProgresoPacienteComponent implements OnInit {
     })
   }
 
+  loadPhotoProgressUploads() {
+    this.getRouteParams();
+    this.usersService.getBodyProgressPhoto(this.emailParam).subscribe(
+      (resp) => {
+        this.bodyProgressPhoto = resp;
+        console.log(this.bodyProgressPhoto);
+      },
+      (error) => {
+        console.log('Error: ', error);
+      }
+    );
+  }
+
   cargarDatosGraficos(email) {
     this.usersService.getBodyProgress(email).subscribe(
-      listDataGrafic => {
-        debugger
-        Object.assign(this, { listDataGrafic });
+      resp => {
+        this.listDataGrafic = resp;
+        this.listDataGrafic[0].series.sort(function (a, b) {
+          var dateA:any = new Date(a.name.split(" ")[0])
+          var dateB:any = new Date(b.name.split(" ")[0])
+          var result:any = dateA - dateB
+          return result;
+        })
+        Object.assign(this, this.listDataGrafic);
       },
       error => {
-        debugger
         console.error("No se puede levantar la informacion")
         console.log(error)
       }

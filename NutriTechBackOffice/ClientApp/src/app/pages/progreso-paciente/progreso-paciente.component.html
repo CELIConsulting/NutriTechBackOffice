@@ -1,10 +1,8 @@
 <app-loading-spinner [spinnerMode]="'indeterminate'" *ngIf="loading$ | async"></app-loading-spinner>
 <app-navigation>
-
   <mat-card-title>Progreso Del Paciente</mat-card-title>
   <mat-card-subtitle id="nombreId"></mat-card-subtitle>
   <mat-card-content>
-
     <ngx-charts-line-chart [view]="view"
                            [scheme]="colorScheme"
                            [legend]="legend"
@@ -15,12 +13,13 @@
                            [xAxisLabel]="xAxisLabel"
                            [yAxisLabel]="yAxisLabel"
                            [timeline]="timeline"
-                           [results]="multi"
+                           [results]="listDataGrafic"
                            (select)="onSelect($event)"
                            (activate)="onActivate($event)"
                            (deactivate)="onDeactivate($event)">
     </ngx-charts-line-chart>
-
+  </mat-card-content>
+  <mat-card-content>
     <table mat-table [dataSource]="dataSourcePaciente" matSort>
       <ng-container matColumnDef="peso">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Peso Actual</th>
@@ -33,7 +32,20 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumnsPaciente"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumnsPaciente;"></tr>
     </table>
-  </mat-card-content>
 
+  </mat-card-content>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <h1 class="centrar-titulos">Fotos de su progreso </h1>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of bodyProgressPhoto">
+      <mat-card class="example-card mat-elevation-z4">
+        <img mat-card-lg-image src={{item.urlImage}} alt="photo">
+        <mat-card-content>
+          <mat-card-subtitle> Fecha de Subida: {{item.lastAssignment}}</mat-card-subtitle>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 
 </app-navigation>

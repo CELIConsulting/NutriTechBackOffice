@@ -7,9 +7,10 @@ import { User } from '../interfaces/user';
 import { Paciente } from '../interfaces/paciente';
 import { PacienteForm } from '../interfaces/paciente-form';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { GraficValues } from '../interfaces/grafic-values';
 import { DailyUploadResponse } from '../interfaces/daily-upload-response';
 import { DailyUpload } from '../interfaces/daily-upload';
+import { DataProgressChart } from '../interfaces/dataProgressChart';
+import { PhotoBodyProgress } from '../interfaces/PhotoBodyProgress';
 
 @Injectable({
   providedIn: 'root'
@@ -67,8 +68,8 @@ export class UsersService {
   }
 
   //GET: Obtener progreso paciente con mail
-  getBodyProgress(email: string): Observable<GraficValues[]> {
-    return this.http.get<GraficValues[]>(`${env.apiBaseUrl}/User/Patients/BodyProgress/${email}`, this.httpOptions);
+  getBodyProgress(email: string): Observable<DataProgressChart[]> {
+    return this.http.get<DataProgressChart[]>(`${env.apiBaseUrl}/User/Patients/BodyProgress/${email}`, this.httpOptions);
   }
 
   //PUT: Actualizar la información del paciente
@@ -85,5 +86,11 @@ export class UsersService {
   getPattientDailyUpload(email: string): Observable<DailyUpload[]> {
     return this.http.get<DailyUpload[]>(`${env.apiBaseUrl}/User/Patients/DailyUpload/${email}`, this.httpOptions);
   }
+
+  //GET: trae toda la colecion de fotos que muestran el progreso del usuario
+  getBodyProgressPhoto(email: string): Observable<PhotoBodyProgress[]> {
+    return this.http.get<PhotoBodyProgress[]>(`${env.apiBaseUrl}/User/Patients/BodyProgressPhoto/${email}`, this.httpOptions);
+  }
+
 
 }
