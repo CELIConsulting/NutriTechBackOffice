@@ -4,6 +4,23 @@
   <mat-card-title>Progreso Del Paciente</mat-card-title>
   <mat-card-subtitle id="nombreId"></mat-card-subtitle>
   <mat-card-content>
+
+    <ngx-charts-line-chart [view]="view"
+                           [scheme]="colorScheme"
+                           [legend]="legend"
+                           [showXAxisLabel]="showXAxisLabel"
+                           [showYAxisLabel]="showYAxisLabel"
+                           [xAxis]="xAxis"
+                           [yAxis]="yAxis"
+                           [xAxisLabel]="xAxisLabel"
+                           [yAxisLabel]="yAxisLabel"
+                           [timeline]="timeline"
+                           [results]="multi"
+                           (select)="onSelect($event)"
+                           (activate)="onActivate($event)"
+                           (deactivate)="onDeactivate($event)">
+    </ngx-charts-line-chart>
+
     <table mat-table [dataSource]="dataSourcePaciente" matSort>
       <ng-container matColumnDef="peso">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Peso Actual</th>
