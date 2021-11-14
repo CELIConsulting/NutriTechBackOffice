@@ -23,7 +23,7 @@ export class ProgresoPacienteComponent implements OnInit {
   loading$ = this.loader.loading$;
 
   bodyProgressPhoto: PhotoBodyProgress[];
-  view: any[] = [700, 300];
+  view: any[] = [500, 500];
 
   // options
   legend: boolean = true;
