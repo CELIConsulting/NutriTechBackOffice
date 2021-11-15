@@ -25,7 +25,7 @@ const routes: Routes = [
     component: LoginFormComponent,
   },
   {
-    path: 'home',
+    path: 'home/:email',
     component: HomeComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },

@@ -17,6 +17,7 @@ import { timeout } from 'rxjs/operators';
 })
 export class LoginFormComponent {
   loading = false;
+  email : String;
   loginForm = this.fb.group({
     email: [null, [Validators.required, Validators.email]],
     password: [null, [Validators.required]],
@@ -47,7 +48,7 @@ export class LoginFormComponent {
     this.loading = true;
     setTimeout(()=>{
       this.loading = false;
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home', this.loginForm.get('email').value]);
     },5000);
   }
 }
