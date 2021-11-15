@@ -1,31 +1,30 @@
 import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { User } from "firebase";
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Subject } from "rxjs";
+import { switchMap, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  public userClaims: any;
-  public userClaims$ = new Subject<any>();
 
-  constructor(private afAuth: AngularFireAuth) { }
-
-  getUserClaims(): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.afAuth.auth.onAuthStateChanged((user) => {
-        if (!!user) {
-          this.setUserClaims(user);
-          resolve(user);
-        } else {
-          reject("No user logged in");
-        }
-      });
-    });
+  constructor(private auth: AngularFireAuth) {
   }
-  setUserClaims(user: any): void {
-    this.userClaims = user;
-    this.userClaims$.next(user);
+
+  getUserClaims(): any {
+    return this.auth.authState.pipe(
+      take(1),
+      switchMap(async (authState) => {
+        if (!authState) {
+          return null;
+        }
+        const token = await authState.getIdTokenResult();
+
+        if (!token.claims.nutricionista && !!token.claims.admin) {
+          return null;
+        }
+        return token.claims;
+      }),
+    );
   }
 }

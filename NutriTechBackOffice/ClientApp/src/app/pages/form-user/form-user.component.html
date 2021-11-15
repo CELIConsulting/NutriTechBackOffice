@@ -73,7 +73,7 @@
                 <mat-label>Roles</mat-label>
                 <mat-select formControlName="rol" required>
                   <mat-option>--</mat-option>
-                  <mat-option *ngFor="let rol of roles" [value]="rol">
+                  <mat-option *ngFor="let rol of roles" [value]="rol.nombre">
                     {{rol.nombre}}
                   </mat-option>
                 </mat-select>

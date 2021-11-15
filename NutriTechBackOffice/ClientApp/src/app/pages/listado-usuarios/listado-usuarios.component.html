@@ -62,7 +62,7 @@
         <ng-container matColumnDef="verCargaDiaria">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ver carga diaria</th>
           <td mat-cell *matCellDef="let row">
-            <button mat-raised-button color="primary" type="submit" [routerLink]="['/patient-history/', row.email]">ver
+            <button  *ngIf="row.rol!='Admin'&& row.rol!='Nutricionista'" mat-raised-button color="primary" type="submit" [routerLink]="['/patient-history/', row.email]">ver
               carga diaria</button>
           </td>
         </ng-container>

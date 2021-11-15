@@ -26,7 +26,7 @@ export class ListadoUsuariosComponent implements OnInit {
     "fechaNacimiento",
     "eliminar",
     "modificar",
-    "verCargaDiaria"
+    "verCargaDiaria",
   ];
   dataSource: MatTableDataSource<User>;
   usuarios: User[];
@@ -34,15 +34,16 @@ export class ListadoUsuariosComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   //validate claims of the loged user
-  isAdmin: boolean;
-  isNutritionist: boolean;
+  userClaims: any;
 
   constructor(
     private usersService: UsersService,
     private dialog: MatDialog,
     private loader: LoadingSpinnerService,
     private authService: AuthService
-  ) { }
+  ) {
+    this.userClaims = authService.getUserClaims();
+  }
 
   loadAdminGrid() {
     this.usersService.getUsers().subscribe(
@@ -75,7 +76,21 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   cargarGrilla() {
-    this.loadNutrittionistGrid();
+    this.userClaims.subscribe(data => {
+      this.userClaims = data;
+      console.log(this.userClaims);
+      if (this.userClaims != null) {
+        if (this.userClaims.Nutricionista) {
+          this.loadNutrittionistGrid();
+        }
+        if (this.userClaims.Admin) {
+          this.loadAdminGrid();
+        }
+      }
+    }, err => {
+      console.log("claims err: ", err);
+    });
+
   }
 
   ngOnInit() {
