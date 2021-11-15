@@ -42,7 +42,7 @@
                 </a>
                 <a>
                   <mat-icon class="pointer" matTooltip="Editar Paciente"
-                    [routerLink]="['/modificar-usuarios/', row.email]" style="color:#28b463">edit</mat-icon>
+                  (click)="modificarPaciente(row.email)" style="color:#28b463">edit</mat-icon>
                 </a>
               </td>
             </ng-container>
@@ -81,6 +81,7 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumnsPaciente"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumnsPaciente;"></tr>
             </table>
+            <button mat-raised-button color="primary" (click)="verProgreso()" *ngIf="!mostrar">Progreso</button>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>

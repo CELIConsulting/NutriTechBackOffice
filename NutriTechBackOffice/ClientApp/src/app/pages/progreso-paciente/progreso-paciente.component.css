@@ -1,0 +1,25 @@
+.content {
+  padding: 16px;
+}
+
+  .content > mat-card {
+    width: 200px;
+  }
+
+.example-card {
+  max-width: 400px;
+  margin-bottom: 8px;
+}
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.centrar-titulos {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100px;
+}

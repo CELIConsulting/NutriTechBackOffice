@@ -15,6 +15,7 @@ import { BarGraphicComponent } from './components/bar-graphic/bar-graphic.compon
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { NoDataResultComponent } from './components/no-data-result/no-data-result.component';
 import { PiechartGridComponent } from './components/piechart-grid/piechart-grid.component';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
 import { TableComponent } from './components/table/table.component';
@@ -29,11 +30,8 @@ import { ModificarPlanesComponent } from './pages/modificar-planes/modificar-pla
 import { ModificarUsuariosComponent } from './pages/modificar-usuarios/modificar-usuarios.component';
 import { PatientHistoryComponent } from './pages/patient-history/patient-history.component';
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
+import { ProgresoPacienteComponent } from './pages/progreso-paciente/progreso-paciente.component';
 import { NetworkInterceptor } from './services/interceptors/network.interceptor';
-import { NoDataResultComponent } from './components/no-data-result/no-data-result.component';
-
-
-
 
 
 @NgModule({
@@ -56,6 +54,7 @@ import { NoDataResultComponent } from './components/no-data-result/no-data-resul
     PatientHistoryComponent,
     ListadoPlanesComponent,
     ModificarPlanesComponent,
+    ProgresoPacienteComponent,
     NoDataResultComponent,
   ],
   imports: [

@@ -99,6 +99,14 @@ namespace NutriTechBackOffice.Controllers
         public async Task<IActionResult> GetPatientById(string email) =>
             Ok(await _mediator.Send(new GetPatientByIdQuery(email)));
 
+        //GET api/<UserController>/Patients/BodyProgress
+        [HttpGet("Patients/BodyProgress/{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> GetBodyProgressQuery(string email) =>
+            Ok(await _mediator.Send(new GetBodyProgressQuery(email)));
+
         //GET api/<UserController>/Patients/1/DailyUpload
         [HttpGet("Patients/DailyUpload/{email}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -107,6 +115,18 @@ namespace NutriTechBackOffice.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> GetDailyUploadPatientById(string email) =>
             Ok(await _mediator.Send(new GetDailyUploadPatientByIdQuery(email,_config["project_id"])));
+
+        //GET api/<UserController>/Patients/1/BodyProgressPhoto
+        [HttpGet("Patients/BodyProgressPhoto/{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> GetBodyProgressPhoto(string email) =>
+            Ok(await _mediator.Send(new GetBodyProgressPhotoQuery(email, _config["project_id"])));
+
+
+
 
         // DELETE api/<UserController>/5
         [HttpDelete("{email}")]

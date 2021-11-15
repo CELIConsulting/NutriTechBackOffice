@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Paciente } from 'src/app/interfaces/paciente';
 import { LoadingSpinnerService } from '../../services/loading-spinner.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,8 +27,7 @@ export class HomeComponent implements OnInit {
   loading$ = this.loader.loading$;
   labelPosition: 'todos' | 'conplan' | 'sinplan' = 'todos';
 
-  constructor(private usersService: UsersService, private loader: LoadingSpinnerService) { }
-
+  constructor(private usersService: UsersService, private loader: LoadingSpinnerService, private router:Router) { }
   ngOnInit() {
     this.cargarGrilla();
   }
@@ -81,6 +81,26 @@ export class HomeComponent implements OnInit {
 
   }
 
+  modificarPaciente(email) {
+    this.usersService.getPatients()
+      .subscribe(
+        patients => {
+          var pacienteFiltrado = new Array();
+          pacienteFiltrado.push(patients.find(m => m.email == email));
+          this.paciente = pacienteFiltrado
+          var objetivo = document.getElementById('nombreId');
+          objetivo.innerHTML = this.paciente[0].nombre;
+          this.dataSourcePaciente = new MatTableDataSource(this.paciente);
+          this.router.navigate(['/modificar-usuarios/', this.paciente[0].email, this.paciente[0].rol]);
+
+        },
+        error => {
+          console.error("No se pudo obtener el paciente")
+          console.log(error)
+        });
+
+  }
+
   obtenerInformacion(email)
   {
     this.dataSourcePaciente = new MatTableDataSource();
@@ -101,11 +121,17 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  verProgreso() {
+   this.router.navigate(['/progreso-paciente/', this.paciente[0].email]);
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  obtenerPaciente(email) {
+  }
 }
 
 
