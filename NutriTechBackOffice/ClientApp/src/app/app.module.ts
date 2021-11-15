@@ -31,6 +31,7 @@ import { PatientHistoryComponent } from './pages/patient-history/patient-history
 import { PlanFormComponent } from './pages/plan-form/plan-form.component';
 import { NetworkInterceptor } from './services/interceptors/network.interceptor';
 import { NoDataResultComponent } from './components/no-data-result/no-data-result.component';
+import { PopEliminarComponent } from './components/pop-eliminar/pop-eliminar.component';
 
 
 
@@ -57,6 +58,7 @@ import { NoDataResultComponent } from './components/no-data-result/no-data-resul
     ListadoPlanesComponent,
     ModificarPlanesComponent,
     NoDataResultComponent,
+    PopEliminarComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -80,7 +82,7 @@ import { NoDataResultComponent } from './components/no-data-result/no-data-resul
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [PopUpComponent],
+  entryComponents: [PopUpComponent,PopEliminarComponent],
 
 })
 export class AppModule { }
