@@ -81,9 +81,11 @@ export class ListadoUsuariosComponent implements OnInit {
       console.log(this.userClaims);
       if (this.userClaims != null) {
         if (this.userClaims.Nutricionista) {
+          console.log("es nutricionista")
           this.loadNutrittionistGrid();
         }
         if (this.userClaims.Admin) {
+          console.log("es admin")
           this.loadAdminGrid();
         }
       }
