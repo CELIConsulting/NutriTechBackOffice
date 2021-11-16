@@ -20,7 +20,7 @@ export class AuthService {
         }
         const token = await authState.getIdTokenResult();
 
-        if (!token.claims.nutricionista && !!token.claims.admin) {
+        if (!!token.claims.Paciente) {
           return null;
         }
         return token.claims;

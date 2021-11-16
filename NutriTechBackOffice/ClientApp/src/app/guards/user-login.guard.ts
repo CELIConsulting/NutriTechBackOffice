@@ -24,11 +24,13 @@ export class UserLoginGuard implements CanActivate {
         }
         const token = await authState.getIdTokenResult();
 
-        if (!token.claims.nutricionista && !!token.claims.admin) {
+        if (!!token.claims.Paciente) {
+          this.auth.auth.signOut();
           this.router.navigate(['']);
           return false;
+        }else {
+          return true;
         }
-        return true;
       }),
     );
   }
