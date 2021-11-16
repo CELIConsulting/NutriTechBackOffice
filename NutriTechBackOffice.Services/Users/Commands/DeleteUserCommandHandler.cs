@@ -66,7 +66,12 @@ namespace NutriTechBackOffice.Services.Users.Commands
                 await DeleteCollection(dailyUpload, 5);
                 await this._firebaseAuth.DeleteUserAsync(userRecord.Uid);
                 await _userRef.Document(request.Email).DeleteAsync();
-                //storageClient.DeleteObject(BUCKETNAME, $"users/{request.Email}");
+                Google.Api.Gax.PagedEnumerable<Google.Apis.Storage.v1.Data.Objects, Google.Apis.Storage.v1.Data.Object> pagedEnumerable = storageClient.ListObjects(BUCKETNAME, $"users/{request.Email}");
+                foreach (var item in pagedEnumerable)
+                {
+                    await storageClient.DeleteObjectAsync(item);
+                }
+
                 return true;
 
             }
