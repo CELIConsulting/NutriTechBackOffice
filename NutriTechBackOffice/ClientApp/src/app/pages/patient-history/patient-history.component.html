@@ -5,7 +5,7 @@
     <div fxLayout="row wrap" fxLayoutGap="16px grid">
       <h1 class="centrar-titulos">Cargas diarias realizadas</h1>
     </div>
-    <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxLayout="row wrap" fxLayoutGap="16px grid" *ngIf="dailyData">
       <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of dailyData">
         <mat-card class="example-card mat-elevation-z4">
           <mat-card-header class="text-overflow">
@@ -20,6 +20,7 @@
         </mat-card>
       </div>
     </div>
+    <app-no-data-result *ngIf="dailyData.length == 0"></app-no-data-result>
   </mat-card>
 
 </app-navigation>
