@@ -62,8 +62,10 @@ namespace NutriTechBackOffice.Services.Users.Commands
                 UserRecord userRecord = await this._firebaseAuth.GetUserByEmailAsync(request.Email);
                 CollectionReference bodyUpload = _userRef.Document(request.Email).Collection("BodyProgress");
                 await DeleteCollection(bodyUpload, 5);
-                //await this._firebaseAuth.DeleteUserAsync(userRecord.Uid);
-                //await _userRef.Document(request.Email).DeleteAsync();
+                CollectionReference dailyUpload = _userRef.Document(request.Email).Collection("DailyUpload");
+                await DeleteCollection(dailyUpload, 5);
+                await this._firebaseAuth.DeleteUserAsync(userRecord.Uid);
+                await _userRef.Document(request.Email).DeleteAsync();
                 //storageClient.DeleteObject(BUCKETNAME, $"users/{request.Email}");
                 return true;
 
@@ -72,7 +74,6 @@ namespace NutriTechBackOffice.Services.Users.Commands
             {
                 Debug.WriteLine($"errror generado {e}");
                 return false;
-                throw;
             }
         }
     }
