@@ -17,10 +17,10 @@ export class HomeComponent implements OnInit {
 
   displayedColumns: string[] = ['nombre', 'apellido', 'acciones'];
   displayedColumnsPaciente: string[] = ['altura', 'peso', 'medidas'];
-  dataSource: MatTableDataSource<User>;
-  dataSourcePaciente: MatTableDataSource<User>;
-  pacientes: User[];
-  paciente: User[];
+  dataSource: MatTableDataSource<User> = new MatTableDataSource();
+  dataSourcePaciente: MatTableDataSource<User> = new MatTableDataSource();
+  pacientes: User[] = [];
+  paciente: User[] = [];
   mostrar = true;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -103,7 +103,6 @@ export class HomeComponent implements OnInit {
 
   obtenerInformacion(email)
   {
-    this.dataSourcePaciente = new MatTableDataSource();
     this.mostrar = false;
     this.usersService.getPatients()
     .subscribe(

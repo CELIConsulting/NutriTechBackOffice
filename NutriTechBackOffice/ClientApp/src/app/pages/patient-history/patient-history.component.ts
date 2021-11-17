@@ -14,7 +14,7 @@ import { UsersService } from "src/app/services/users.service";
 export class PatientHistoryComponent implements OnInit {
   loading$ = this.loader.loading$;
   emailParam: string;
-  dailyData: DailyUpload[];
+  dailyData: DailyUpload[] = [];
 
 
   constructor(

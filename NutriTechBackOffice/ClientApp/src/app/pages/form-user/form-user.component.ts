@@ -58,7 +58,7 @@ export class FormUserComponent {
           return { nombre: item.nombre };
         });
         this.consumeClaims();
-        this.enableFormWhileFinished()
+        this.enableFormWhileFinished();
       },
       (err) => {
         console.log(err);
@@ -68,7 +68,7 @@ export class FormUserComponent {
 
   onSubmit() {
     if (this.userForm.valid) {
-      this.enableFormWhileFinished()
+      this.enableFormWhileFinished();
       debugger;
       let user: UserForm = {
         Nombre: this.userForm.value["firstName"],

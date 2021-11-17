@@ -28,8 +28,8 @@ export class ListadoPlanesComponent implements OnInit {
       'eliminar',
       'modificar'];
 
-  dataSource: MatTableDataSource<PlanAlimentacion>;
-  planesAlimentacion: PlanAlimentacion[];
+  dataSource: MatTableDataSource<PlanAlimentacion> = new MatTableDataSource();
+  planesAlimentacion: PlanAlimentacion[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 

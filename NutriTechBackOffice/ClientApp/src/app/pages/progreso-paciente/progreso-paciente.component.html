@@ -12,7 +12,7 @@
       </div>
       <mat-grid-tile>
         <mat-card-content class="mat-elevation-z8">
-          <ngx-charts-line-chart [view]="view" [scheme]="colorScheme" [legend]="legend"
+          <ngx-charts-line-chart *ngIf="listDataGrafic" [view]="view" [scheme]="colorScheme" [legend]="legend"
             [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis"
             [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="listDataGrafic"
             (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
@@ -43,7 +43,7 @@
     <div fxLayout="row wrap" fxLayoutGap="16px grid">
       <h1 class="centrar-titulos">Fotos de su progreso </h1>
     </div>
-    <div fxLayout="row wrap" fxLayoutGap="16px grid" *ngIf="bodyProgressPhoto">
+    <div fxLayout="row wrap" fxLayoutGap="16px grid" *ngIf="bodyProgressPhoto.length != 0">
       <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of bodyProgressPhoto">
         <mat-card class="example-card mat-elevation-z4">
           <img mat-card-lg-image src={{item.urlImage}} alt="photo">

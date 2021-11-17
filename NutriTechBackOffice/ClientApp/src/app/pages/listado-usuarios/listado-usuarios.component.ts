@@ -29,8 +29,8 @@ export class ListadoUsuariosComponent implements OnInit {
     "modificar",
     "verCargaDiaria",
   ];
-  dataSource: MatTableDataSource<User>;
-  usuarios: User[];
+  dataSource: MatTableDataSource<User> = new MatTableDataSource();
+  usuarios: User[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 

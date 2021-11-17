@@ -73,7 +73,7 @@ export class PlanFormComponent implements OnInit {
         "Merienda": this.opcionesMerienda,
         "Cena": this.opcionesCena,
         "Colacion": this.opcionesColacion,
-      }
+      };
 
       console.log("Sending request to create a new plan");
       this.planesService.addPlan(plan).subscribe(
@@ -102,8 +102,8 @@ export class PlanFormComponent implements OnInit {
         console.log("Response to get plans: OK");
         console.table(this.planesExistentes);
       },
-      (error) => { console.error("Response to get all plans: FAILS", error) }
-    )
+      (error) => { console.error("Response to get all plans: FAILS", error); }
+    );
   }
 
   //Desayuno
@@ -193,10 +193,7 @@ export class PlanFormComponent implements OnInit {
     this.opcionesDesayuno = [];
     this.opcionesMerienda = [];
     this.opcionesMerienda = [];
-    this.opcionesCena = []
+    this.opcionesCena = [];
     this.opcionesColacion = [];
   }
-
-
-
 }

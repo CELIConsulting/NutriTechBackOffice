@@ -16,13 +16,13 @@ import { PhotoBodyProgress } from '../../interfaces/PhotoBodyProgress';
 export class ProgresoPacienteComponent implements OnInit {
   emailParam: string;
   displayedColumnsPaciente: string[] = ['peso', 'medidas'];
-  dataSource: MatTableDataSource<User>;
-  dataSourcePaciente: MatTableDataSource<User>;
-  paciente: User[];
-  listDataGrafic: DataProgressChart[];
+  dataSource: MatTableDataSource<User> = new MatTableDataSource();
+  dataSourcePaciente: MatTableDataSource<User> = new MatTableDataSource();
+  paciente: User[] = [];
+  listDataGrafic: DataProgressChart[] = [];
   loading$ = this.loader.loading$;
 
-  bodyProgressPhoto: PhotoBodyProgress[];
+  bodyProgressPhoto: PhotoBodyProgress[] = [];
   view: any[] = [500, 500];
 
   // options
@@ -36,7 +36,7 @@ export class ProgresoPacienteComponent implements OnInit {
   xAxisLabel: string = 'Fecha';
   yAxisLabel: string = 'Peso';
   timeline: boolean = true;
-  
+
   constructor(private usersService: UsersService, private loader: LoadingSpinnerService, private activatedRoute: ActivatedRoute,) {
 
   }
@@ -104,7 +104,6 @@ export class ProgresoPacienteComponent implements OnInit {
 
 
   obtenerInformacion(email) {
-    this.dataSourcePaciente = new MatTableDataSource();
     this.usersService.getPatients()
       .subscribe(
         patients => {
