@@ -69,7 +69,6 @@ export class FormUserComponent {
   onSubmit() {
     if (this.userForm.valid) {
       this.enableFormWhileFinished();
-      debugger;
       let user: UserForm = {
         Nombre: this.userForm.value["firstName"],
         Apellido: this.userForm.value["lastName"],
@@ -85,14 +84,14 @@ export class FormUserComponent {
       console.log(user);
       this.usersService.addUser(user).subscribe(
         (data) => {
-          this.dialog.open(PopUpComponent, {
+          const dialog = this.dialog.open(PopUpComponent, {
             data: {
               title: "Listo!",
               message: "El usuario fue correctamente registrado.",
             },
           });
 
-          this.dialog.afterAllClosed.subscribe(() => {
+          dialog.afterClosed().subscribe(() => {
             this.refreshPantalla();
           });
         },

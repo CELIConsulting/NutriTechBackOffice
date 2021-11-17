@@ -77,7 +77,7 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   cargarGrilla() {
-    this.userClaims.subscribe(data => {
+    this.authService.getUserClaims().subscribe(data => {
       this.userClaims = data;
       console.log(this.userClaims);
       if (this.userClaims != null) {
@@ -122,10 +122,13 @@ export class ListadoUsuariosComponent implements OnInit {
       if (confirmed) {
         this.usersService.deleteUser(email).subscribe(
           (data) => {
-            this.dialog.open(PopUpComponent, {
+            const dialogRef2 = this.dialog.open(PopUpComponent, {
               data: { title: "Listo!", message: "El usuario fue eliminado." },
             });
-            this.cargarGrilla();
+
+            dialogRef2.afterClosed().subscribe(() => {
+              this.cargarGrilla();
+            })
           },
           (err) => {
             this.dialog.open(PopUpComponent, {
@@ -134,6 +137,11 @@ export class ListadoUsuariosComponent implements OnInit {
           }
         );
       }
+      else {
+
+      }
     });
   }
+
+
 }

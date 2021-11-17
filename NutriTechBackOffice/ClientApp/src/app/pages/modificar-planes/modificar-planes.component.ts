@@ -125,16 +125,16 @@ export class ModificarPlanesComponent implements OnInit {
     this.disableFormWhileLoading();
     this.planService.updatePlan(nombre, planModificacionForm).subscribe(
       data => {
-        this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue correctamente modificado." } });
+        const dialog = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue correctamente modificado." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        dialog.afterClosed().subscribe(() => {
           this.navigateToplanList()
         })
       },
       err => {
-        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el plan." } });
+        const dialog =this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el plan." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        dialog.afterClosed().subscribe(() => {
           this.enableFormWhileFinished();
         })
       }

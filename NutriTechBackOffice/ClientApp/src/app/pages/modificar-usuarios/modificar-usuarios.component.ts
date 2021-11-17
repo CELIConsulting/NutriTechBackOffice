@@ -264,9 +264,9 @@ export class ModificarUsuariosComponent implements OnInit {
 
       },
       error => {
-        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar al usuario." } });
+        const dialog = this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar al usuario." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        dialog.afterClosed().subscribe(() => {
           this.enableFormWhileFinished();
         });
       },

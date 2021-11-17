@@ -128,9 +128,9 @@ export class AsignacionPlanComponent implements OnInit {
     this.usersService.updatePaciente(this.pacienteSeleccionado.email, pacienteForm).subscribe
       (
         (pacienteOK) => {
-          this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue asignado al paciente correctamente." } });
+          const dialog = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue asignado al paciente correctamente." } });
 
-          this.dialog.afterAllClosed.subscribe(() => {
+          dialog.afterClosed().subscribe(() => {
             this.refreshPantalla()
           })
         }
