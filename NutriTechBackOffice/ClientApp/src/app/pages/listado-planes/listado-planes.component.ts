@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { PopEliminarComponent } from 'src/app/components/pop-eliminar/pop-eliminar.component';
 import { PopUpComponent } from 'src/app/components/pop-up/pop-up.component';
 import { PlanAlimentacion } from 'src/app/interfaces/plan-alimentacion';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner.service';
@@ -14,18 +15,18 @@ export class ListadoPlanesComponent implements OnInit {
 
   loading$ = this.loader.loading$;
 
-  displayedColumns: string[] = 
-  ['nombre', 
-  'tipo', 
-  'cantidadAgua', 
-  'cantidadColaciones', 
-  'desayuno', 
-  'almuerzo', 
-  'merienda', 
-  'cena',
-  'colacion',
-  'eliminar', 
-  'modificar'];
+  displayedColumns: string[] =
+    ['nombre',
+      'tipo',
+      'cantidadAgua',
+      'cantidadColaciones',
+      'desayuno',
+      'almuerzo',
+      'merienda',
+      'cena',
+      'colacion',
+      'eliminar',
+      'modificar'];
 
   dataSource: MatTableDataSource<PlanAlimentacion>;
   planesAlimentacion: PlanAlimentacion[];
@@ -46,8 +47,8 @@ export class ListadoPlanesComponent implements OnInit {
           this.dataSource.sort = this.sort;
         },
         error => {
-          console.error("No se pudo obtener los planes guardados")
-          console.log(error)
+          console.error("No se pudo obtener los planes guardados");
+          console.log(error);
         });
 
   }
@@ -63,17 +64,30 @@ export class ListadoPlanesComponent implements OnInit {
     }
 
   }
-
-  eliminar(nombre: string) {
-    this.planesService.deletePlan(nombre).subscribe(
-      data => {
-        this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue eliminado." } });
-        this.cargarGrilla();
-      },
-      err => {
-        this.dialog.open(PopUpComponent, { data: { title: "Oops!", message: "El plan no se pudo eliminar." } })
+  openDialog(nombre: string) {
+    const dialogRef = this.dialog.open(PopEliminarComponent, {
+      data: {
+        message: 'Esta seguro que quiere eliminar?',
+        buttonText: {
+          ok: 'Si',
+          cancel: 'No'
+        }
       }
-    )
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.planesService.deletePlan(nombre).subscribe(
+          data => {
+            this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue eliminado." } });
+            this.cargarGrilla();
+          },
+          err => {
+            this.dialog.open(PopUpComponent, { data: { title: "Oops!", message: "El plan no se pudo eliminar." } });
+          }
+        );
+      }
+    });
   }
 
 }
