@@ -33,7 +33,6 @@ export class LoginFormComponent {
     public auth: AngularFireAuth,
     private authService: AuthService
   ) {
-    this.userClaims = authService.getUserClaims();
   }
 
   onSubmit() {
@@ -59,24 +58,43 @@ export class LoginFormComponent {
   }
 
   imageLoading() {
-    this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-      this.userClaims.subscribe(data => {
-        this.userClaims = data;
-        if (this.userClaims != null) {
-          if (this.userClaims.Admin) {
-            this.router.navigate(["/listado-usuarios"]);
-          } else {
-            this.router.navigate(["/home"]);
-          }
-        }else{
+    this.loading = false;
+    this.authService.getUserClaims().subscribe(data => {
+      this.userClaims = data;
+      if (this.userClaims != null) {
+        this.loading = true;
+        if (this.userClaims.Admin) {
+          this.router.navigate(["/listado-usuarios"]);
+        }
+        else if (this.userClaims.Nutricionista) {
           this.router.navigate(["/home"]);
         }
-      }, err => {
-        console.log("claims err: ", err);
-        this.router.navigate(["/home"]);
-      });
-    }, 5000);
+      } else {
+        const ref = this.dialog.open(PopUpComponent, {
+          data: {
+            title: "Ups hubo un error!",
+            message: "Su usuario no cuenta con los permisos para acceder.",
+          }
+        });
+
+        ref.afterClosed().subscribe(() => {
+          this.refreshPantalla();
+        });
+        
+        //El claim del paciente viene nulo
+        //this.router.navigate(["/home"]);
+      }
+    }, err => {
+      console.log("claims err: ", err);
+      this.router.navigate(["/home"]);
+    });
+  }
+
+  private refreshPantalla() {
+    console.log("Refreshing component...");
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }
