@@ -14,7 +14,7 @@ import * as _moment from 'moment';
 import { Moment } from 'moment';
 
 const PACIENTE = "Paciente";
-const ADMIN = "Admin"
+const ADMIN = "Admin";
 const NUTRICIONISTA = "Nutricionista";
 
 @Component({
@@ -70,12 +70,12 @@ export class ModificarUsuariosComponent implements OnInit {
   fillRoles() {
     this.roleService.getRoles().subscribe(
       data => {
-        this.roles = data.map(item => { return { nombre: item.nombre } })
+        this.roles = data.map(item => { return { nombre: item.nombre }; });
       },
       err => {
-        console.log(err)
+        console.log(err);
       }
-    )
+    );
   }
 
 
@@ -87,7 +87,7 @@ export class ModificarUsuariosComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(parameters => {
       this.emailParam = parameters.get('email');
       this.rolParam = parameters.get('rol');
-    })
+    });
   }
 
   cargarPantalla() {
@@ -117,8 +117,9 @@ export class ModificarUsuariosComponent implements OnInit {
         this.fillFormWithUserData(this.usuarioModificar);
       },
       err => {
+        console.error(err);
       }
-    )
+    );
   }
 
   cargarPaciente() {
@@ -128,7 +129,7 @@ export class ModificarUsuariosComponent implements OnInit {
         this.fillFormWithPatientData(this.pacienteModificar);
       },
       (err) => {
-
+        console.error(err);
       }
     );
   }
@@ -184,7 +185,7 @@ export class ModificarUsuariosComponent implements OnInit {
     let day = date.getUTCDate();
     let month = date.getUTCMonth();
     let year = date.getUTCFullYear();
-    return _moment([year, month, day])
+    return _moment([year, month, day]);
   }
 
   private buildDateFromPicker(): Date {
@@ -258,16 +259,16 @@ export class ModificarUsuariosComponent implements OnInit {
         let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente modificado." } });
 
         popupRef.afterClosed().subscribe(() => {
-          this.navigateToUserList()
-        })
+          this.navigateToUserList();
+        });
 
       },
       error => {
-        this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar al usuario." } })
+        const dialog = this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar al usuario." } });
 
-        this.dialog.afterAllClosed.subscribe(() => {
+        dialog.afterClosed().subscribe(() => {
           this.enableFormWhileFinished();
-        })
+        });
       },
     );
   }
@@ -280,18 +281,18 @@ export class ModificarUsuariosComponent implements OnInit {
         let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El paciente fue correctamente modificado." } });
 
         popupRef.afterClosed().subscribe(() => {
-          this.navigateToUserList()
-        })
+          this.navigateToUserList();
+        });
       },
       err => {
         let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el paciente." } });
 
         popupRef.afterClosed().subscribe(() => {
           this.enableFormWhileFinished();
-        })
+        });
       }
 
-    )
+    );
   }
 
   private updateUserInfo(email: string, userForm: UserForm) {
@@ -302,18 +303,18 @@ export class ModificarUsuariosComponent implements OnInit {
         let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El usuario fue correctamente modificado." } });
 
         popupRef.afterClosed().subscribe(() => {
-          this.navigateToUserList()
-        })
+          this.navigateToUserList();
+        });
       },
       err => {
         let popupRef = this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo modificar el usuario." } });
 
         popupRef.afterClosed().subscribe(() => {
           this.enableFormWhileFinished();
-        })
+        });
       }
 
-    )
+    );
   }
 
   private disableFormWhileLoading() {

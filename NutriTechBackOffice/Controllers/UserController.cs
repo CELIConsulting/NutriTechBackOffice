@@ -18,7 +18,7 @@ namespace NutriTechBackOffice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UserController : ControllerBase
     {
         public readonly IMediator _mediator;

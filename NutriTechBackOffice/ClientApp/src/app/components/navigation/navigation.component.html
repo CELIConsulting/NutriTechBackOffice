@@ -22,7 +22,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <div class="font-family">NutriTechBackOffice</div>
-      <button [routerLink]="['']" mat-icon-button style="margin:0 30px">
+      <button (click)="logOut()" mat-icon-button style="margin:0 30px">
         <mat-icon>logout</mat-icon>&nbsp;Logout
       </button>
     </mat-toolbar>

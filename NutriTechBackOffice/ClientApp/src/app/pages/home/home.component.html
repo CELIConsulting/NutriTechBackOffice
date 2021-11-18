@@ -68,15 +68,15 @@
             <table mat-table [dataSource]="dataSourcePaciente" matSort *ngIf="!mostrar">
               <ng-container matColumnDef="altura">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Altura </th>
-                <td mat-cell *matCellDef="let row"> {{row.altura}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.altura || 0 | number}} </td>
               </ng-container>
               <ng-container matColumnDef="peso">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Peso </th>
-                <td mat-cell *matCellDef="let row"> {{row.peso}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.peso || 0 | number}} </td>
               </ng-container>
               <ng-container matColumnDef="medidas">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Medida </th>
-                <td mat-cell *matCellDef="let row"> {{row.medidas}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.medidaCintura || 0 | number}} </td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumnsPaciente"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumnsPaciente;"></tr>

@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { PopEliminarComponent } from "src/app/components/pop-eliminar/pop-eliminar.component";
 import { AuthService } from "src/app/services/auth.service";
 import { PopUpComponent } from "../../components/pop-up/pop-up.component";
 import { User } from "../../interfaces/user";
@@ -26,23 +27,24 @@ export class ListadoUsuariosComponent implements OnInit {
     "fechaNacimiento",
     "eliminar",
     "modificar",
-    "verCargaDiaria"
+    "verCargaDiaria",
   ];
-  dataSource: MatTableDataSource<User>;
-  usuarios: User[];
+  dataSource: MatTableDataSource<User> = new MatTableDataSource();
+  usuarios: User[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   //validate claims of the loged user
-  isAdmin: boolean;
-  isNutritionist: boolean;
+  userClaims: any;
 
   constructor(
     private usersService: UsersService,
     private dialog: MatDialog,
     private loader: LoadingSpinnerService,
     private authService: AuthService
-  ) { }
+  ) {
+    this.userClaims = authService.getUserClaims();
+  }
 
   loadAdminGrid() {
     this.usersService.getUsers().subscribe(
@@ -75,7 +77,23 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   cargarGrilla() {
-    this.loadNutrittionistGrid();
+    this.authService.getUserClaims().subscribe(data => {
+      this.userClaims = data;
+      console.log(this.userClaims);
+      if (this.userClaims != null) {
+        if (this.userClaims.Nutricionista) {
+          console.log("es nutricionista");
+          this.loadNutrittionistGrid();
+        }
+        if (this.userClaims.Admin) {
+          console.log("es admin");
+          this.loadAdminGrid();
+        }
+      }
+    }, err => {
+      console.log("claims err: ", err);
+    });
+
   }
 
   ngOnInit() {
@@ -89,19 +107,41 @@ export class ListadoUsuariosComponent implements OnInit {
     }
   }
 
-  eliminar(email: string) {
-    this.usersService.deleteUser(email).subscribe(
-      (data) => {
-        this.dialog.open(PopUpComponent, {
-          data: { title: "Listo!", message: "El usuario fue eliminado." },
-        });
-        this.cargarGrilla();
-      },
-      (err) => {
-        this.dialog.open(PopUpComponent, {
-          data: { title: "Oops!", message: "El usuario no se pudo eliminar." },
-        });
+  openDialog(email: string) {
+    const dialogRef = this.dialog.open(PopEliminarComponent, {
+      data: {
+        message: 'Esta seguro que quiere eliminar?',
+        buttonText: {
+          ok: 'Si',
+          cancel: 'No'
+        }
       }
-    );
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.usersService.deleteUser(email).subscribe(
+          (data) => {
+            const dialogRef2 = this.dialog.open(PopUpComponent, {
+              data: { title: "Listo!", message: "El usuario fue eliminado." },
+            });
+
+            dialogRef2.afterClosed().subscribe(() => {
+              this.cargarGrilla();
+            })
+          },
+          (err) => {
+            this.dialog.open(PopUpComponent, {
+              data: { title: "Oops!", message: "El usuario no se pudo eliminar." },
+            });
+          }
+        );
+      }
+      else {
+
+      }
+    });
   }
+
+
 }

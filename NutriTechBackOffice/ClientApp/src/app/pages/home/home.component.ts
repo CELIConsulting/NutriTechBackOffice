@@ -17,10 +17,10 @@ export class HomeComponent implements OnInit {
 
   displayedColumns: string[] = ['nombre', 'apellido', 'acciones'];
   displayedColumnsPaciente: string[] = ['altura', 'peso', 'medidas'];
-  dataSource: MatTableDataSource<User>;
-  dataSourcePaciente: MatTableDataSource<User>;
-  pacientes: User[];
-  paciente: User[];
+  dataSource: MatTableDataSource<User> = new MatTableDataSource();
+  dataSourcePaciente: MatTableDataSource<User> = new MatTableDataSource();
+  pacientes: User[] = [];
+  paciente: User[] = [];
   mostrar = true;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -41,20 +41,20 @@ export class HomeComponent implements OnInit {
           {
             this.pacientes = patient;
             this.dataSource = new MatTableDataSource(this.pacientes);
-  
+
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
           else if (this.labelPosition == 'conplan')
           {
             patient.forEach(element => {
-            
+
               if(element.planAsignado!=null)
-              {             
+              {
                 pacienteFiltrado.push(element);
                 this.pacientes = pacienteFiltrado;
               }
-            });        
+            });
               this.dataSource = new MatTableDataSource(pacienteFiltrado);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
@@ -62,17 +62,17 @@ export class HomeComponent implements OnInit {
           else if (this.labelPosition=='sinplan')
           {
             patient.forEach(element => {
-            
+
               if(element.planAsignado==null)
-              {             
+              {
                 pacienteFiltrado.push(element);
                 this.pacientes = pacienteFiltrado;
               }
-            });        
+            });
               this.dataSource = new MatTableDataSource(pacienteFiltrado);
               this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;  
-          }            
+              this.dataSource.sort = this.sort;
+          }
         },
         error => {
           console.error("No se pudo obtener a los pacientes con planes")
@@ -103,7 +103,6 @@ export class HomeComponent implements OnInit {
 
   obtenerInformacion(email)
   {
-    this.dataSourcePaciente = new MatTableDataSource();
     this.mostrar = false;
     this.usersService.getPatients()
     .subscribe(
@@ -112,8 +111,8 @@ export class HomeComponent implements OnInit {
         pacienteFiltrado.push(patients.find(m=>m.email==email));
         this.paciente = pacienteFiltrado
         var objetivo = document.getElementById('nombreId');
-        objetivo.innerHTML = this.paciente[0].nombre;     
-        this.dataSourcePaciente = new MatTableDataSource(this.paciente);              
+        objetivo.innerHTML = this.paciente[0].nombre;
+        this.dataSourcePaciente = new MatTableDataSource(this.paciente);
       },
       error => {
         console.error("No se pudo obtener el paciente")

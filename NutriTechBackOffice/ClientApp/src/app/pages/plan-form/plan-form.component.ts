@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 import { PlanAlimentacionForm } from 'src/app/interfaces/plan-alimentacion-form';
 import { PopUpComponent } from '../../components/pop-up/pop-up.component';
 import { PlanAlimentacion } from '../../interfaces/plan-alimentacion';
@@ -28,7 +29,7 @@ export class PlanFormComponent implements OnInit {
   minCantColaciones: number = 0;
   numberRegEx = "/\-?\d*\.?\d{1,2}/";
 
-  constructor(private fb: FormBuilder, private planesService: PlanesService, public dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private planesService: PlanesService, public dialog: MatDialog, private router: Router) {
     console.log("Sending request to get all plans");
     this.getAllPlans();
   }
@@ -73,18 +74,17 @@ export class PlanFormComponent implements OnInit {
         "Merienda": this.opcionesMerienda,
         "Cena": this.opcionesCena,
         "Colacion": this.opcionesColacion,
-      }
+      };
 
-      console.log("Sending request to create a new plan");
       this.planesService.addPlan(plan).subscribe(
         planResponse => {
-          console.log("Request OK!");
-          this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue agregado correctamente" } });
+          const dialog = this.dialog.open(PopUpComponent, { data: { title: "Listo!", message: "El plan fue agregado correctamente" } });
 
-          setTimeout(() => this.resetForm(), 0);
+          dialog.afterClosed().subscribe(() => {
+            this.refreshPantalla();
+          });
 
         }, error => {
-          console.error("Request Failed");
           this.dialog.open(PopUpComponent, { data: { title: "Ups hubo un error!", message: "No se pudo agregar el plan" } });
         });
 
@@ -99,11 +99,10 @@ export class PlanFormComponent implements OnInit {
     this.planesService.getAllPlans().subscribe(
       (planes) => {
         this.planesExistentes = planes;
-        console.log("Response to get plans: OK");
         console.table(this.planesExistentes);
       },
-      (error) => { console.error("Response to get all plans: FAILS", error) }
-    )
+      (error) => { console.error("Response to get all plans: FAILS", error); }
+    );
   }
 
   //Desayuno
@@ -188,15 +187,12 @@ export class PlanFormComponent implements OnInit {
     this.opcionesColacion.splice(posOpcion, 1);
   }
 
-  private resetForm() {
-    this.formGroupDirective.resetForm();
-    this.opcionesDesayuno = [];
-    this.opcionesMerienda = [];
-    this.opcionesMerienda = [];
-    this.opcionesCena = []
-    this.opcionesColacion = [];
+  private refreshPantalla() {
+    console.log("Refreshing component...");
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
-
-
 
 }
